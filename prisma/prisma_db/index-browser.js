@@ -122,6 +122,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   name: 'name',
   passwordHash: 'passwordHash',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -133,6 +134,32 @@ exports.Prisma.SessionScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.LikedTrackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  deezerTrackId: 'deezerTrackId',
+  title: 'title',
+  artistName: 'artistName',
+  albumTitle: 'albumTitle',
+  albumCover: 'albumCover',
+  duration: 'duration',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AppSettingScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserSettingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  key: 'key',
+  value: 'value',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -142,11 +169,17 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.Role = exports.$Enums.Role = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Session: 'Session'
+  Session: 'Session',
+  LikedTrack: 'LikedTrack',
+  AppSetting: 'AppSetting',
+  UserSetting: 'UserSetting'
 };
 
 /**

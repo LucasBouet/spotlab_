@@ -1,0 +1,19 @@
+import { AppShell } from "@/components/app-shell";
+import SettingsPage from "@/features/Settings/pages";
+import { requireUser } from "@/lib/rbac";
+import { getUserSettings } from "@/lib/settings";
+
+export default async function Page() {
+  const user = await requireUser();
+  const userSettings = await getUserSettings(user.id);
+
+  return (
+    <AppShell user={user}>
+      <SettingsPage
+        name={user.name}
+        email={user.email}
+        userSettings={userSettings}
+      />
+    </AppShell>
+  );
+}

@@ -1,8 +1,11 @@
 import { defineConfig } from "prisma/config";
 
 export default defineConfig({
-  schema: "prisma/prisma_db/schema.prisma",
+  schema: "prisma/schema.prisma",
   datasource: {
     url: "file:./dev.db",
+  },
+  migrations: {
+    seed: "node prisma/seed.mts",
   },
 });

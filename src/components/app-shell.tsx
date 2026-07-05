@@ -1,0 +1,65 @@
+import type { User } from "!/prisma_db";
+import type { ReactNode } from "react";
+import { MobileNav, SidebarNav } from "@/components/nav-items";
+import { signOut } from "@/features/Auth/actions";
+import { isAdmin } from "@/lib/rbac";
+import { getAppSetting } from "@/lib/settings";
+
+export async function AppShell({
+  user,
+  children,
+}: {
+  user: User;
+  children: ReactNode;
+}) {
+  const siteName = await getAppSetting("site_name");
+  const admin = isAdmin(user);
+
+  return (
+    <div className="flex min-h-screen w-full bg-background text-foreground">
+      <aside className="hidden w-60 flex-col border-r border-border bg-surface p-4 md:flex">
+        <div className="mb-8 flex items-center gap-2 px-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white">
+            {siteName.charAt(0).toUpperCase()}
+          </div>
+          <span className="text-lg font-semibold tracking-tight">
+            {siteName}
+          </span>
+        </div>
+
+        <SidebarNav isAdmin={admin} />
+      </aside>
+
+      <div className="flex flex-1 flex-col">
+        <header className="flex items-center justify-between gap-3 border-b border-border bg-surface/60 px-4 py-3 backdrop-blur sm:px-6 sm:py-4">
+          <div className="flex shrink-0 items-center gap-2 md:hidden">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-xs font-bold text-white">
+              {siteName.charAt(0).toUpperCase()}
+            </div>
+            <span className="font-semibold tracking-tight">{siteName}</span>
+          </div>
+
+          <p className="min-w-0 flex-1 truncate text-right text-sm text-white/60 md:text-left">
+            <span className="hidden sm:inline">Bienvenue, </span>
+            <span className="font-medium text-white">
+              {user.name ?? user.email}
+            </span>
+          </p>
+
+          <form action={signOut} className="shrink-0">
+            <button
+              type="submit"
+              className="rounded-lg border border-border px-3 py-1.5 text-sm text-white/70 transition hover:border-brand hover:text-white"
+            >
+              Déconnexion
+            </button>
+          </form>
+        </header>
+
+        <main className="flex flex-1 flex-col pb-20 md:pb-0">{children}</main>
+
+        <MobileNav isAdmin={admin} />
+      </div>
+    </div>
+  );
+}

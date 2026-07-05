@@ -23,6 +23,38 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
+/**
+ * Model LikedTrack
+ * 
+ */
+export type LikedTrack = $Result.DefaultSelection<Prisma.$LikedTrackPayload>
+/**
+ * Model AppSetting
+ * 
+ */
+export type AppSetting = $Result.DefaultSelection<Prisma.$AppSettingPayload>
+/**
+ * Model UserSetting
+ * 
+ */
+export type UserSetting = $Result.DefaultSelection<Prisma.$UserSettingPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const Role: {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+}
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
 
 /**
  * ##  Prisma Client ʲˢ
@@ -164,6 +196,36 @@ export class PrismaClient<
     * ```
     */
   get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.likedTrack`: Exposes CRUD operations for the **LikedTrack** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LikedTracks
+    * const likedTracks = await prisma.likedTrack.findMany()
+    * ```
+    */
+  get likedTrack(): Prisma.LikedTrackDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.appSetting`: Exposes CRUD operations for the **AppSetting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AppSettings
+    * const appSettings = await prisma.appSetting.findMany()
+    * ```
+    */
+  get appSetting(): Prisma.AppSettingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userSetting`: Exposes CRUD operations for the **UserSetting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserSettings
+    * const userSettings = await prisma.userSetting.findMany()
+    * ```
+    */
+  get userSetting(): Prisma.UserSettingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -599,7 +661,10 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Session: 'Session'
+    Session: 'Session',
+    LikedTrack: 'LikedTrack',
+    AppSetting: 'AppSetting',
+    UserSetting: 'UserSetting'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -615,7 +680,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session"
+      modelProps: "user" | "session" | "likedTrack" | "appSetting" | "userSetting"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -767,6 +832,228 @@ export namespace Prisma {
           }
         }
       }
+      LikedTrack: {
+        payload: Prisma.$LikedTrackPayload<ExtArgs>
+        fields: Prisma.LikedTrackFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LikedTrackFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LikedTrackFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>
+          }
+          findFirst: {
+            args: Prisma.LikedTrackFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LikedTrackFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>
+          }
+          findMany: {
+            args: Prisma.LikedTrackFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>[]
+          }
+          create: {
+            args: Prisma.LikedTrackCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>
+          }
+          createMany: {
+            args: Prisma.LikedTrackCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LikedTrackCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>[]
+          }
+          delete: {
+            args: Prisma.LikedTrackDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>
+          }
+          update: {
+            args: Prisma.LikedTrackUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>
+          }
+          deleteMany: {
+            args: Prisma.LikedTrackDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LikedTrackUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LikedTrackUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>[]
+          }
+          upsert: {
+            args: Prisma.LikedTrackUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LikedTrackPayload>
+          }
+          aggregate: {
+            args: Prisma.LikedTrackAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLikedTrack>
+          }
+          groupBy: {
+            args: Prisma.LikedTrackGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LikedTrackGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LikedTrackCountArgs<ExtArgs>
+            result: $Utils.Optional<LikedTrackCountAggregateOutputType> | number
+          }
+        }
+      }
+      AppSetting: {
+        payload: Prisma.$AppSettingPayload<ExtArgs>
+        fields: Prisma.AppSettingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AppSettingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AppSettingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>
+          }
+          findFirst: {
+            args: Prisma.AppSettingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AppSettingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>
+          }
+          findMany: {
+            args: Prisma.AppSettingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>[]
+          }
+          create: {
+            args: Prisma.AppSettingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>
+          }
+          createMany: {
+            args: Prisma.AppSettingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AppSettingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>[]
+          }
+          delete: {
+            args: Prisma.AppSettingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>
+          }
+          update: {
+            args: Prisma.AppSettingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>
+          }
+          deleteMany: {
+            args: Prisma.AppSettingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AppSettingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AppSettingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>[]
+          }
+          upsert: {
+            args: Prisma.AppSettingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AppSettingPayload>
+          }
+          aggregate: {
+            args: Prisma.AppSettingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAppSetting>
+          }
+          groupBy: {
+            args: Prisma.AppSettingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AppSettingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AppSettingCountArgs<ExtArgs>
+            result: $Utils.Optional<AppSettingCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserSetting: {
+        payload: Prisma.$UserSettingPayload<ExtArgs>
+        fields: Prisma.UserSettingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserSettingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserSettingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>
+          }
+          findFirst: {
+            args: Prisma.UserSettingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserSettingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>
+          }
+          findMany: {
+            args: Prisma.UserSettingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>[]
+          }
+          create: {
+            args: Prisma.UserSettingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>
+          }
+          createMany: {
+            args: Prisma.UserSettingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserSettingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>[]
+          }
+          delete: {
+            args: Prisma.UserSettingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>
+          }
+          update: {
+            args: Prisma.UserSettingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserSettingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserSettingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserSettingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserSettingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserSettingPayload>
+          }
+          aggregate: {
+            args: Prisma.UserSettingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserSetting>
+          }
+          groupBy: {
+            args: Prisma.UserSettingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserSettingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserSettingCountArgs<ExtArgs>
+            result: $Utils.Optional<UserSettingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -877,6 +1164,9 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     session?: SessionOmit
+    likedTrack?: LikedTrackOmit
+    appSetting?: AppSettingOmit
+    userSetting?: UserSettingOmit
   }
 
   /* Types for Logging */
@@ -958,10 +1248,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     sessions: number
+    likedTracks: number
+    settings: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+    likedTracks?: boolean | UserCountOutputTypeCountLikedTracksArgs
+    settings?: boolean | UserCountOutputTypeCountSettingsArgs
   }
 
   // Custom InputTypes
@@ -980,6 +1274,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SessionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLikedTracksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LikedTrackWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSettingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserSettingWhereInput
   }
 
 
@@ -1002,6 +1310,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     passwordHash: string | null
+    role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1011,6 +1320,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     passwordHash: string | null
+    role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1020,6 +1330,7 @@ export namespace Prisma {
     email: number
     name: number
     passwordHash: number
+    role: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1031,6 +1342,7 @@ export namespace Prisma {
     email?: true
     name?: true
     passwordHash?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1040,6 +1352,7 @@ export namespace Prisma {
     email?: true
     name?: true
     passwordHash?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1049,6 +1362,7 @@ export namespace Prisma {
     email?: true
     name?: true
     passwordHash?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1131,6 +1445,7 @@ export namespace Prisma {
     email: string
     name: string | null
     passwordHash: string
+    role: $Enums.Role
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1157,9 +1472,12 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     passwordHash?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    likedTracks?: boolean | User$likedTracksArgs<ExtArgs>
+    settings?: boolean | User$settingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1168,6 +1486,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     passwordHash?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1177,6 +1496,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     passwordHash?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1186,13 +1506,16 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     passwordHash?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    likedTracks?: boolean | User$likedTracksArgs<ExtArgs>
+    settings?: boolean | User$settingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1202,12 +1525,15 @@ export namespace Prisma {
     name: "User"
     objects: {
       sessions: Prisma.$SessionPayload<ExtArgs>[]
+      likedTracks: Prisma.$LikedTrackPayload<ExtArgs>[]
+      settings: Prisma.$UserSettingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
       name: string | null
       passwordHash: string
+      role: $Enums.Role
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1605,6 +1931,8 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    likedTracks<T extends User$likedTracksArgs<ExtArgs> = {}>(args?: Subset<T, User$likedTracksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    settings<T extends User$settingsArgs<ExtArgs> = {}>(args?: Subset<T, User$settingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1638,6 +1966,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -2052,6 +2381,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.likedTracks
+   */
+  export type User$likedTracksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    where?: LikedTrackWhereInput
+    orderBy?: LikedTrackOrderByWithRelationInput | LikedTrackOrderByWithRelationInput[]
+    cursor?: LikedTrackWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LikedTrackScalarFieldEnum | LikedTrackScalarFieldEnum[]
+  }
+
+  /**
+   * User.settings
+   */
+  export type User$settingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    where?: UserSettingWhereInput
+    orderBy?: UserSettingOrderByWithRelationInput | UserSettingOrderByWithRelationInput[]
+    cursor?: UserSettingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserSettingScalarFieldEnum | UserSettingScalarFieldEnum[]
   }
 
   /**
@@ -3122,6 +3499,3190 @@ export namespace Prisma {
 
 
   /**
+   * Model LikedTrack
+   */
+
+  export type AggregateLikedTrack = {
+    _count: LikedTrackCountAggregateOutputType | null
+    _avg: LikedTrackAvgAggregateOutputType | null
+    _sum: LikedTrackSumAggregateOutputType | null
+    _min: LikedTrackMinAggregateOutputType | null
+    _max: LikedTrackMaxAggregateOutputType | null
+  }
+
+  export type LikedTrackAvgAggregateOutputType = {
+    deezerTrackId: number | null
+    duration: number | null
+  }
+
+  export type LikedTrackSumAggregateOutputType = {
+    deezerTrackId: number | null
+    duration: number | null
+  }
+
+  export type LikedTrackMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    deezerTrackId: number | null
+    title: string | null
+    artistName: string | null
+    albumTitle: string | null
+    albumCover: string | null
+    duration: number | null
+    createdAt: Date | null
+  }
+
+  export type LikedTrackMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    deezerTrackId: number | null
+    title: string | null
+    artistName: string | null
+    albumTitle: string | null
+    albumCover: string | null
+    duration: number | null
+    createdAt: Date | null
+  }
+
+  export type LikedTrackCountAggregateOutputType = {
+    id: number
+    userId: number
+    deezerTrackId: number
+    title: number
+    artistName: number
+    albumTitle: number
+    albumCover: number
+    duration: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type LikedTrackAvgAggregateInputType = {
+    deezerTrackId?: true
+    duration?: true
+  }
+
+  export type LikedTrackSumAggregateInputType = {
+    deezerTrackId?: true
+    duration?: true
+  }
+
+  export type LikedTrackMinAggregateInputType = {
+    id?: true
+    userId?: true
+    deezerTrackId?: true
+    title?: true
+    artistName?: true
+    albumTitle?: true
+    albumCover?: true
+    duration?: true
+    createdAt?: true
+  }
+
+  export type LikedTrackMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    deezerTrackId?: true
+    title?: true
+    artistName?: true
+    albumTitle?: true
+    albumCover?: true
+    duration?: true
+    createdAt?: true
+  }
+
+  export type LikedTrackCountAggregateInputType = {
+    id?: true
+    userId?: true
+    deezerTrackId?: true
+    title?: true
+    artistName?: true
+    albumTitle?: true
+    albumCover?: true
+    duration?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type LikedTrackAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LikedTrack to aggregate.
+     */
+    where?: LikedTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LikedTracks to fetch.
+     */
+    orderBy?: LikedTrackOrderByWithRelationInput | LikedTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LikedTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LikedTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LikedTracks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LikedTracks
+    **/
+    _count?: true | LikedTrackCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LikedTrackAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LikedTrackSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LikedTrackMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LikedTrackMaxAggregateInputType
+  }
+
+  export type GetLikedTrackAggregateType<T extends LikedTrackAggregateArgs> = {
+        [P in keyof T & keyof AggregateLikedTrack]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLikedTrack[P]>
+      : GetScalarType<T[P], AggregateLikedTrack[P]>
+  }
+
+
+
+
+  export type LikedTrackGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LikedTrackWhereInput
+    orderBy?: LikedTrackOrderByWithAggregationInput | LikedTrackOrderByWithAggregationInput[]
+    by: LikedTrackScalarFieldEnum[] | LikedTrackScalarFieldEnum
+    having?: LikedTrackScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LikedTrackCountAggregateInputType | true
+    _avg?: LikedTrackAvgAggregateInputType
+    _sum?: LikedTrackSumAggregateInputType
+    _min?: LikedTrackMinAggregateInputType
+    _max?: LikedTrackMaxAggregateInputType
+  }
+
+  export type LikedTrackGroupByOutputType = {
+    id: string
+    userId: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt: Date
+    _count: LikedTrackCountAggregateOutputType | null
+    _avg: LikedTrackAvgAggregateOutputType | null
+    _sum: LikedTrackSumAggregateOutputType | null
+    _min: LikedTrackMinAggregateOutputType | null
+    _max: LikedTrackMaxAggregateOutputType | null
+  }
+
+  type GetLikedTrackGroupByPayload<T extends LikedTrackGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LikedTrackGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LikedTrackGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LikedTrackGroupByOutputType[P]>
+            : GetScalarType<T[P], LikedTrackGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LikedTrackSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["likedTrack"]>
+
+  export type LikedTrackSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["likedTrack"]>
+
+  export type LikedTrackSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["likedTrack"]>
+
+  export type LikedTrackSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+  }
+
+  export type LikedTrackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "deezerTrackId" | "title" | "artistName" | "albumTitle" | "albumCover" | "duration" | "createdAt", ExtArgs["result"]["likedTrack"]>
+  export type LikedTrackInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LikedTrackIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LikedTrackIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $LikedTrackPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LikedTrack"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      deezerTrackId: number
+      title: string
+      artistName: string
+      albumTitle: string
+      albumCover: string
+      duration: number
+      createdAt: Date
+    }, ExtArgs["result"]["likedTrack"]>
+    composites: {}
+  }
+
+  type LikedTrackGetPayload<S extends boolean | null | undefined | LikedTrackDefaultArgs> = $Result.GetResult<Prisma.$LikedTrackPayload, S>
+
+  type LikedTrackCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LikedTrackFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LikedTrackCountAggregateInputType | true
+    }
+
+  export interface LikedTrackDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LikedTrack'], meta: { name: 'LikedTrack' } }
+    /**
+     * Find zero or one LikedTrack that matches the filter.
+     * @param {LikedTrackFindUniqueArgs} args - Arguments to find a LikedTrack
+     * @example
+     * // Get one LikedTrack
+     * const likedTrack = await prisma.likedTrack.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LikedTrackFindUniqueArgs>(args: SelectSubset<T, LikedTrackFindUniqueArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LikedTrack that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LikedTrackFindUniqueOrThrowArgs} args - Arguments to find a LikedTrack
+     * @example
+     * // Get one LikedTrack
+     * const likedTrack = await prisma.likedTrack.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LikedTrackFindUniqueOrThrowArgs>(args: SelectSubset<T, LikedTrackFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LikedTrack that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikedTrackFindFirstArgs} args - Arguments to find a LikedTrack
+     * @example
+     * // Get one LikedTrack
+     * const likedTrack = await prisma.likedTrack.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LikedTrackFindFirstArgs>(args?: SelectSubset<T, LikedTrackFindFirstArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LikedTrack that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikedTrackFindFirstOrThrowArgs} args - Arguments to find a LikedTrack
+     * @example
+     * // Get one LikedTrack
+     * const likedTrack = await prisma.likedTrack.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LikedTrackFindFirstOrThrowArgs>(args?: SelectSubset<T, LikedTrackFindFirstOrThrowArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LikedTracks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikedTrackFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LikedTracks
+     * const likedTracks = await prisma.likedTrack.findMany()
+     * 
+     * // Get first 10 LikedTracks
+     * const likedTracks = await prisma.likedTrack.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const likedTrackWithIdOnly = await prisma.likedTrack.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LikedTrackFindManyArgs>(args?: SelectSubset<T, LikedTrackFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LikedTrack.
+     * @param {LikedTrackCreateArgs} args - Arguments to create a LikedTrack.
+     * @example
+     * // Create one LikedTrack
+     * const LikedTrack = await prisma.likedTrack.create({
+     *   data: {
+     *     // ... data to create a LikedTrack
+     *   }
+     * })
+     * 
+     */
+    create<T extends LikedTrackCreateArgs>(args: SelectSubset<T, LikedTrackCreateArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LikedTracks.
+     * @param {LikedTrackCreateManyArgs} args - Arguments to create many LikedTracks.
+     * @example
+     * // Create many LikedTracks
+     * const likedTrack = await prisma.likedTrack.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LikedTrackCreateManyArgs>(args?: SelectSubset<T, LikedTrackCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LikedTracks and returns the data saved in the database.
+     * @param {LikedTrackCreateManyAndReturnArgs} args - Arguments to create many LikedTracks.
+     * @example
+     * // Create many LikedTracks
+     * const likedTrack = await prisma.likedTrack.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LikedTracks and only return the `id`
+     * const likedTrackWithIdOnly = await prisma.likedTrack.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LikedTrackCreateManyAndReturnArgs>(args?: SelectSubset<T, LikedTrackCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LikedTrack.
+     * @param {LikedTrackDeleteArgs} args - Arguments to delete one LikedTrack.
+     * @example
+     * // Delete one LikedTrack
+     * const LikedTrack = await prisma.likedTrack.delete({
+     *   where: {
+     *     // ... filter to delete one LikedTrack
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LikedTrackDeleteArgs>(args: SelectSubset<T, LikedTrackDeleteArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LikedTrack.
+     * @param {LikedTrackUpdateArgs} args - Arguments to update one LikedTrack.
+     * @example
+     * // Update one LikedTrack
+     * const likedTrack = await prisma.likedTrack.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LikedTrackUpdateArgs>(args: SelectSubset<T, LikedTrackUpdateArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LikedTracks.
+     * @param {LikedTrackDeleteManyArgs} args - Arguments to filter LikedTracks to delete.
+     * @example
+     * // Delete a few LikedTracks
+     * const { count } = await prisma.likedTrack.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LikedTrackDeleteManyArgs>(args?: SelectSubset<T, LikedTrackDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LikedTracks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikedTrackUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LikedTracks
+     * const likedTrack = await prisma.likedTrack.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LikedTrackUpdateManyArgs>(args: SelectSubset<T, LikedTrackUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LikedTracks and returns the data updated in the database.
+     * @param {LikedTrackUpdateManyAndReturnArgs} args - Arguments to update many LikedTracks.
+     * @example
+     * // Update many LikedTracks
+     * const likedTrack = await prisma.likedTrack.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LikedTracks and only return the `id`
+     * const likedTrackWithIdOnly = await prisma.likedTrack.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LikedTrackUpdateManyAndReturnArgs>(args: SelectSubset<T, LikedTrackUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LikedTrack.
+     * @param {LikedTrackUpsertArgs} args - Arguments to update or create a LikedTrack.
+     * @example
+     * // Update or create a LikedTrack
+     * const likedTrack = await prisma.likedTrack.upsert({
+     *   create: {
+     *     // ... data to create a LikedTrack
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LikedTrack we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LikedTrackUpsertArgs>(args: SelectSubset<T, LikedTrackUpsertArgs<ExtArgs>>): Prisma__LikedTrackClient<$Result.GetResult<Prisma.$LikedTrackPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LikedTracks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikedTrackCountArgs} args - Arguments to filter LikedTracks to count.
+     * @example
+     * // Count the number of LikedTracks
+     * const count = await prisma.likedTrack.count({
+     *   where: {
+     *     // ... the filter for the LikedTracks we want to count
+     *   }
+     * })
+    **/
+    count<T extends LikedTrackCountArgs>(
+      args?: Subset<T, LikedTrackCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LikedTrackCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LikedTrack.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikedTrackAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LikedTrackAggregateArgs>(args: Subset<T, LikedTrackAggregateArgs>): Prisma.PrismaPromise<GetLikedTrackAggregateType<T>>
+
+    /**
+     * Group by LikedTrack.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikedTrackGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LikedTrackGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LikedTrackGroupByArgs['orderBy'] }
+        : { orderBy?: LikedTrackGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LikedTrackGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLikedTrackGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LikedTrack model
+   */
+  readonly fields: LikedTrackFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LikedTrack.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LikedTrackClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LikedTrack model
+   */
+  interface LikedTrackFieldRefs {
+    readonly id: FieldRef<"LikedTrack", 'String'>
+    readonly userId: FieldRef<"LikedTrack", 'String'>
+    readonly deezerTrackId: FieldRef<"LikedTrack", 'Int'>
+    readonly title: FieldRef<"LikedTrack", 'String'>
+    readonly artistName: FieldRef<"LikedTrack", 'String'>
+    readonly albumTitle: FieldRef<"LikedTrack", 'String'>
+    readonly albumCover: FieldRef<"LikedTrack", 'String'>
+    readonly duration: FieldRef<"LikedTrack", 'Int'>
+    readonly createdAt: FieldRef<"LikedTrack", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LikedTrack findUnique
+   */
+  export type LikedTrackFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * Filter, which LikedTrack to fetch.
+     */
+    where: LikedTrackWhereUniqueInput
+  }
+
+  /**
+   * LikedTrack findUniqueOrThrow
+   */
+  export type LikedTrackFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * Filter, which LikedTrack to fetch.
+     */
+    where: LikedTrackWhereUniqueInput
+  }
+
+  /**
+   * LikedTrack findFirst
+   */
+  export type LikedTrackFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * Filter, which LikedTrack to fetch.
+     */
+    where?: LikedTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LikedTracks to fetch.
+     */
+    orderBy?: LikedTrackOrderByWithRelationInput | LikedTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LikedTracks.
+     */
+    cursor?: LikedTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LikedTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LikedTracks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LikedTracks.
+     */
+    distinct?: LikedTrackScalarFieldEnum | LikedTrackScalarFieldEnum[]
+  }
+
+  /**
+   * LikedTrack findFirstOrThrow
+   */
+  export type LikedTrackFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * Filter, which LikedTrack to fetch.
+     */
+    where?: LikedTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LikedTracks to fetch.
+     */
+    orderBy?: LikedTrackOrderByWithRelationInput | LikedTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LikedTracks.
+     */
+    cursor?: LikedTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LikedTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LikedTracks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LikedTracks.
+     */
+    distinct?: LikedTrackScalarFieldEnum | LikedTrackScalarFieldEnum[]
+  }
+
+  /**
+   * LikedTrack findMany
+   */
+  export type LikedTrackFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * Filter, which LikedTracks to fetch.
+     */
+    where?: LikedTrackWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LikedTracks to fetch.
+     */
+    orderBy?: LikedTrackOrderByWithRelationInput | LikedTrackOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LikedTracks.
+     */
+    cursor?: LikedTrackWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LikedTracks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LikedTracks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LikedTracks.
+     */
+    distinct?: LikedTrackScalarFieldEnum | LikedTrackScalarFieldEnum[]
+  }
+
+  /**
+   * LikedTrack create
+   */
+  export type LikedTrackCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LikedTrack.
+     */
+    data: XOR<LikedTrackCreateInput, LikedTrackUncheckedCreateInput>
+  }
+
+  /**
+   * LikedTrack createMany
+   */
+  export type LikedTrackCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LikedTracks.
+     */
+    data: LikedTrackCreateManyInput | LikedTrackCreateManyInput[]
+  }
+
+  /**
+   * LikedTrack createManyAndReturn
+   */
+  export type LikedTrackCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * The data used to create many LikedTracks.
+     */
+    data: LikedTrackCreateManyInput | LikedTrackCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LikedTrack update
+   */
+  export type LikedTrackUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LikedTrack.
+     */
+    data: XOR<LikedTrackUpdateInput, LikedTrackUncheckedUpdateInput>
+    /**
+     * Choose, which LikedTrack to update.
+     */
+    where: LikedTrackWhereUniqueInput
+  }
+
+  /**
+   * LikedTrack updateMany
+   */
+  export type LikedTrackUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LikedTracks.
+     */
+    data: XOR<LikedTrackUpdateManyMutationInput, LikedTrackUncheckedUpdateManyInput>
+    /**
+     * Filter which LikedTracks to update
+     */
+    where?: LikedTrackWhereInput
+    /**
+     * Limit how many LikedTracks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LikedTrack updateManyAndReturn
+   */
+  export type LikedTrackUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * The data used to update LikedTracks.
+     */
+    data: XOR<LikedTrackUpdateManyMutationInput, LikedTrackUncheckedUpdateManyInput>
+    /**
+     * Filter which LikedTracks to update
+     */
+    where?: LikedTrackWhereInput
+    /**
+     * Limit how many LikedTracks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LikedTrack upsert
+   */
+  export type LikedTrackUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LikedTrack to update in case it exists.
+     */
+    where: LikedTrackWhereUniqueInput
+    /**
+     * In case the LikedTrack found by the `where` argument doesn't exist, create a new LikedTrack with this data.
+     */
+    create: XOR<LikedTrackCreateInput, LikedTrackUncheckedCreateInput>
+    /**
+     * In case the LikedTrack was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LikedTrackUpdateInput, LikedTrackUncheckedUpdateInput>
+  }
+
+  /**
+   * LikedTrack delete
+   */
+  export type LikedTrackDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+    /**
+     * Filter which LikedTrack to delete.
+     */
+    where: LikedTrackWhereUniqueInput
+  }
+
+  /**
+   * LikedTrack deleteMany
+   */
+  export type LikedTrackDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LikedTracks to delete
+     */
+    where?: LikedTrackWhereInput
+    /**
+     * Limit how many LikedTracks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LikedTrack without action
+   */
+  export type LikedTrackDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LikedTrack
+     */
+    select?: LikedTrackSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LikedTrack
+     */
+    omit?: LikedTrackOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LikedTrackInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AppSetting
+   */
+
+  export type AggregateAppSetting = {
+    _count: AppSettingCountAggregateOutputType | null
+    _min: AppSettingMinAggregateOutputType | null
+    _max: AppSettingMaxAggregateOutputType | null
+  }
+
+  export type AppSettingMinAggregateOutputType = {
+    key: string | null
+    value: string | null
+    updatedAt: Date | null
+  }
+
+  export type AppSettingMaxAggregateOutputType = {
+    key: string | null
+    value: string | null
+    updatedAt: Date | null
+  }
+
+  export type AppSettingCountAggregateOutputType = {
+    key: number
+    value: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AppSettingMinAggregateInputType = {
+    key?: true
+    value?: true
+    updatedAt?: true
+  }
+
+  export type AppSettingMaxAggregateInputType = {
+    key?: true
+    value?: true
+    updatedAt?: true
+  }
+
+  export type AppSettingCountAggregateInputType = {
+    key?: true
+    value?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AppSettingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AppSetting to aggregate.
+     */
+    where?: AppSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppSettings to fetch.
+     */
+    orderBy?: AppSettingOrderByWithRelationInput | AppSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AppSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AppSettings
+    **/
+    _count?: true | AppSettingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AppSettingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AppSettingMaxAggregateInputType
+  }
+
+  export type GetAppSettingAggregateType<T extends AppSettingAggregateArgs> = {
+        [P in keyof T & keyof AggregateAppSetting]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAppSetting[P]>
+      : GetScalarType<T[P], AggregateAppSetting[P]>
+  }
+
+
+
+
+  export type AppSettingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AppSettingWhereInput
+    orderBy?: AppSettingOrderByWithAggregationInput | AppSettingOrderByWithAggregationInput[]
+    by: AppSettingScalarFieldEnum[] | AppSettingScalarFieldEnum
+    having?: AppSettingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AppSettingCountAggregateInputType | true
+    _min?: AppSettingMinAggregateInputType
+    _max?: AppSettingMaxAggregateInputType
+  }
+
+  export type AppSettingGroupByOutputType = {
+    key: string
+    value: string
+    updatedAt: Date
+    _count: AppSettingCountAggregateOutputType | null
+    _min: AppSettingMinAggregateOutputType | null
+    _max: AppSettingMaxAggregateOutputType | null
+  }
+
+  type GetAppSettingGroupByPayload<T extends AppSettingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AppSettingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AppSettingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AppSettingGroupByOutputType[P]>
+            : GetScalarType<T[P], AppSettingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AppSettingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["appSetting"]>
+
+  export type AppSettingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["appSetting"]>
+
+  export type AppSettingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["appSetting"]>
+
+  export type AppSettingSelectScalar = {
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AppSettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"key" | "value" | "updatedAt", ExtArgs["result"]["appSetting"]>
+
+  export type $AppSettingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AppSetting"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      key: string
+      value: string
+      updatedAt: Date
+    }, ExtArgs["result"]["appSetting"]>
+    composites: {}
+  }
+
+  type AppSettingGetPayload<S extends boolean | null | undefined | AppSettingDefaultArgs> = $Result.GetResult<Prisma.$AppSettingPayload, S>
+
+  type AppSettingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AppSettingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AppSettingCountAggregateInputType | true
+    }
+
+  export interface AppSettingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AppSetting'], meta: { name: 'AppSetting' } }
+    /**
+     * Find zero or one AppSetting that matches the filter.
+     * @param {AppSettingFindUniqueArgs} args - Arguments to find a AppSetting
+     * @example
+     * // Get one AppSetting
+     * const appSetting = await prisma.appSetting.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AppSettingFindUniqueArgs>(args: SelectSubset<T, AppSettingFindUniqueArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AppSetting that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AppSettingFindUniqueOrThrowArgs} args - Arguments to find a AppSetting
+     * @example
+     * // Get one AppSetting
+     * const appSetting = await prisma.appSetting.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AppSettingFindUniqueOrThrowArgs>(args: SelectSubset<T, AppSettingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AppSetting that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppSettingFindFirstArgs} args - Arguments to find a AppSetting
+     * @example
+     * // Get one AppSetting
+     * const appSetting = await prisma.appSetting.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AppSettingFindFirstArgs>(args?: SelectSubset<T, AppSettingFindFirstArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AppSetting that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppSettingFindFirstOrThrowArgs} args - Arguments to find a AppSetting
+     * @example
+     * // Get one AppSetting
+     * const appSetting = await prisma.appSetting.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AppSettingFindFirstOrThrowArgs>(args?: SelectSubset<T, AppSettingFindFirstOrThrowArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AppSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppSettingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AppSettings
+     * const appSettings = await prisma.appSetting.findMany()
+     * 
+     * // Get first 10 AppSettings
+     * const appSettings = await prisma.appSetting.findMany({ take: 10 })
+     * 
+     * // Only select the `key`
+     * const appSettingWithKeyOnly = await prisma.appSetting.findMany({ select: { key: true } })
+     * 
+     */
+    findMany<T extends AppSettingFindManyArgs>(args?: SelectSubset<T, AppSettingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AppSetting.
+     * @param {AppSettingCreateArgs} args - Arguments to create a AppSetting.
+     * @example
+     * // Create one AppSetting
+     * const AppSetting = await prisma.appSetting.create({
+     *   data: {
+     *     // ... data to create a AppSetting
+     *   }
+     * })
+     * 
+     */
+    create<T extends AppSettingCreateArgs>(args: SelectSubset<T, AppSettingCreateArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AppSettings.
+     * @param {AppSettingCreateManyArgs} args - Arguments to create many AppSettings.
+     * @example
+     * // Create many AppSettings
+     * const appSetting = await prisma.appSetting.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AppSettingCreateManyArgs>(args?: SelectSubset<T, AppSettingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AppSettings and returns the data saved in the database.
+     * @param {AppSettingCreateManyAndReturnArgs} args - Arguments to create many AppSettings.
+     * @example
+     * // Create many AppSettings
+     * const appSetting = await prisma.appSetting.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AppSettings and only return the `key`
+     * const appSettingWithKeyOnly = await prisma.appSetting.createManyAndReturn({
+     *   select: { key: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AppSettingCreateManyAndReturnArgs>(args?: SelectSubset<T, AppSettingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AppSetting.
+     * @param {AppSettingDeleteArgs} args - Arguments to delete one AppSetting.
+     * @example
+     * // Delete one AppSetting
+     * const AppSetting = await prisma.appSetting.delete({
+     *   where: {
+     *     // ... filter to delete one AppSetting
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AppSettingDeleteArgs>(args: SelectSubset<T, AppSettingDeleteArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AppSetting.
+     * @param {AppSettingUpdateArgs} args - Arguments to update one AppSetting.
+     * @example
+     * // Update one AppSetting
+     * const appSetting = await prisma.appSetting.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AppSettingUpdateArgs>(args: SelectSubset<T, AppSettingUpdateArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AppSettings.
+     * @param {AppSettingDeleteManyArgs} args - Arguments to filter AppSettings to delete.
+     * @example
+     * // Delete a few AppSettings
+     * const { count } = await prisma.appSetting.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AppSettingDeleteManyArgs>(args?: SelectSubset<T, AppSettingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AppSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppSettingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AppSettings
+     * const appSetting = await prisma.appSetting.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AppSettingUpdateManyArgs>(args: SelectSubset<T, AppSettingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AppSettings and returns the data updated in the database.
+     * @param {AppSettingUpdateManyAndReturnArgs} args - Arguments to update many AppSettings.
+     * @example
+     * // Update many AppSettings
+     * const appSetting = await prisma.appSetting.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AppSettings and only return the `key`
+     * const appSettingWithKeyOnly = await prisma.appSetting.updateManyAndReturn({
+     *   select: { key: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AppSettingUpdateManyAndReturnArgs>(args: SelectSubset<T, AppSettingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AppSetting.
+     * @param {AppSettingUpsertArgs} args - Arguments to update or create a AppSetting.
+     * @example
+     * // Update or create a AppSetting
+     * const appSetting = await prisma.appSetting.upsert({
+     *   create: {
+     *     // ... data to create a AppSetting
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AppSetting we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AppSettingUpsertArgs>(args: SelectSubset<T, AppSettingUpsertArgs<ExtArgs>>): Prisma__AppSettingClient<$Result.GetResult<Prisma.$AppSettingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AppSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppSettingCountArgs} args - Arguments to filter AppSettings to count.
+     * @example
+     * // Count the number of AppSettings
+     * const count = await prisma.appSetting.count({
+     *   where: {
+     *     // ... the filter for the AppSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends AppSettingCountArgs>(
+      args?: Subset<T, AppSettingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AppSettingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AppSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppSettingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AppSettingAggregateArgs>(args: Subset<T, AppSettingAggregateArgs>): Prisma.PrismaPromise<GetAppSettingAggregateType<T>>
+
+    /**
+     * Group by AppSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AppSettingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AppSettingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AppSettingGroupByArgs['orderBy'] }
+        : { orderBy?: AppSettingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AppSettingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAppSettingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AppSetting model
+   */
+  readonly fields: AppSettingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AppSetting.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AppSettingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AppSetting model
+   */
+  interface AppSettingFieldRefs {
+    readonly key: FieldRef<"AppSetting", 'String'>
+    readonly value: FieldRef<"AppSetting", 'String'>
+    readonly updatedAt: FieldRef<"AppSetting", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AppSetting findUnique
+   */
+  export type AppSettingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which AppSetting to fetch.
+     */
+    where: AppSettingWhereUniqueInput
+  }
+
+  /**
+   * AppSetting findUniqueOrThrow
+   */
+  export type AppSettingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which AppSetting to fetch.
+     */
+    where: AppSettingWhereUniqueInput
+  }
+
+  /**
+   * AppSetting findFirst
+   */
+  export type AppSettingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which AppSetting to fetch.
+     */
+    where?: AppSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppSettings to fetch.
+     */
+    orderBy?: AppSettingOrderByWithRelationInput | AppSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AppSettings.
+     */
+    cursor?: AppSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppSettings.
+     */
+    distinct?: AppSettingScalarFieldEnum | AppSettingScalarFieldEnum[]
+  }
+
+  /**
+   * AppSetting findFirstOrThrow
+   */
+  export type AppSettingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which AppSetting to fetch.
+     */
+    where?: AppSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppSettings to fetch.
+     */
+    orderBy?: AppSettingOrderByWithRelationInput | AppSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AppSettings.
+     */
+    cursor?: AppSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppSettings.
+     */
+    distinct?: AppSettingScalarFieldEnum | AppSettingScalarFieldEnum[]
+  }
+
+  /**
+   * AppSetting findMany
+   */
+  export type AppSettingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * Filter, which AppSettings to fetch.
+     */
+    where?: AppSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AppSettings to fetch.
+     */
+    orderBy?: AppSettingOrderByWithRelationInput | AppSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AppSettings.
+     */
+    cursor?: AppSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AppSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AppSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AppSettings.
+     */
+    distinct?: AppSettingScalarFieldEnum | AppSettingScalarFieldEnum[]
+  }
+
+  /**
+   * AppSetting create
+   */
+  export type AppSettingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AppSetting.
+     */
+    data: XOR<AppSettingCreateInput, AppSettingUncheckedCreateInput>
+  }
+
+  /**
+   * AppSetting createMany
+   */
+  export type AppSettingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AppSettings.
+     */
+    data: AppSettingCreateManyInput | AppSettingCreateManyInput[]
+  }
+
+  /**
+   * AppSetting createManyAndReturn
+   */
+  export type AppSettingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * The data used to create many AppSettings.
+     */
+    data: AppSettingCreateManyInput | AppSettingCreateManyInput[]
+  }
+
+  /**
+   * AppSetting update
+   */
+  export type AppSettingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AppSetting.
+     */
+    data: XOR<AppSettingUpdateInput, AppSettingUncheckedUpdateInput>
+    /**
+     * Choose, which AppSetting to update.
+     */
+    where: AppSettingWhereUniqueInput
+  }
+
+  /**
+   * AppSetting updateMany
+   */
+  export type AppSettingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AppSettings.
+     */
+    data: XOR<AppSettingUpdateManyMutationInput, AppSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which AppSettings to update
+     */
+    where?: AppSettingWhereInput
+    /**
+     * Limit how many AppSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppSetting updateManyAndReturn
+   */
+  export type AppSettingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * The data used to update AppSettings.
+     */
+    data: XOR<AppSettingUpdateManyMutationInput, AppSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which AppSettings to update
+     */
+    where?: AppSettingWhereInput
+    /**
+     * Limit how many AppSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppSetting upsert
+   */
+  export type AppSettingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AppSetting to update in case it exists.
+     */
+    where: AppSettingWhereUniqueInput
+    /**
+     * In case the AppSetting found by the `where` argument doesn't exist, create a new AppSetting with this data.
+     */
+    create: XOR<AppSettingCreateInput, AppSettingUncheckedCreateInput>
+    /**
+     * In case the AppSetting was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AppSettingUpdateInput, AppSettingUncheckedUpdateInput>
+  }
+
+  /**
+   * AppSetting delete
+   */
+  export type AppSettingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+    /**
+     * Filter which AppSetting to delete.
+     */
+    where: AppSettingWhereUniqueInput
+  }
+
+  /**
+   * AppSetting deleteMany
+   */
+  export type AppSettingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AppSettings to delete
+     */
+    where?: AppSettingWhereInput
+    /**
+     * Limit how many AppSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AppSetting without action
+   */
+  export type AppSettingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AppSetting
+     */
+    select?: AppSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AppSetting
+     */
+    omit?: AppSettingOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserSetting
+   */
+
+  export type AggregateUserSetting = {
+    _count: UserSettingCountAggregateOutputType | null
+    _min: UserSettingMinAggregateOutputType | null
+    _max: UserSettingMaxAggregateOutputType | null
+  }
+
+  export type UserSettingMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    key: string | null
+    value: string | null
+    updatedAt: Date | null
+  }
+
+  export type UserSettingMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    key: string | null
+    value: string | null
+    updatedAt: Date | null
+  }
+
+  export type UserSettingCountAggregateOutputType = {
+    id: number
+    userId: number
+    key: number
+    value: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserSettingMinAggregateInputType = {
+    id?: true
+    userId?: true
+    key?: true
+    value?: true
+    updatedAt?: true
+  }
+
+  export type UserSettingMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    key?: true
+    value?: true
+    updatedAt?: true
+  }
+
+  export type UserSettingCountAggregateInputType = {
+    id?: true
+    userId?: true
+    key?: true
+    value?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserSettingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserSetting to aggregate.
+     */
+    where?: UserSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSettings to fetch.
+     */
+    orderBy?: UserSettingOrderByWithRelationInput | UserSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserSettings
+    **/
+    _count?: true | UserSettingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserSettingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserSettingMaxAggregateInputType
+  }
+
+  export type GetUserSettingAggregateType<T extends UserSettingAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserSetting]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserSetting[P]>
+      : GetScalarType<T[P], AggregateUserSetting[P]>
+  }
+
+
+
+
+  export type UserSettingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserSettingWhereInput
+    orderBy?: UserSettingOrderByWithAggregationInput | UserSettingOrderByWithAggregationInput[]
+    by: UserSettingScalarFieldEnum[] | UserSettingScalarFieldEnum
+    having?: UserSettingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserSettingCountAggregateInputType | true
+    _min?: UserSettingMinAggregateInputType
+    _max?: UserSettingMaxAggregateInputType
+  }
+
+  export type UserSettingGroupByOutputType = {
+    id: string
+    userId: string
+    key: string
+    value: string
+    updatedAt: Date
+    _count: UserSettingCountAggregateOutputType | null
+    _min: UserSettingMinAggregateOutputType | null
+    _max: UserSettingMaxAggregateOutputType | null
+  }
+
+  type GetUserSettingGroupByPayload<T extends UserSettingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserSettingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserSettingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserSettingGroupByOutputType[P]>
+            : GetScalarType<T[P], UserSettingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSettingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userSetting"]>
+
+  export type UserSettingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userSetting"]>
+
+  export type UserSettingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userSetting"]>
+
+  export type UserSettingSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    key?: boolean
+    value?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserSettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "key" | "value" | "updatedAt", ExtArgs["result"]["userSetting"]>
+  export type UserSettingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserSettingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserSettingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserSettingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserSetting"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      key: string
+      value: string
+      updatedAt: Date
+    }, ExtArgs["result"]["userSetting"]>
+    composites: {}
+  }
+
+  type UserSettingGetPayload<S extends boolean | null | undefined | UserSettingDefaultArgs> = $Result.GetResult<Prisma.$UserSettingPayload, S>
+
+  type UserSettingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserSettingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserSettingCountAggregateInputType | true
+    }
+
+  export interface UserSettingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserSetting'], meta: { name: 'UserSetting' } }
+    /**
+     * Find zero or one UserSetting that matches the filter.
+     * @param {UserSettingFindUniqueArgs} args - Arguments to find a UserSetting
+     * @example
+     * // Get one UserSetting
+     * const userSetting = await prisma.userSetting.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserSettingFindUniqueArgs>(args: SelectSubset<T, UserSettingFindUniqueArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserSetting that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserSettingFindUniqueOrThrowArgs} args - Arguments to find a UserSetting
+     * @example
+     * // Get one UserSetting
+     * const userSetting = await prisma.userSetting.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserSettingFindUniqueOrThrowArgs>(args: SelectSubset<T, UserSettingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserSetting that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSettingFindFirstArgs} args - Arguments to find a UserSetting
+     * @example
+     * // Get one UserSetting
+     * const userSetting = await prisma.userSetting.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserSettingFindFirstArgs>(args?: SelectSubset<T, UserSettingFindFirstArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserSetting that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSettingFindFirstOrThrowArgs} args - Arguments to find a UserSetting
+     * @example
+     * // Get one UserSetting
+     * const userSetting = await prisma.userSetting.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserSettingFindFirstOrThrowArgs>(args?: SelectSubset<T, UserSettingFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSettingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserSettings
+     * const userSettings = await prisma.userSetting.findMany()
+     * 
+     * // Get first 10 UserSettings
+     * const userSettings = await prisma.userSetting.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userSettingWithIdOnly = await prisma.userSetting.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserSettingFindManyArgs>(args?: SelectSubset<T, UserSettingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserSetting.
+     * @param {UserSettingCreateArgs} args - Arguments to create a UserSetting.
+     * @example
+     * // Create one UserSetting
+     * const UserSetting = await prisma.userSetting.create({
+     *   data: {
+     *     // ... data to create a UserSetting
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserSettingCreateArgs>(args: SelectSubset<T, UserSettingCreateArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserSettings.
+     * @param {UserSettingCreateManyArgs} args - Arguments to create many UserSettings.
+     * @example
+     * // Create many UserSettings
+     * const userSetting = await prisma.userSetting.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserSettingCreateManyArgs>(args?: SelectSubset<T, UserSettingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserSettings and returns the data saved in the database.
+     * @param {UserSettingCreateManyAndReturnArgs} args - Arguments to create many UserSettings.
+     * @example
+     * // Create many UserSettings
+     * const userSetting = await prisma.userSetting.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserSettings and only return the `id`
+     * const userSettingWithIdOnly = await prisma.userSetting.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserSettingCreateManyAndReturnArgs>(args?: SelectSubset<T, UserSettingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserSetting.
+     * @param {UserSettingDeleteArgs} args - Arguments to delete one UserSetting.
+     * @example
+     * // Delete one UserSetting
+     * const UserSetting = await prisma.userSetting.delete({
+     *   where: {
+     *     // ... filter to delete one UserSetting
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserSettingDeleteArgs>(args: SelectSubset<T, UserSettingDeleteArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserSetting.
+     * @param {UserSettingUpdateArgs} args - Arguments to update one UserSetting.
+     * @example
+     * // Update one UserSetting
+     * const userSetting = await prisma.userSetting.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserSettingUpdateArgs>(args: SelectSubset<T, UserSettingUpdateArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserSettings.
+     * @param {UserSettingDeleteManyArgs} args - Arguments to filter UserSettings to delete.
+     * @example
+     * // Delete a few UserSettings
+     * const { count } = await prisma.userSetting.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserSettingDeleteManyArgs>(args?: SelectSubset<T, UserSettingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSettingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserSettings
+     * const userSetting = await prisma.userSetting.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserSettingUpdateManyArgs>(args: SelectSubset<T, UserSettingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserSettings and returns the data updated in the database.
+     * @param {UserSettingUpdateManyAndReturnArgs} args - Arguments to update many UserSettings.
+     * @example
+     * // Update many UserSettings
+     * const userSetting = await prisma.userSetting.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserSettings and only return the `id`
+     * const userSettingWithIdOnly = await prisma.userSetting.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserSettingUpdateManyAndReturnArgs>(args: SelectSubset<T, UserSettingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserSetting.
+     * @param {UserSettingUpsertArgs} args - Arguments to update or create a UserSetting.
+     * @example
+     * // Update or create a UserSetting
+     * const userSetting = await prisma.userSetting.upsert({
+     *   create: {
+     *     // ... data to create a UserSetting
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserSetting we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserSettingUpsertArgs>(args: SelectSubset<T, UserSettingUpsertArgs<ExtArgs>>): Prisma__UserSettingClient<$Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSettingCountArgs} args - Arguments to filter UserSettings to count.
+     * @example
+     * // Count the number of UserSettings
+     * const count = await prisma.userSetting.count({
+     *   where: {
+     *     // ... the filter for the UserSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserSettingCountArgs>(
+      args?: Subset<T, UserSettingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserSettingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSettingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserSettingAggregateArgs>(args: Subset<T, UserSettingAggregateArgs>): Prisma.PrismaPromise<GetUserSettingAggregateType<T>>
+
+    /**
+     * Group by UserSetting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserSettingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserSettingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserSettingGroupByArgs['orderBy'] }
+        : { orderBy?: UserSettingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserSettingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserSettingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserSetting model
+   */
+  readonly fields: UserSettingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserSetting.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserSettingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserSetting model
+   */
+  interface UserSettingFieldRefs {
+    readonly id: FieldRef<"UserSetting", 'String'>
+    readonly userId: FieldRef<"UserSetting", 'String'>
+    readonly key: FieldRef<"UserSetting", 'String'>
+    readonly value: FieldRef<"UserSetting", 'String'>
+    readonly updatedAt: FieldRef<"UserSetting", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserSetting findUnique
+   */
+  export type UserSettingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSetting to fetch.
+     */
+    where: UserSettingWhereUniqueInput
+  }
+
+  /**
+   * UserSetting findUniqueOrThrow
+   */
+  export type UserSettingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSetting to fetch.
+     */
+    where: UserSettingWhereUniqueInput
+  }
+
+  /**
+   * UserSetting findFirst
+   */
+  export type UserSettingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSetting to fetch.
+     */
+    where?: UserSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSettings to fetch.
+     */
+    orderBy?: UserSettingOrderByWithRelationInput | UserSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserSettings.
+     */
+    cursor?: UserSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserSettings.
+     */
+    distinct?: UserSettingScalarFieldEnum | UserSettingScalarFieldEnum[]
+  }
+
+  /**
+   * UserSetting findFirstOrThrow
+   */
+  export type UserSettingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSetting to fetch.
+     */
+    where?: UserSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSettings to fetch.
+     */
+    orderBy?: UserSettingOrderByWithRelationInput | UserSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserSettings.
+     */
+    cursor?: UserSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserSettings.
+     */
+    distinct?: UserSettingScalarFieldEnum | UserSettingScalarFieldEnum[]
+  }
+
+  /**
+   * UserSetting findMany
+   */
+  export type UserSettingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserSettings to fetch.
+     */
+    where?: UserSettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserSettings to fetch.
+     */
+    orderBy?: UserSettingOrderByWithRelationInput | UserSettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserSettings.
+     */
+    cursor?: UserSettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserSettings.
+     */
+    distinct?: UserSettingScalarFieldEnum | UserSettingScalarFieldEnum[]
+  }
+
+  /**
+   * UserSetting create
+   */
+  export type UserSettingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserSetting.
+     */
+    data: XOR<UserSettingCreateInput, UserSettingUncheckedCreateInput>
+  }
+
+  /**
+   * UserSetting createMany
+   */
+  export type UserSettingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserSettings.
+     */
+    data: UserSettingCreateManyInput | UserSettingCreateManyInput[]
+  }
+
+  /**
+   * UserSetting createManyAndReturn
+   */
+  export type UserSettingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserSettings.
+     */
+    data: UserSettingCreateManyInput | UserSettingCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserSetting update
+   */
+  export type UserSettingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserSetting.
+     */
+    data: XOR<UserSettingUpdateInput, UserSettingUncheckedUpdateInput>
+    /**
+     * Choose, which UserSetting to update.
+     */
+    where: UserSettingWhereUniqueInput
+  }
+
+  /**
+   * UserSetting updateMany
+   */
+  export type UserSettingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserSettings.
+     */
+    data: XOR<UserSettingUpdateManyMutationInput, UserSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which UserSettings to update
+     */
+    where?: UserSettingWhereInput
+    /**
+     * Limit how many UserSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserSetting updateManyAndReturn
+   */
+  export type UserSettingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * The data used to update UserSettings.
+     */
+    data: XOR<UserSettingUpdateManyMutationInput, UserSettingUncheckedUpdateManyInput>
+    /**
+     * Filter which UserSettings to update
+     */
+    where?: UserSettingWhereInput
+    /**
+     * Limit how many UserSettings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserSetting upsert
+   */
+  export type UserSettingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserSetting to update in case it exists.
+     */
+    where: UserSettingWhereUniqueInput
+    /**
+     * In case the UserSetting found by the `where` argument doesn't exist, create a new UserSetting with this data.
+     */
+    create: XOR<UserSettingCreateInput, UserSettingUncheckedCreateInput>
+    /**
+     * In case the UserSetting was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserSettingUpdateInput, UserSettingUncheckedUpdateInput>
+  }
+
+  /**
+   * UserSetting delete
+   */
+  export type UserSettingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+    /**
+     * Filter which UserSetting to delete.
+     */
+    where: UserSettingWhereUniqueInput
+  }
+
+  /**
+   * UserSetting deleteMany
+   */
+  export type UserSettingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserSettings to delete
+     */
+    where?: UserSettingWhereInput
+    /**
+     * Limit how many UserSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserSetting without action
+   */
+  export type UserSettingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserSetting
+     */
+    select?: UserSettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserSetting
+     */
+    omit?: UserSettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserSettingInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3137,6 +6698,7 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     passwordHash: 'passwordHash',
+    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3152,6 +6714,41 @@ export namespace Prisma {
   };
 
   export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+  export const LikedTrackScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    deezerTrackId: 'deezerTrackId',
+    title: 'title',
+    artistName: 'artistName',
+    albumTitle: 'albumTitle',
+    albumCover: 'albumCover',
+    duration: 'duration',
+    createdAt: 'createdAt'
+  };
+
+  export type LikedTrackScalarFieldEnum = (typeof LikedTrackScalarFieldEnum)[keyof typeof LikedTrackScalarFieldEnum]
+
+
+  export const AppSettingScalarFieldEnum: {
+    key: 'key',
+    value: 'value',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AppSettingScalarFieldEnum = (typeof AppSettingScalarFieldEnum)[keyof typeof AppSettingScalarFieldEnum]
+
+
+  export const UserSettingScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    key: 'key',
+    value: 'value',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserSettingScalarFieldEnum = (typeof UserSettingScalarFieldEnum)[keyof typeof UserSettingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3183,6 +6780,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -3193,6 +6797,13 @@ export namespace Prisma {
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
   /**
    * Deep Input Types
@@ -3207,9 +6818,12 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
+    likedTracks?: LikedTrackListRelationFilter
+    settings?: UserSettingListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3217,9 +6831,12 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
+    likedTracks?: LikedTrackOrderByRelationAggregateInput
+    settings?: UserSettingOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3230,9 +6847,12 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
+    likedTracks?: LikedTrackListRelationFilter
+    settings?: UserSettingListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3240,6 +6860,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -3255,6 +6876,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordHash?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -3309,14 +6931,193 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
   }
 
+  export type LikedTrackWhereInput = {
+    AND?: LikedTrackWhereInput | LikedTrackWhereInput[]
+    OR?: LikedTrackWhereInput[]
+    NOT?: LikedTrackWhereInput | LikedTrackWhereInput[]
+    id?: StringFilter<"LikedTrack"> | string
+    userId?: StringFilter<"LikedTrack"> | string
+    deezerTrackId?: IntFilter<"LikedTrack"> | number
+    title?: StringFilter<"LikedTrack"> | string
+    artistName?: StringFilter<"LikedTrack"> | string
+    albumTitle?: StringFilter<"LikedTrack"> | string
+    albumCover?: StringFilter<"LikedTrack"> | string
+    duration?: IntFilter<"LikedTrack"> | number
+    createdAt?: DateTimeFilter<"LikedTrack"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type LikedTrackOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type LikedTrackWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_deezerTrackId?: LikedTrackUserIdDeezerTrackIdCompoundUniqueInput
+    AND?: LikedTrackWhereInput | LikedTrackWhereInput[]
+    OR?: LikedTrackWhereInput[]
+    NOT?: LikedTrackWhereInput | LikedTrackWhereInput[]
+    userId?: StringFilter<"LikedTrack"> | string
+    deezerTrackId?: IntFilter<"LikedTrack"> | number
+    title?: StringFilter<"LikedTrack"> | string
+    artistName?: StringFilter<"LikedTrack"> | string
+    albumTitle?: StringFilter<"LikedTrack"> | string
+    albumCover?: StringFilter<"LikedTrack"> | string
+    duration?: IntFilter<"LikedTrack"> | number
+    createdAt?: DateTimeFilter<"LikedTrack"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_deezerTrackId">
+
+  export type LikedTrackOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+    _count?: LikedTrackCountOrderByAggregateInput
+    _avg?: LikedTrackAvgOrderByAggregateInput
+    _max?: LikedTrackMaxOrderByAggregateInput
+    _min?: LikedTrackMinOrderByAggregateInput
+    _sum?: LikedTrackSumOrderByAggregateInput
+  }
+
+  export type LikedTrackScalarWhereWithAggregatesInput = {
+    AND?: LikedTrackScalarWhereWithAggregatesInput | LikedTrackScalarWhereWithAggregatesInput[]
+    OR?: LikedTrackScalarWhereWithAggregatesInput[]
+    NOT?: LikedTrackScalarWhereWithAggregatesInput | LikedTrackScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"LikedTrack"> | string
+    userId?: StringWithAggregatesFilter<"LikedTrack"> | string
+    deezerTrackId?: IntWithAggregatesFilter<"LikedTrack"> | number
+    title?: StringWithAggregatesFilter<"LikedTrack"> | string
+    artistName?: StringWithAggregatesFilter<"LikedTrack"> | string
+    albumTitle?: StringWithAggregatesFilter<"LikedTrack"> | string
+    albumCover?: StringWithAggregatesFilter<"LikedTrack"> | string
+    duration?: IntWithAggregatesFilter<"LikedTrack"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"LikedTrack"> | Date | string
+  }
+
+  export type AppSettingWhereInput = {
+    AND?: AppSettingWhereInput | AppSettingWhereInput[]
+    OR?: AppSettingWhereInput[]
+    NOT?: AppSettingWhereInput | AppSettingWhereInput[]
+    key?: StringFilter<"AppSetting"> | string
+    value?: StringFilter<"AppSetting"> | string
+    updatedAt?: DateTimeFilter<"AppSetting"> | Date | string
+  }
+
+  export type AppSettingOrderByWithRelationInput = {
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppSettingWhereUniqueInput = Prisma.AtLeast<{
+    key?: string
+    AND?: AppSettingWhereInput | AppSettingWhereInput[]
+    OR?: AppSettingWhereInput[]
+    NOT?: AppSettingWhereInput | AppSettingWhereInput[]
+    value?: StringFilter<"AppSetting"> | string
+    updatedAt?: DateTimeFilter<"AppSetting"> | Date | string
+  }, "key">
+
+  export type AppSettingOrderByWithAggregationInput = {
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AppSettingCountOrderByAggregateInput
+    _max?: AppSettingMaxOrderByAggregateInput
+    _min?: AppSettingMinOrderByAggregateInput
+  }
+
+  export type AppSettingScalarWhereWithAggregatesInput = {
+    AND?: AppSettingScalarWhereWithAggregatesInput | AppSettingScalarWhereWithAggregatesInput[]
+    OR?: AppSettingScalarWhereWithAggregatesInput[]
+    NOT?: AppSettingScalarWhereWithAggregatesInput | AppSettingScalarWhereWithAggregatesInput[]
+    key?: StringWithAggregatesFilter<"AppSetting"> | string
+    value?: StringWithAggregatesFilter<"AppSetting"> | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AppSetting"> | Date | string
+  }
+
+  export type UserSettingWhereInput = {
+    AND?: UserSettingWhereInput | UserSettingWhereInput[]
+    OR?: UserSettingWhereInput[]
+    NOT?: UserSettingWhereInput | UserSettingWhereInput[]
+    id?: StringFilter<"UserSetting"> | string
+    userId?: StringFilter<"UserSetting"> | string
+    key?: StringFilter<"UserSetting"> | string
+    value?: StringFilter<"UserSetting"> | string
+    updatedAt?: DateTimeFilter<"UserSetting"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserSettingOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserSettingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_key?: UserSettingUserIdKeyCompoundUniqueInput
+    AND?: UserSettingWhereInput | UserSettingWhereInput[]
+    OR?: UserSettingWhereInput[]
+    NOT?: UserSettingWhereInput | UserSettingWhereInput[]
+    userId?: StringFilter<"UserSetting"> | string
+    key?: StringFilter<"UserSetting"> | string
+    value?: StringFilter<"UserSetting"> | string
+    updatedAt?: DateTimeFilter<"UserSetting"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_key">
+
+  export type UserSettingOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserSettingCountOrderByAggregateInput
+    _max?: UserSettingMaxOrderByAggregateInput
+    _min?: UserSettingMinOrderByAggregateInput
+  }
+
+  export type UserSettingScalarWhereWithAggregatesInput = {
+    AND?: UserSettingScalarWhereWithAggregatesInput | UserSettingScalarWhereWithAggregatesInput[]
+    OR?: UserSettingScalarWhereWithAggregatesInput[]
+    NOT?: UserSettingScalarWhereWithAggregatesInput | UserSettingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserSetting"> | string
+    userId?: StringWithAggregatesFilter<"UserSetting"> | string
+    key?: StringWithAggregatesFilter<"UserSetting"> | string
+    value?: StringWithAggregatesFilter<"UserSetting"> | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserSetting"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
     name?: string | null
     passwordHash: string
+    role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackCreateNestedManyWithoutUserInput
+    settings?: UserSettingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3324,9 +7125,12 @@ export namespace Prisma {
     email: string
     name?: string | null
     passwordHash: string
+    role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackUncheckedCreateNestedManyWithoutUserInput
+    settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3334,9 +7138,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3344,9 +7151,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUncheckedUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3354,6 +7164,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     passwordHash: string
+    role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -3363,6 +7174,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3372,6 +7184,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -3424,6 +7237,186 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type LikedTrackCreateInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutLikedTracksInput
+  }
+
+  export type LikedTrackUncheckedCreateInput = {
+    id?: string
+    userId: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type LikedTrackUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutLikedTracksNestedInput
+  }
+
+  export type LikedTrackUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikedTrackCreateManyInput = {
+    id?: string
+    userId: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type LikedTrackUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikedTrackUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppSettingCreateInput = {
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type AppSettingUncheckedCreateInput = {
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type AppSettingUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppSettingUncheckedUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppSettingCreateManyInput = {
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type AppSettingUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AppSettingUncheckedUpdateManyInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSettingCreateInput = {
+    id?: string
+    key: string
+    value: string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSettingsInput
+  }
+
+  export type UserSettingUncheckedCreateInput = {
+    id?: string
+    userId: string
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type UserSettingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSettingsNestedInput
+  }
+
+  export type UserSettingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSettingCreateManyInput = {
+    id?: string
+    userId: string
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type UserSettingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSettingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -3452,6 +7445,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -3469,6 +7469,18 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
+  export type LikedTrackListRelationFilter = {
+    every?: LikedTrackWhereInput
+    some?: LikedTrackWhereInput
+    none?: LikedTrackWhereInput
+  }
+
+  export type UserSettingListRelationFilter = {
+    every?: UserSettingWhereInput
+    some?: UserSettingWhereInput
+    none?: UserSettingWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -3478,11 +7490,20 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type LikedTrackOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserSettingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3492,6 +7513,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3501,6 +7523,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     passwordHash?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -3537,6 +7560,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -3579,11 +7612,150 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type LikedTrackUserIdDeezerTrackIdCompoundUniqueInput = {
+    userId: string
+    deezerTrackId: number
+  }
+
+  export type LikedTrackCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LikedTrackAvgOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type LikedTrackMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LikedTrackMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type LikedTrackSumOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type AppSettingCountOrderByAggregateInput = {
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppSettingMaxOrderByAggregateInput = {
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AppSettingMinOrderByAggregateInput = {
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserSettingUserIdKeyCompoundUniqueInput = {
+    userId: string
+    key: string
+  }
+
+  export type UserSettingCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserSettingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserSettingMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type SessionCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type LikedTrackCreateNestedManyWithoutUserInput = {
+    create?: XOR<LikedTrackCreateWithoutUserInput, LikedTrackUncheckedCreateWithoutUserInput> | LikedTrackCreateWithoutUserInput[] | LikedTrackUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LikedTrackCreateOrConnectWithoutUserInput | LikedTrackCreateOrConnectWithoutUserInput[]
+    createMany?: LikedTrackCreateManyUserInputEnvelope
+    connect?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+  }
+
+  export type UserSettingCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserSettingCreateWithoutUserInput, UserSettingUncheckedCreateWithoutUserInput> | UserSettingCreateWithoutUserInput[] | UserSettingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSettingCreateOrConnectWithoutUserInput | UserSettingCreateOrConnectWithoutUserInput[]
+    createMany?: UserSettingCreateManyUserInputEnvelope
+    connect?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
   }
 
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
@@ -3593,12 +7765,30 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type LikedTrackUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<LikedTrackCreateWithoutUserInput, LikedTrackUncheckedCreateWithoutUserInput> | LikedTrackCreateWithoutUserInput[] | LikedTrackUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LikedTrackCreateOrConnectWithoutUserInput | LikedTrackCreateOrConnectWithoutUserInput[]
+    createMany?: LikedTrackCreateManyUserInputEnvelope
+    connect?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+  }
+
+  export type UserSettingUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserSettingCreateWithoutUserInput, UserSettingUncheckedCreateWithoutUserInput> | UserSettingCreateWithoutUserInput[] | UserSettingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSettingCreateOrConnectWithoutUserInput | UserSettingCreateOrConnectWithoutUserInput[]
+    createMany?: UserSettingCreateManyUserInputEnvelope
+    connect?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -3619,6 +7809,34 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type LikedTrackUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LikedTrackCreateWithoutUserInput, LikedTrackUncheckedCreateWithoutUserInput> | LikedTrackCreateWithoutUserInput[] | LikedTrackUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LikedTrackCreateOrConnectWithoutUserInput | LikedTrackCreateOrConnectWithoutUserInput[]
+    upsert?: LikedTrackUpsertWithWhereUniqueWithoutUserInput | LikedTrackUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LikedTrackCreateManyUserInputEnvelope
+    set?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    disconnect?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    delete?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    connect?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    update?: LikedTrackUpdateWithWhereUniqueWithoutUserInput | LikedTrackUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LikedTrackUpdateManyWithWhereWithoutUserInput | LikedTrackUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LikedTrackScalarWhereInput | LikedTrackScalarWhereInput[]
+  }
+
+  export type UserSettingUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserSettingCreateWithoutUserInput, UserSettingUncheckedCreateWithoutUserInput> | UserSettingCreateWithoutUserInput[] | UserSettingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSettingCreateOrConnectWithoutUserInput | UserSettingCreateOrConnectWithoutUserInput[]
+    upsert?: UserSettingUpsertWithWhereUniqueWithoutUserInput | UserSettingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserSettingCreateManyUserInputEnvelope
+    set?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    disconnect?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    delete?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    connect?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    update?: UserSettingUpdateWithWhereUniqueWithoutUserInput | UserSettingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserSettingUpdateManyWithWhereWithoutUserInput | UserSettingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserSettingScalarWhereInput | UserSettingScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -3633,6 +7851,34 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type LikedTrackUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LikedTrackCreateWithoutUserInput, LikedTrackUncheckedCreateWithoutUserInput> | LikedTrackCreateWithoutUserInput[] | LikedTrackUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LikedTrackCreateOrConnectWithoutUserInput | LikedTrackCreateOrConnectWithoutUserInput[]
+    upsert?: LikedTrackUpsertWithWhereUniqueWithoutUserInput | LikedTrackUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LikedTrackCreateManyUserInputEnvelope
+    set?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    disconnect?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    delete?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    connect?: LikedTrackWhereUniqueInput | LikedTrackWhereUniqueInput[]
+    update?: LikedTrackUpdateWithWhereUniqueWithoutUserInput | LikedTrackUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LikedTrackUpdateManyWithWhereWithoutUserInput | LikedTrackUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LikedTrackScalarWhereInput | LikedTrackScalarWhereInput[]
+  }
+
+  export type UserSettingUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserSettingCreateWithoutUserInput, UserSettingUncheckedCreateWithoutUserInput> | UserSettingCreateWithoutUserInput[] | UserSettingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserSettingCreateOrConnectWithoutUserInput | UserSettingCreateOrConnectWithoutUserInput[]
+    upsert?: UserSettingUpsertWithWhereUniqueWithoutUserInput | UserSettingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserSettingCreateManyUserInputEnvelope
+    set?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    disconnect?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    delete?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    connect?: UserSettingWhereUniqueInput | UserSettingWhereUniqueInput[]
+    update?: UserSettingUpdateWithWhereUniqueWithoutUserInput | UserSettingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserSettingUpdateManyWithWhereWithoutUserInput | UserSettingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserSettingScalarWhereInput | UserSettingScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutSessionsInput = {
     create?: XOR<UserCreateWithoutSessionsInput, UserUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSessionsInput
@@ -3645,6 +7891,42 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSessionsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type UserCreateNestedOneWithoutLikedTracksInput = {
+    create?: XOR<UserCreateWithoutLikedTracksInput, UserUncheckedCreateWithoutLikedTracksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLikedTracksInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutLikedTracksNestedInput = {
+    create?: XOR<UserCreateWithoutLikedTracksInput, UserUncheckedCreateWithoutLikedTracksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLikedTracksInput
+    upsert?: UserUpsertWithoutLikedTracksInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLikedTracksInput, UserUpdateWithoutLikedTracksInput>, UserUncheckedUpdateWithoutLikedTracksInput>
+  }
+
+  export type UserCreateNestedOneWithoutSettingsInput = {
+    create?: XOR<UserCreateWithoutSettingsInput, UserUncheckedCreateWithoutSettingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSettingsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSettingsNestedInput = {
+    create?: XOR<UserCreateWithoutSettingsInput, UserUncheckedCreateWithoutSettingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSettingsInput
+    upsert?: UserUpsertWithoutSettingsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSettingsInput, UserUpdateWithoutSettingsInput>, UserUncheckedUpdateWithoutSettingsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -3673,6 +7955,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -3742,6 +8031,16 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -3754,6 +8053,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -3775,6 +8101,60 @@ export namespace Prisma {
 
   export type SessionCreateManyUserInputEnvelope = {
     data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
+  }
+
+  export type LikedTrackCreateWithoutUserInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type LikedTrackUncheckedCreateWithoutUserInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type LikedTrackCreateOrConnectWithoutUserInput = {
+    where: LikedTrackWhereUniqueInput
+    create: XOR<LikedTrackCreateWithoutUserInput, LikedTrackUncheckedCreateWithoutUserInput>
+  }
+
+  export type LikedTrackCreateManyUserInputEnvelope = {
+    data: LikedTrackCreateManyUserInput | LikedTrackCreateManyUserInput[]
+  }
+
+  export type UserSettingCreateWithoutUserInput = {
+    id?: string
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type UserSettingUncheckedCreateWithoutUserInput = {
+    id?: string
+    key: string
+    value: string
+    updatedAt?: Date | string
+  }
+
+  export type UserSettingCreateOrConnectWithoutUserInput = {
+    where: UserSettingWhereUniqueInput
+    create: XOR<UserSettingCreateWithoutUserInput, UserSettingUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserSettingCreateManyUserInputEnvelope = {
+    data: UserSettingCreateManyUserInput | UserSettingCreateManyUserInput[]
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -3803,13 +8183,74 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Session"> | Date | string
   }
 
+  export type LikedTrackUpsertWithWhereUniqueWithoutUserInput = {
+    where: LikedTrackWhereUniqueInput
+    update: XOR<LikedTrackUpdateWithoutUserInput, LikedTrackUncheckedUpdateWithoutUserInput>
+    create: XOR<LikedTrackCreateWithoutUserInput, LikedTrackUncheckedCreateWithoutUserInput>
+  }
+
+  export type LikedTrackUpdateWithWhereUniqueWithoutUserInput = {
+    where: LikedTrackWhereUniqueInput
+    data: XOR<LikedTrackUpdateWithoutUserInput, LikedTrackUncheckedUpdateWithoutUserInput>
+  }
+
+  export type LikedTrackUpdateManyWithWhereWithoutUserInput = {
+    where: LikedTrackScalarWhereInput
+    data: XOR<LikedTrackUpdateManyMutationInput, LikedTrackUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type LikedTrackScalarWhereInput = {
+    AND?: LikedTrackScalarWhereInput | LikedTrackScalarWhereInput[]
+    OR?: LikedTrackScalarWhereInput[]
+    NOT?: LikedTrackScalarWhereInput | LikedTrackScalarWhereInput[]
+    id?: StringFilter<"LikedTrack"> | string
+    userId?: StringFilter<"LikedTrack"> | string
+    deezerTrackId?: IntFilter<"LikedTrack"> | number
+    title?: StringFilter<"LikedTrack"> | string
+    artistName?: StringFilter<"LikedTrack"> | string
+    albumTitle?: StringFilter<"LikedTrack"> | string
+    albumCover?: StringFilter<"LikedTrack"> | string
+    duration?: IntFilter<"LikedTrack"> | number
+    createdAt?: DateTimeFilter<"LikedTrack"> | Date | string
+  }
+
+  export type UserSettingUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserSettingWhereUniqueInput
+    update: XOR<UserSettingUpdateWithoutUserInput, UserSettingUncheckedUpdateWithoutUserInput>
+    create: XOR<UserSettingCreateWithoutUserInput, UserSettingUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserSettingUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserSettingWhereUniqueInput
+    data: XOR<UserSettingUpdateWithoutUserInput, UserSettingUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserSettingUpdateManyWithWhereWithoutUserInput = {
+    where: UserSettingScalarWhereInput
+    data: XOR<UserSettingUpdateManyMutationInput, UserSettingUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserSettingScalarWhereInput = {
+    AND?: UserSettingScalarWhereInput | UserSettingScalarWhereInput[]
+    OR?: UserSettingScalarWhereInput[]
+    NOT?: UserSettingScalarWhereInput | UserSettingScalarWhereInput[]
+    id?: StringFilter<"UserSetting"> | string
+    userId?: StringFilter<"UserSetting"> | string
+    key?: StringFilter<"UserSetting"> | string
+    value?: StringFilter<"UserSetting"> | string
+    updatedAt?: DateTimeFilter<"UserSetting"> | Date | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id?: string
     email: string
     name?: string | null
     passwordHash: string
+    role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    likedTracks?: LikedTrackCreateNestedManyWithoutUserInput
+    settings?: UserSettingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -3817,8 +8258,11 @@ export namespace Prisma {
     email: string
     name?: string | null
     passwordHash: string
+    role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    likedTracks?: LikedTrackUncheckedCreateNestedManyWithoutUserInput
+    settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -3842,8 +8286,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likedTracks?: LikedTrackUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -3851,14 +8298,163 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likedTracks?: LikedTrackUncheckedUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutLikedTracksInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    settings?: UserSettingCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutLikedTracksInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutLikedTracksInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLikedTracksInput, UserUncheckedCreateWithoutLikedTracksInput>
+  }
+
+  export type UserUpsertWithoutLikedTracksInput = {
+    update: XOR<UserUpdateWithoutLikedTracksInput, UserUncheckedUpdateWithoutLikedTracksInput>
+    create: XOR<UserCreateWithoutLikedTracksInput, UserUncheckedCreateWithoutLikedTracksInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLikedTracksInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLikedTracksInput, UserUncheckedUpdateWithoutLikedTracksInput>
+  }
+
+  export type UserUpdateWithoutLikedTracksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLikedTracksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutSettingsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSettingsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSettingsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSettingsInput, UserUncheckedCreateWithoutSettingsInput>
+  }
+
+  export type UserUpsertWithoutSettingsInput = {
+    update: XOR<UserUpdateWithoutSettingsInput, UserUncheckedUpdateWithoutSettingsInput>
+    create: XOR<UserCreateWithoutSettingsInput, UserUncheckedCreateWithoutSettingsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSettingsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSettingsInput, UserUncheckedUpdateWithoutSettingsInput>
+  }
+
+  export type UserUpdateWithoutSettingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSettingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionCreateManyUserInput = {
     id: string
     expiresAt: Date | string
     createdAt?: Date | string
+  }
+
+  export type LikedTrackCreateManyUserInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type UserSettingCreateManyUserInput = {
+    id?: string
+    key: string
+    value: string
+    updatedAt?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -3877,6 +8473,60 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikedTrackUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikedTrackUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikedTrackUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSettingUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSettingUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserSettingUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
