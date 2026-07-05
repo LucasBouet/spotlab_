@@ -1,6 +1,6 @@
 # File Tree: spotlab
 
-**Generated:** 7/5/2026, 8:19:42 PM
+**Generated:** 7/5/2026, 9:19:14 PM
 **Root Path:** `c:\Users\lucas\Documents\deezer-dl\spotlab`
 
 ```
@@ -15,6 +15,8 @@
 │   │   ├── 20260702183700_add_auth
 │   │   │   └── migration.sql
 │   │   ├── 20260705173650_add_liked_tracks
+│   │   │   └── migration.sql
+│   │   ├── 20260705182706_add_roles_and_settings
 │   │   │   └── migration.sql
 │   │   └── migration_lock.toml
 │   ├── prisma_db
@@ -51,7 +53,8 @@
 │   │   ├── schema.prisma
 │   │   ├── wasm-edge-light-loader.mjs
 │   │   └── wasm-worker-loader.mjs
-│   └── schema.prisma
+│   ├── schema.prisma
+│   └── seed.mts
 ├── public
 │   ├── file.svg
 │   ├── globe.svg
@@ -60,6 +63,11 @@
 │   └── window.svg
 ├── src
 │   ├── app
+│   │   ├── admin
+│   │   │   ├── settings
+│   │   │   │   └── page.tsx
+│   │   │   └── users
+│   │   │       └── page.tsx
 │   │   ├── api
 │   │   │   └── search
 │   │   │       └── route.ts
@@ -71,6 +79,8 @@
 │   │   │   └── page.tsx
 │   │   ├── search
 │   │   │   └── page.tsx
+│   │   ├── settings
+│   │   │   └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -80,7 +90,16 @@
 │   │   ├── icons.tsx
 │   │   └── nav-items.tsx
 │   ├── config
+│   │   └── settings.ts
 │   ├── features
+│   │   ├── Admin
+│   │   │   ├── Settings
+│   │   │   │   └── pages.tsx
+│   │   │   ├── Users
+│   │   │   │   └── pages.tsx
+│   │   │   ├── components
+│   │   │   │   └── admin-tabs.tsx
+│   │   │   └── actions.ts
 │   │   ├── Auth
 │   │   │   ├── Login
 │   │   │   │   └── pages.tsx
@@ -92,18 +111,28 @@
 │   │   ├── Library
 │   │   │   ├── actions.ts
 │   │   │   └── pages.tsx
-│   │   └── Search
+│   │   ├── Search
+│   │   │   └── pages.tsx
+│   │   └── Settings
+│   │       ├── components
+│   │       │   ├── password-form.tsx
+│   │       │   ├── preferences-form.tsx
+│   │       │   └── profile-form.tsx
+│   │       ├── actions.ts
 │   │       └── pages.tsx
 │   ├── lib
 │   │   ├── password.ts
 │   │   ├── prisma.ts
-│   │   └── session.ts
+│   │   ├── rbac.ts
+│   │   ├── session.ts
+│   │   ├── settings.ts
+│   │   └── validation.ts
 │   ├── utils
 │   └── proxy.ts
 ├── .claudeignore
 ├── .gitignore
-├── CLAUDE.md
 ├── README.md
+├── architecture.md
 ├── biome.json
 ├── dev.db
 ├── next.config.ts

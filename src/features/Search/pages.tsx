@@ -1,19 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { HeartIcon, SearchIcon } from "@/components/icons";
-import { likeTrack, unlikeTrack } from "@/features/Library/actions";
+import { SearchIcon } from "@/components/icons";
+import { TrackList } from "@/components/track-list";
+import { useLikeToggle } from "@/features/shared/use-like-toggle";
+import type { DeezerTrack } from "@/lib/deezer";
 
 type SearchType = "track" | "album" | "artist";
-
-type DeezerTrack = {
-  id: number;
-  title: string;
-  duration: number;
-  artist: { name: string };
-  album: { title: string; cover_medium: string };
-};
 
 type DeezerAlbum = {
   id: number;
@@ -36,23 +31,23 @@ const TABS: { type: SearchType; label: string }[] = [
   { type: "artist", label: "Artistes" },
 ];
 
-function formatDuration(totalSeconds: number) {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-}
-
 function formatCount(count: number) {
   return new Intl.NumberFormat("fr-FR", { notation: "compact" }).format(count);
 }
 
-export default function SearchPage({ initialLikedTrackIds }: { initialLikedTrackIds: number[] }) {
+export default function SearchPage({
+  initialLikedTrackIds,
+}: {
+  initialLikedTrackIds: number[];
+}) {
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState<SearchType>("track");
-  const [results, setResults] = useState<(DeezerTrack | DeezerAlbum | DeezerArtist)[]>([]);
+  const [results, setResults] = useState<
+    (DeezerTrack | DeezerAlbum | DeezerArtist)[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [likedTrackIds, setLikedTrackIds] = useState(() => new Set(initialLikedTrackIds));
+  const { likedTrackIds, toggleLike } = useLikeToggle(initialLikedTrackIds);
 
   useEffect(() => {
     setResults([]);
@@ -93,45 +88,6 @@ export default function SearchPage({ initialLikedTrackIds }: { initialLikedTrack
     };
   }, [query, activeTab]);
 
-  async function toggleLike(track: DeezerTrack) {
-    const isLiked = likedTrackIds.has(track.id);
-
-    setLikedTrackIds((prev) => {
-      const next = new Set(prev);
-      if (isLiked) {
-        next.delete(track.id);
-      } else {
-        next.add(track.id);
-      }
-      return next;
-    });
-
-    try {
-      if (isLiked) {
-        await unlikeTrack(track.id);
-      } else {
-        await likeTrack({
-          deezerTrackId: track.id,
-          title: track.title,
-          artistName: track.artist.name,
-          albumTitle: track.album.title,
-          albumCover: track.album.cover_medium,
-          duration: track.duration,
-        });
-      }
-    } catch {
-      setLikedTrackIds((prev) => {
-        const next = new Set(prev);
-        if (isLiked) {
-          next.add(track.id);
-        } else {
-          next.delete(track.id);
-        }
-        return next;
-      });
-    }
-  }
-
   const hasQuery = query.trim().length > 0;
 
   return (
@@ -170,57 +126,37 @@ export default function SearchPage({ initialLikedTrackIds }: { initialLikedTrack
         </p>
       )}
 
-      {isLoading && <p className="text-sm text-white/40">Recherche en cours...</p>}
+      {isLoading && (
+        <p className="text-sm text-white/40">Recherche en cours...</p>
+      )}
 
       {!isLoading && !error && hasQuery && results.length === 0 && (
-        <p className="text-sm text-white/40">Aucun résultat pour « {query} ».</p>
+        <p className="text-sm text-white/40">
+          Aucun résultat pour « {query} ».
+        </p>
       )}
 
       {!hasQuery && (
         <p className="text-sm text-white/40">
-          Commencez à taper pour rechercher un titre, un album ou un artiste sur Deezer.
+          Commencez à taper pour rechercher un titre, un album ou un artiste sur
+          Deezer.
         </p>
       )}
 
       {activeTab === "track" && (
-        <ul className="flex flex-col divide-y divide-border">
-          {(results as DeezerTrack[]).map((track) => {
-            const isLiked = likedTrackIds.has(track.id);
-            return (
-              <li key={track.id} className="flex items-center gap-3 py-2.5">
-                <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
-                  <Image
-                    src={track.album.cover_medium}
-                    alt=""
-                    fill
-                    sizes="44px"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-white">{track.title}</p>
-                  <p className="truncate text-xs text-white/50">{track.artist.name}</p>
-                </div>
-                <span className="shrink-0 text-xs text-white/40">{formatDuration(track.duration)}</span>
-                <button
-                  type="button"
-                  onClick={() => toggleLike(track)}
-                  aria-label={isLiked ? "Retirer des titres likés" : "Ajouter aux titres likés"}
-                  className={`shrink-0 transition hover:text-brand ${isLiked ? "text-brand" : "text-white/40"}`}
-                >
-                  <HeartIcon className="h-5 w-5" fill={isLiked ? "currentColor" : "none"} />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <TrackList
+          tracks={results as DeezerTrack[]}
+          likedTrackIds={likedTrackIds}
+          onToggleLike={toggleLike}
+        />
       )}
 
       {activeTab === "album" && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {(results as DeezerAlbum[]).map((album) => (
-            <div
+            <Link
               key={album.id}
+              href={`/album/${album.id}`}
               className="flex flex-col gap-2 rounded-lg p-2 transition hover:bg-surface-elevated"
             >
               <div className="relative aspect-square w-full overflow-hidden rounded-md">
@@ -233,10 +169,14 @@ export default function SearchPage({ initialLikedTrackIds }: { initialLikedTrack
                 />
               </div>
               <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-white">{album.title}</p>
-                <p className="truncate text-xs text-white/50">{album.artist.name}</p>
+                <p className="truncate text-sm font-medium text-white">
+                  {album.title}
+                </p>
+                <p className="truncate text-xs text-white/50">
+                  {album.artist.name}
+                </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
@@ -244,8 +184,9 @@ export default function SearchPage({ initialLikedTrackIds }: { initialLikedTrack
       {activeTab === "artist" && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {(results as DeezerArtist[]).map((artist) => (
-            <div
+            <Link
               key={artist.id}
+              href={`/artist/${artist.id}`}
               className="flex flex-col items-center gap-2 rounded-lg p-3 text-center transition hover:bg-surface-elevated"
             >
               <div className="relative aspect-square w-full overflow-hidden rounded-full">
@@ -258,12 +199,16 @@ export default function SearchPage({ initialLikedTrackIds }: { initialLikedTrack
                 />
               </div>
               <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-white">{artist.name}</p>
+                <p className="truncate text-sm font-medium text-white">
+                  {artist.name}
+                </p>
                 {typeof artist.nb_fan === "number" && (
-                  <p className="text-xs text-white/50">{formatCount(artist.nb_fan)} fans</p>
+                  <p className="text-xs text-white/50">
+                    {formatCount(artist.nb_fan)} fans
+                  </p>
                 )}
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
