@@ -45,9 +45,16 @@ If `rip/config.toml` doesn't exist yet, it's created from
 `config.template.toml` (streamrip's default config) before the ARL is
 written in.
 
-## Endpoint
+The effective download folder is `FOLDER` from `.env` if set, otherwise
+`rip/songs`. It's written to `[downloads].folder` on startup and on every
+`/config` call. The database paths (`[database].downloads_path` /
+`failed_downloads_path`) are likewise always pinned to `rip/downloads.db`
+and `rip/failed_downloads.db`, since the template's defaults
+(`/root/.config/streamrip/...`) don't exist outside a Linux container.
 
-`POST /config`
+## Endpoints
+
+### `POST /config`
 
 Body (JSON, form, or query string):
 
@@ -55,8 +62,6 @@ Body (JSON, form, or query string):
 | ------ | ------------------------------------- |
 | `arl`  | Deezer ARL cookie                     |
 | `totp` | current 6-digit code from your app    |
-
-Example:
 
 ```bash
 curl -X POST http://localhost:8081/config \
@@ -70,3 +75,28 @@ Responses:
 - `400` missing `arl`/`totp`
 - `401` invalid TOTP code
 - `500` couldn't read/write the config file
+
+### `POST /download`
+
+Downloads a Deezer track by ID via `rip --config-path <config.toml> -ndb
+--no-progress id deezer track <id>`, then renames the resulting audio
+file to `<id>.<ext>` in the download folder. If a file named `<id>.*`
+already exists there, the download is skipped and that file is returned.
+
+Body (JSON, form, or query string):
+
+| field | description        |
+| ----- | ------------------- |
+| `id`  | Deezer track ID      |
+
+```bash
+curl -X POST http://localhost:8081/download \
+  -H "Content-Type: application/json" \
+  -d '{"id": "618526932"}'
+```
+
+Responses:
+
+- `200` `{"success": true, "file": "...", "already_downloaded": bool}`
+- `400` missing/non-numeric `id`
+- `500` `rip` failed, or produced no audio file
