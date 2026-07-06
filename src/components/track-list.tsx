@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { HeartIcon, XIcon } from "@/components/icons";
+import { TrackPlayButton } from "@/features/Player/components/track-play-button";
 import { AddToPlaylistMenu } from "@/features/Playlists/components/add-to-playlist-menu";
 import type { DeezerTrack } from "@/lib/deezer";
 
@@ -33,13 +34,21 @@ export function TrackList({
             key={track.rowKey ?? track.id}
             className="flex items-center gap-3 py-2.5"
           >
-            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
+            <div className="group relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
               <Image
                 src={track.album.cover_medium}
                 alt=""
                 fill
                 sizes="44px"
                 className="object-cover"
+              />
+              <TrackPlayButton
+                track={{
+                  id: track.id,
+                  title: track.title,
+                  artist: track.artist.name,
+                  cover: track.album.cover_medium,
+                }}
               />
             </div>
             <div className="min-w-0 flex-1">

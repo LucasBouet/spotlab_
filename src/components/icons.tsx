@@ -127,3 +127,40 @@ export function ShieldIcon(props: SVGProps<SVGSVGElement>) {
     </IconBase>
   );
 }
+
+export function PlayIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props} fill="currentColor" stroke="none">
+      <path d="M7 4.5v15l13-7.5-13-7.5Z" />
+    </IconBase>
+  );
+}
+
+export function PauseIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props} fill="currentColor" stroke="none">
+      <path d="M6 4.5h4v15H6v-15Z" />
+      <path d="M14 4.5h4v15h-4v-15Z" />
+    </IconBase>
+  );
+}
+
+export function VolumeIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor" stroke="none" />
+      <path d="M16.5 8.5a5 5 0 0 1 0 7" />
+      <path d="M19 6a8.5 8.5 0 0 1 0 12" />
+    </IconBase>
+  );
+}
+
+export function VolumeMuteIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor" stroke="none" />
+      <path d="m17 9 5 6" />
+      <path d="m22 9-5 6" />
+    </IconBase>
+  );
+}

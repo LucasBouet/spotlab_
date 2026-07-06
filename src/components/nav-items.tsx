@@ -75,7 +75,7 @@ export function MobileNav({ isAdmin }: { isAdmin: boolean }) {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-20 flex items-center justify-around border-t border-border bg-surface/95 pt-2 backdrop-blur md:hidden"
+      className="flex items-center justify-around border-t border-border bg-surface/95 pt-2 backdrop-blur md:hidden"
       style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
     >
       {items.map(({ label, href, icon: Icon }) => {

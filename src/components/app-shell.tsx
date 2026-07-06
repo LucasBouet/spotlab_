@@ -2,6 +2,7 @@ import type { User } from "!/prisma_db";
 import type { ReactNode } from "react";
 import { MobileNav, SidebarNav } from "@/components/nav-items";
 import { signOut } from "@/features/Auth/actions";
+import { PlayerBar } from "@/features/Player/components/player-bar";
 import { isAdmin } from "@/lib/rbac";
 import { getAppSetting } from "@/lib/settings";
 
@@ -56,8 +57,11 @@ export async function AppShell({
           </form>
         </header>
 
-        <main className="flex flex-1 flex-col pb-20 md:pb-0">{children}</main>
+        <main className="flex flex-1 flex-col pb-40 md:pb-24">{children}</main>
+      </div>
 
+      <div className="fixed inset-x-0 bottom-0 z-30 flex flex-col">
+        <PlayerBar />
         <MobileNav isAdmin={admin} />
       </div>
     </div>

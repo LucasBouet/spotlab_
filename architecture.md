@@ -1,6 +1,6 @@
 # File Tree: spotlab
 
-**Generated:** 7/5/2026, 9:40:13 PM
+**Generated:** 7/6/2026, 8:33:28 PM
 **Root Path:** `c:\Users\lucas\Documents\deezer-dl\spotlab`
 
 ```
@@ -17,6 +17,8 @@
 │   │   ├── 20260705173650_add_liked_tracks
 │   │   │   └── migration.sql
 │   │   ├── 20260705182706_add_roles_and_settings
+│   │   │   └── migration.sql
+│   │   ├── 20260706161543_add_playlists
 │   │   │   └── migration.sql
 │   │   └── migration_lock.toml
 │   ├── prisma_db
@@ -61,6 +63,12 @@
 │   ├── next.svg
 │   ├── vercel.svg
 │   └── window.svg
+├── rip
+│   ├── API.md
+│   ├── README.md
+│   ├── app.py
+│   ├── config.template.toml
+│   └── requirements.txt
 ├── src
 │   ├── app
 │   │   ├── admin
@@ -80,6 +88,10 @@
 │   │   ├── library
 │   │   │   └── page.tsx
 │   │   ├── login
+│   │   │   └── page.tsx
+│   │   ├── playlists
+│   │   │   ├── [id]
+│   │   │   │   └── page.tsx
 │   │   │   └── page.tsx
 │   │   ├── register
 │   │   │   └── page.tsx
@@ -122,6 +134,14 @@
 │   │   ├── Library
 │   │   │   ├── actions.ts
 │   │   │   └── pages.tsx
+│   │   ├── Playlists
+│   │   │   ├── Detail
+│   │   │   │   └── pages.tsx
+│   │   │   ├── List
+│   │   │   │   └── pages.tsx
+│   │   │   ├── components
+│   │   │   │   └── add-to-playlist-menu.tsx
+│   │   │   └── actions.ts
 │   │   ├── Search
 │   │   │   └── pages.tsx
 │   │   ├── Settings

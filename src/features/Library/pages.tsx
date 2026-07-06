@@ -1,6 +1,7 @@
 import type { LikedTrack } from "!/prisma_db";
 import Image from "next/image";
 import { unlikeTrack } from "@/features/Library/actions";
+import { TrackPlayButton } from "@/features/Player/components/track-play-button";
 import { AddToPlaylistMenu } from "@/features/Playlists/components/add-to-playlist-menu";
 
 function formatDuration(totalSeconds: number) {
@@ -27,13 +28,21 @@ export default function LibraryPage({
         <ul className="flex flex-col divide-y divide-border">
           {likedTracks.map((track) => (
             <li key={track.id} className="flex items-center gap-3 py-2.5">
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
+              <div className="group relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
                 <Image
                   src={track.albumCover}
                   alt=""
                   fill
                   sizes="44px"
                   className="object-cover"
+                />
+                <TrackPlayButton
+                  track={{
+                    id: track.deezerTrackId,
+                    title: track.title,
+                    artist: track.artistName,
+                    cover: track.albumCover,
+                  }}
                 />
               </div>
               <div className="min-w-0 flex-1">
