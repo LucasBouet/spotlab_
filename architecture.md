@@ -1,6 +1,6 @@
 # File Tree: spotlab
 
-**Generated:** 7/5/2026, 9:19:14 PM
+**Generated:** 7/5/2026, 9:40:13 PM
 **Root Path:** `c:\Users\lucas\Documents\deezer-dl\spotlab`
 
 ```
@@ -68,9 +68,15 @@
 │   │   │   │   └── page.tsx
 │   │   │   └── users
 │   │   │       └── page.tsx
+│   │   ├── album
+│   │   │   └── [id]
+│   │   │       └── page.tsx
 │   │   ├── api
 │   │   │   └── search
 │   │   │       └── route.ts
+│   │   ├── artist
+│   │   │   └── [id]
+│   │   │       └── page.tsx
 │   │   ├── library
 │   │   │   └── page.tsx
 │   │   ├── login
@@ -88,7 +94,8 @@
 │   ├── components
 │   │   ├── app-shell.tsx
 │   │   ├── icons.tsx
-│   │   └── nav-items.tsx
+│   │   ├── nav-items.tsx
+│   │   └── track-list.tsx
 │   ├── config
 │   │   └── settings.ts
 │   ├── features
@@ -100,6 +107,10 @@
 │   │   │   ├── components
 │   │   │   │   └── admin-tabs.tsx
 │   │   │   └── actions.ts
+│   │   ├── Album
+│   │   │   └── pages.tsx
+│   │   ├── Artist
+│   │   │   └── pages.tsx
 │   │   ├── Auth
 │   │   │   ├── Login
 │   │   │   │   └── pages.tsx
@@ -113,14 +124,17 @@
 │   │   │   └── pages.tsx
 │   │   ├── Search
 │   │   │   └── pages.tsx
-│   │   └── Settings
-│   │       ├── components
-│   │       │   ├── password-form.tsx
-│   │       │   ├── preferences-form.tsx
-│   │       │   └── profile-form.tsx
-│   │       ├── actions.ts
-│   │       └── pages.tsx
+│   │   ├── Settings
+│   │   │   ├── components
+│   │   │   │   ├── password-form.tsx
+│   │   │   │   ├── preferences-form.tsx
+│   │   │   │   └── profile-form.tsx
+│   │   │   ├── actions.ts
+│   │   │   └── pages.tsx
+│   │   └── shared
+│   │       └── use-like-toggle.ts
 │   ├── lib
+│   │   ├── deezer.ts
 │   │   ├── password.ts
 │   │   ├── prisma.ts
 │   │   ├── rbac.ts

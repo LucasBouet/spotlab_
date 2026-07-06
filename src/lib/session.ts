@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
 export const SESSION_COOKIE = "spotlab_session";
@@ -13,10 +13,13 @@ export async function createSession(userId: string) {
     data: { id: token, userId, expiresAt },
   });
 
+  const headerList = await headers();
+  const isHttps = headerList.get("x-forwarded-proto") === "https";
+
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isHttps,
     sameSite: "lax",
     expires: expiresAt,
     path: "/",

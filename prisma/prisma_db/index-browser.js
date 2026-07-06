@@ -146,6 +146,26 @@ exports.Prisma.LikedTrackScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PlaylistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PlaylistTrackScalarFieldEnum = {
+  id: 'id',
+  playlistId: 'playlistId',
+  deezerTrackId: 'deezerTrackId',
+  title: 'title',
+  artistName: 'artistName',
+  albumTitle: 'albumTitle',
+  albumCover: 'albumCover',
+  duration: 'duration',
+  addedAt: 'addedAt'
+};
+
 exports.Prisma.AppSettingScalarFieldEnum = {
   key: 'key',
   value: 'value',
@@ -178,6 +198,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',
   LikedTrack: 'LikedTrack',
+  Playlist: 'Playlist',
+  PlaylistTrack: 'PlaylistTrack',
   AppSetting: 'AppSetting',
   UserSetting: 'UserSetting'
 };

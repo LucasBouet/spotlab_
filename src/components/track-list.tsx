@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { HeartIcon } from "@/components/icons";
+import { HeartIcon, XIcon } from "@/components/icons";
+import { AddToPlaylistMenu } from "@/features/Playlists/components/add-to-playlist-menu";
 import type { DeezerTrack } from "@/lib/deezer";
 
 export function formatDuration(totalSeconds: number) {
@@ -8,21 +9,30 @@ export function formatDuration(totalSeconds: number) {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
+export type TrackListItem = DeezerTrack & { rowKey?: string };
+
 export function TrackList({
   tracks,
   likedTrackIds,
   onToggleLike,
+  onRemove,
+  removeLabel = "Retirer de la playlist",
 }: {
-  tracks: DeezerTrack[];
+  tracks: TrackListItem[];
   likedTrackIds: Set<number>;
   onToggleLike: (track: DeezerTrack) => void;
+  onRemove?: (track: TrackListItem) => void;
+  removeLabel?: string;
 }) {
   return (
     <ul className="flex flex-col divide-y divide-border">
       {tracks.map((track) => {
         const isLiked = likedTrackIds.has(track.id);
         return (
-          <li key={track.id} className="flex items-center gap-3 py-2.5">
+          <li
+            key={track.rowKey ?? track.id}
+            className="flex items-center gap-3 py-2.5"
+          >
             <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
               <Image
                 src={track.album.cover_medium}
@@ -58,6 +68,17 @@ export function TrackList({
                 fill={isLiked ? "currentColor" : "none"}
               />
             </button>
+            <AddToPlaylistMenu track={track} />
+            {onRemove && (
+              <button
+                type="button"
+                onClick={() => onRemove(track)}
+                aria-label={removeLabel}
+                className="shrink-0 text-white/40 transition hover:text-red-400"
+              >
+                <XIcon className="h-5 w-5" />
+              </button>
+            )}
           </li>
         );
       })}
