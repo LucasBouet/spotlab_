@@ -11,6 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useMediaSession } from "@/features/Player/use-media-session";
 
 export type PlayerTrack = {
   id: number;
@@ -475,6 +476,28 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const closeQueuePanel = useCallback(() => {
     setIsQueueOpen(false);
   }, []);
+
+  const handleMediaSessionPlay = useCallback(() => {
+    audioContextRef.current?.resume();
+    audioRef.current?.play().catch(() => setStatus("error"));
+  }, []);
+
+  const handleMediaSessionPause = useCallback(() => {
+    audioRef.current?.pause();
+  }, []);
+
+  useMediaSession({
+    track: current,
+    isPlaying: status === "playing",
+    duration,
+    currentTime,
+    canSkipNext: queue.length > 0,
+    onPlay: handleMediaSessionPlay,
+    onPause: handleMediaSessionPause,
+    onNext: skipNext,
+    onPrevious: skipPrevious,
+    onSeek: seek,
+  });
 
   const prefetchedIdsRef = useRef<Set<number>>(new Set());
   useEffect(() => {

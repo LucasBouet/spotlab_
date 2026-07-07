@@ -1,6 +1,6 @@
 # File Tree: spotlab
 
-**Generated:** 7/7/2026, 8:37:03 PM
+**Generated:** 7/7/2026, 9:56:42 PM
 **Root Path:** `c:\Users\lucas\Documents\deezer-dl\spotlab`
 
 ```
@@ -82,6 +82,9 @@
 │   │   │   └── [id]
 │   │   │       └── page.tsx
 │   │   ├── api
+│   │   │   ├── prefetch
+│   │   │   │   └── [id]
+│   │   │   │       └── route.ts
 │   │   │   ├── search
 │   │   │   │   └── route.ts
 │   │   │   └── stream
@@ -112,6 +115,7 @@
 │   │   ├── app-shell.tsx
 │   │   ├── icons.tsx
 │   │   ├── nav-items.tsx
+│   │   ├── resizable-sidebar.tsx
 │   │   └── track-list.tsx
 │   ├── config
 │   │   └── settings.ts
@@ -141,8 +145,11 @@
 │   │   │   └── pages.tsx
 │   │   ├── Player
 │   │   │   ├── components
+│   │   │   │   ├── context-play-controls.tsx
 │   │   │   │   ├── player-bar.tsx
-│   │   │   │   └── track-play-button.tsx
+│   │   │   │   ├── queue-panel.tsx
+│   │   │   │   ├── track-play-button.tsx
+│   │   │   │   └── track-queue-menu.tsx
 │   │   │   └── player-context.tsx
 │   │   ├── Playlists
 │   │   │   ├── Detail
@@ -170,6 +177,8 @@
 │   │   ├── rbac.ts
 │   │   ├── session.ts
 │   │   ├── settings.ts
+│   │   ├── stream.ts
+│   │   ├── use-resizable-width.ts
 │   │   └── validation.ts
 │   ├── utils
 │   └── proxy.ts

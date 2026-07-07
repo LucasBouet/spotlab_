@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PlayerProvider } from "@/features/Player/player-context";
 import "./globals.css";
@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Spotlab",
   description: "Spotlab — une alternative libre et gratuite à Spotify.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#060608",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
