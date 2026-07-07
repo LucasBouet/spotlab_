@@ -1,13 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  HeartIcon,
   PauseIcon,
   PlayIcon,
+  QueueIcon,
+  ShuffleIcon,
+  SkipNextIcon,
+  SkipPreviousIcon,
   VolumeIcon,
   VolumeMuteIcon,
 } from "@/components/icons";
+import {
+  isTrackLiked,
+  likeTrack,
+  unlikeTrack,
+} from "@/features/Library/actions";
 import { MAX_VOLUME, usePlayer } from "@/features/Player/player-context";
 
 function formatTime(totalSeconds: number) {
@@ -25,6 +35,7 @@ function Slider({
   disabled = false,
   ariaLabel,
   className = "",
+  trackClassName = "h-1",
 }: {
   value: number;
   max: number;
@@ -33,6 +44,7 @@ function Slider({
   disabled?: boolean;
   ariaLabel: string;
   className?: string;
+  trackClassName?: string;
 }) {
   const percent = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
 
@@ -40,7 +52,9 @@ function Slider({
     <div
       className={`relative flex h-5 shrink-0 items-center ${disabled ? "opacity-0" : ""} ${className}`}
     >
-      <div className="h-1 w-full overflow-hidden rounded-full bg-white/15">
+      <div
+        className={`w-full overflow-hidden rounded-full bg-white/15 ${trackClassName}`}
+      >
         <div
           className="h-full rounded-full bg-brand"
           style={{ width: `${percent}%` }}
@@ -71,12 +85,34 @@ export function PlayerBar() {
     togglePlay,
     seek,
     setVolume,
+    shuffle,
+    toggleShuffle,
+    skipNext,
+    skipPrevious,
+    queue,
+    isQueueOpen,
+    toggleQueuePanel,
   } = usePlayer();
   const previousVolumeRef = useRef(volume || 100);
+  const [isLiked, setIsLiked] = useState(false);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
   const hasDuration = duration > 0;
+
+  useEffect(() => {
+    if (!currentTrack) {
+      setIsLiked(false);
+      return;
+    }
+    let cancelled = false;
+    isTrackLiked(currentTrack.id).then((liked) => {
+      if (!cancelled) setIsLiked(liked);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [currentTrack]);
 
   function toggleMute() {
     if (volume > 0) {
@@ -84,6 +120,28 @@ export function PlayerBar() {
       setVolume(0);
     } else {
       setVolume(previousVolumeRef.current || 100);
+    }
+  }
+
+  async function handleToggleLike() {
+    if (!currentTrack) return;
+    const nextLiked = !isLiked;
+    setIsLiked(nextLiked);
+    try {
+      if (nextLiked) {
+        await likeTrack({
+          deezerTrackId: currentTrack.id,
+          title: currentTrack.title,
+          artistName: currentTrack.artist,
+          albumTitle: currentTrack.album,
+          albumCover: currentTrack.cover,
+          duration: currentTrack.duration,
+        });
+      } else {
+        await unlikeTrack(currentTrack.id);
+      }
+    } catch {
+      setIsLiked(!nextLiked);
     }
   }
 
@@ -123,29 +181,88 @@ export function PlayerBar() {
                   : (currentTrack?.artist ?? " ")}
               </p>
             </div>
+            <button
+              type="button"
+              onClick={handleToggleLike}
+              disabled={!currentTrack}
+              aria-label={
+                isLiked
+                  ? "Retirer des titres likés"
+                  : "Ajouter aux titres likés"
+              }
+              className={`shrink-0 transition hover:text-brand disabled:opacity-30 ${isLiked ? "text-brand" : "text-white/40"}`}
+            >
+              <HeartIcon
+                className="h-5 w-5"
+                fill={isLiked ? "currentColor" : "none"}
+              />
+            </button>
           </div>
 
-          <button
-            type="button"
-            onClick={togglePlay}
-            disabled={!currentTrack}
-            aria-label={isPlaying ? "Mettre en pause" : "Lecture"}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-black transition disabled:opacity-30 enabled:hover:scale-105"
-          >
-            {isLoading ? (
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/20 border-t-black" />
-            ) : isPlaying ? (
-              <PauseIcon className="h-4 w-4" />
-            ) : (
-              <PlayIcon className="h-4 w-4 translate-x-0.5" />
-            )}
-          </button>
+          <div className="flex shrink-0 items-center gap-3 sm:gap-5">
+            <button
+              type="button"
+              onClick={toggleShuffle}
+              disabled={!currentTrack}
+              aria-pressed={shuffle}
+              aria-label="Lecture aléatoire"
+              className={`hidden shrink-0 items-center justify-center rounded-full p-1.5 transition disabled:opacity-30 sm:flex ${
+                shuffle
+                  ? "bg-brand/20 text-brand"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              <ShuffleIcon className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={skipPrevious}
+              disabled={!currentTrack}
+              aria-label="Titre précédent"
+              className="text-white/70 transition hover:text-white disabled:opacity-30"
+            >
+              <SkipPreviousIcon className="h-6 w-6" />
+            </button>
+            <button
+              type="button"
+              onClick={togglePlay}
+              disabled={!currentTrack}
+              aria-label={isPlaying ? "Mettre en pause" : "Lecture"}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-black transition disabled:opacity-30 enabled:hover:scale-105"
+            >
+              {isLoading ? (
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/20 border-t-black" />
+              ) : isPlaying ? (
+                <PauseIcon className="h-4 w-4" />
+              ) : (
+                <PlayIcon className="h-4 w-4 translate-x-0.5" />
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={skipNext}
+              disabled={queue.length === 0}
+              aria-label="Titre suivant"
+              className="text-white/70 transition hover:text-white disabled:opacity-30"
+            >
+              <SkipNextIcon className="h-6 w-6" />
+            </button>
+          </div>
 
           <div className="flex min-w-0 items-center justify-end gap-3">
-            <span className="shrink-0 text-xs text-white/40 tabular-nums">
+            <span className="hidden shrink-0 text-xs text-white/40 tabular-nums sm:inline">
               {formatTime(currentTime)} / {formatTime(duration)}
             </span>
-            <div className="hidden shrink-0 items-center gap-2 sm:flex">
+            <button
+              type="button"
+              onClick={toggleQueuePanel}
+              aria-pressed={isQueueOpen}
+              aria-label="File d'attente"
+              className={`flex shrink-0 items-center justify-center rounded-full p-1.5 transition ${isQueueOpen ? "bg-brand/20 text-brand" : "text-white/60 hover:text-white"}`}
+            >
+              <QueueIcon className="h-5 w-5" />
+            </button>
+            <div className="hidden shrink-0 items-center gap-2.5 sm:flex">
               <button
                 type="button"
                 onClick={toggleMute}
@@ -153,9 +270,9 @@ export function PlayerBar() {
                 className="text-white/60 transition hover:text-white"
               >
                 {volume === 0 ? (
-                  <VolumeMuteIcon className="h-4 w-4" />
+                  <VolumeMuteIcon className="h-5 w-5" />
                 ) : (
-                  <VolumeIcon className="h-4 w-4" />
+                  <VolumeIcon className="h-5 w-5" />
                 )}
               </button>
               <Slider
@@ -164,7 +281,8 @@ export function PlayerBar() {
                 step={1}
                 onChange={setVolume}
                 ariaLabel="Volume"
-                className="w-24"
+                className="w-40"
+                trackClassName="h-1.5"
               />
               <span className="w-9 shrink-0 text-right text-xs text-white/40 tabular-nums">
                 {volume}%

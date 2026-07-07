@@ -1,8 +1,10 @@
 import type { User } from "!/prisma_db";
 import type { ReactNode } from "react";
 import { MobileNav, SidebarNav } from "@/components/nav-items";
+import { ResizableSidebar } from "@/components/resizable-sidebar";
 import { signOut } from "@/features/Auth/actions";
 import { PlayerBar } from "@/features/Player/components/player-bar";
+import { QueuePanel } from "@/features/Player/components/queue-panel";
 import { isAdmin } from "@/lib/rbac";
 import { getAppSetting } from "@/lib/settings";
 
@@ -18,7 +20,7 @@ export async function AppShell({
 
   return (
     <div className="flex min-h-screen w-full bg-background text-foreground">
-      <aside className="hidden w-60 flex-col border-r border-border bg-surface p-4 md:flex">
+      <ResizableSidebar>
         <div className="mb-8 flex items-center gap-2 px-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white">
             {siteName.charAt(0).toUpperCase()}
@@ -29,7 +31,7 @@ export async function AppShell({
         </div>
 
         <SidebarNav isAdmin={admin} />
-      </aside>
+      </ResizableSidebar>
 
       <div className="flex flex-1 flex-col">
         <header className="flex items-center justify-between gap-3 border-b border-border bg-surface/60 px-4 py-3 backdrop-blur sm:px-6 sm:py-4">
@@ -59,6 +61,8 @@ export async function AppShell({
 
         <main className="flex flex-1 flex-col pb-40 md:pb-24">{children}</main>
       </div>
+
+      <QueuePanel />
 
       <div className="fixed inset-x-0 bottom-0 z-30 flex flex-col">
         <PlayerBar />

@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@/components/icons";
-import { TrackList } from "@/components/track-list";
+import { TrackList, toPlayerTrack } from "@/components/track-list";
+import { ContextPlayControls } from "@/features/Player/components/context-play-controls";
 import { useLikeToggle } from "@/features/shared/use-like-toggle";
 import type { DeezerArtistDetail, DeezerTrack } from "@/lib/deezer";
 
@@ -21,6 +22,7 @@ export default function ArtistPage({
   initialLikedTrackIds: number[];
 }) {
   const { likedTrackIds, toggleLike } = useLikeToggle(initialLikedTrackIds);
+  const contextId = `artist:${artist.id}`;
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-4 sm:p-6">
@@ -62,10 +64,15 @@ export default function ArtistPage({
           <h2 className="text-sm font-medium text-white/70">
             Titres populaires
           </h2>
+          <ContextPlayControls
+            contextId={contextId}
+            tracks={topTracks.map(toPlayerTrack)}
+          />
           <TrackList
             tracks={topTracks}
             likedTrackIds={likedTrackIds}
             onToggleLike={toggleLike}
+            queueContextId={contextId}
           />
         </div>
       )}

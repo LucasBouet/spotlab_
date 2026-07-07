@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { HeartIcon, XIcon } from "@/components/icons";
 import { TrackPlayButton } from "@/features/Player/components/track-play-button";
+import { TrackQueueMenu } from "@/features/Player/components/track-queue-menu";
+import { type PlayerTrack, usePlayer } from "@/features/Player/player-context";
 import { AddToPlaylistMenu } from "@/features/Playlists/components/add-to-playlist-menu";
 import type { DeezerTrack } from "@/lib/deezer";
 
@@ -12,23 +16,40 @@ export function formatDuration(totalSeconds: number) {
 
 export type TrackListItem = DeezerTrack & { rowKey?: string };
 
+export function toPlayerTrack(track: DeezerTrack): PlayerTrack {
+  return {
+    id: track.id,
+    title: track.title,
+    artist: track.artist.name,
+    album: track.album.title,
+    cover: track.album.cover_medium,
+    duration: track.duration,
+  };
+}
+
 export function TrackList({
   tracks,
   likedTrackIds,
   onToggleLike,
   onRemove,
   removeLabel = "Retirer de la playlist",
+  queueContextId,
 }: {
   tracks: TrackListItem[];
   likedTrackIds: Set<number>;
   onToggleLike: (track: DeezerTrack) => void;
   onRemove?: (track: TrackListItem) => void;
   removeLabel?: string;
+  queueContextId?: string;
 }) {
+  const { playContext } = usePlayer();
+  const playerTracks = tracks.map(toPlayerTrack);
+
   return (
     <ul className="flex flex-col divide-y divide-border">
-      {tracks.map((track) => {
+      {tracks.map((track, index) => {
         const isLiked = likedTrackIds.has(track.id);
+        const playerTrack = playerTracks[index];
         return (
           <li
             key={track.rowKey ?? track.id}
@@ -43,12 +64,12 @@ export function TrackList({
                 className="object-cover"
               />
               <TrackPlayButton
-                track={{
-                  id: track.id,
-                  title: track.title,
-                  artist: track.artist.name,
-                  cover: track.album.cover_medium,
-                }}
+                track={playerTrack}
+                onPlay={
+                  queueContextId
+                    ? () => playContext(queueContextId, playerTracks, index)
+                    : undefined
+                }
               />
             </div>
             <div className="min-w-0 flex-1">
@@ -88,6 +109,7 @@ export function TrackList({
                 <XIcon className="h-5 w-5" />
               </button>
             )}
+            <TrackQueueMenu track={playerTrack} />
           </li>
         );
       })}

@@ -164,3 +164,67 @@ export function VolumeMuteIcon(props: SVGProps<SVGSVGElement>) {
     </IconBase>
   );
 }
+
+export function ShuffleIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <path d="M3 6h3.5c1.6 0 3 .9 3.8 2.2l3.4 5.6c.8 1.3 2.2 2.2 3.8 2.2H21" />
+      <path d="m17.5 4 3.5 2-3.5 2" />
+      <path d="m17.5 20 3.5-2-3.5-2" />
+      <path d="M3 18h3.5c1.6 0 3-.9 3.8-2.2l.6-1" />
+      <path d="M13.9 9.2 14.5 8c.8-1.3 2.2-2 3.8-2H21" />
+    </IconBase>
+  );
+}
+
+export function SkipNextIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props} fill="currentColor" stroke="none">
+      <path d="M6 5v14l10-7z" />
+      <path d="M17 5h2v14h-2z" />
+    </IconBase>
+  );
+}
+
+export function SkipPreviousIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props} fill="currentColor" stroke="none">
+      <path d="M18 19V5L8 12z" />
+      <path d="M5 5h2v14H5z" />
+    </IconBase>
+  );
+}
+
+export function QueueIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <path d="M3 6h12" />
+      <path d="M3 12h12" />
+      <path d="M3 18h7" />
+      <path d="m16 9 4 3-4 3" />
+    </IconBase>
+  );
+}
+
+export function DotsIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props} fill="currentColor" stroke="none">
+      <circle cx="12" cy="5" r="1.8" />
+      <circle cx="12" cy="12" r="1.8" />
+      <circle cx="12" cy="19" r="1.8" />
+    </IconBase>
+  );
+}
+
+export function GripIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props} fill="currentColor" stroke="none">
+      <circle cx="9" cy="6" r="1.5" />
+      <circle cx="15" cy="6" r="1.5" />
+      <circle cx="9" cy="12" r="1.5" />
+      <circle cx="15" cy="12" r="1.5" />
+      <circle cx="9" cy="18" r="1.5" />
+      <circle cx="15" cy="18" r="1.5" />
+    </IconBase>
+  );
+}

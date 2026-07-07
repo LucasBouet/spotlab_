@@ -1,11 +1,13 @@
 "use client";
 
+import { arrayMove } from "@dnd-kit/sortable";
 import {
   createContext,
   type ReactNode,
   useCallback,
   useContext,
   useEffect,
+  useReducer,
   useRef,
   useState,
 } from "react";
@@ -14,13 +16,193 @@ export type PlayerTrack = {
   id: number;
   title: string;
   artist: string;
+  album: string;
   cover: string;
+  duration: number;
 };
+
+export type QueueItem = PlayerTrack & { uid: string; isManual: boolean };
 
 export type PlayerStatus = "idle" | "loading" | "playing" | "paused" | "error";
 
-export const MAX_VOLUME = 150;
+export const MAX_VOLUME = 120;
 export const DEFAULT_VOLUME = 100;
+const RESTART_THRESHOLD_SECONDS = 3;
+const PREFETCH_COUNT = 1;
+
+// Human hearing perceives loudness roughly logarithmically, so a gain node
+// driven linearly from the slider makes the lower half of the range feel
+// nearly silent and the upper half feel cramped. Squaring the 0-100 portion
+// spreads out the quiet end for finer control while keeping the same
+// reference points as a linear scale (0% -> silence, 100% -> unity gain).
+// The 100-150% boost range stays linear since headroom doesn't need the
+// same perceptual care.
+function volumeToGain(volume: number): number {
+  if (volume <= 0) return 0;
+  if (volume >= 100) return volume / 100;
+  return (volume / 100) ** 2;
+}
+
+let uidCounter = 0;
+
+function generateUid(): string {
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.randomUUID === "function"
+  ) {
+    return crypto.randomUUID();
+  }
+  uidCounter += 1;
+  return `${Date.now().toString(36)}-${uidCounter}-${Math.random().toString(36).slice(2)}`;
+}
+
+function makeQueueItem(track: PlayerTrack, isManual = false): QueueItem {
+  return { ...track, uid: generateUid(), isManual };
+}
+
+function shuffleArray<T>(items: T[]): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+type QueueState = {
+  current: QueueItem | null;
+  queue: QueueItem[];
+  history: QueueItem[];
+  contextTracks: QueueItem[];
+  activeContextId: string | null;
+  shuffle: boolean;
+};
+
+const initialQueueState: QueueState = {
+  current: null,
+  queue: [],
+  history: [],
+  contextTracks: [],
+  activeContextId: null,
+  shuffle: false,
+};
+
+type QueueAction =
+  | { type: "PLAY_TRACK"; item: QueueItem }
+  | {
+      type: "PLAY_CONTEXT";
+      contextId: string;
+      items: QueueItem[];
+      startIndex: number;
+      shuffleOverride?: boolean;
+    }
+  | { type: "SKIP_NEXT" }
+  | { type: "SKIP_PREVIOUS" }
+  | { type: "TOGGLE_SHUFFLE" }
+  | { type: "PLAY_FROM_QUEUE"; uid: string }
+  | { type: "QUEUE_PLAY_NEXT"; item: QueueItem }
+  | { type: "QUEUE_ADD_TO_END"; item: QueueItem }
+  | { type: "REMOVE_FROM_QUEUE"; uid: string }
+  | { type: "REORDER_QUEUE"; fromIndex: number; toIndex: number };
+
+function queueReducer(state: QueueState, action: QueueAction): QueueState {
+  switch (action.type) {
+    case "PLAY_TRACK": {
+      return {
+        ...state,
+        current: action.item,
+        queue: [],
+        history: [],
+        contextTracks: [],
+        activeContextId: null,
+      };
+    }
+    case "PLAY_CONTEXT": {
+      const { items, startIndex, contextId, shuffleOverride } = action;
+      const before = items.slice(0, startIndex);
+      let after = items.slice(startIndex + 1);
+      const nextShuffle = shuffleOverride ?? state.shuffle;
+      if (nextShuffle) after = shuffleArray(after);
+      return {
+        current: items[startIndex],
+        queue: after,
+        history: before,
+        contextTracks: items,
+        activeContextId: contextId,
+        shuffle: nextShuffle,
+      };
+    }
+    case "SKIP_NEXT": {
+      if (state.queue.length === 0) return state;
+      const [next, ...rest] = state.queue;
+      return {
+        ...state,
+        current: next,
+        queue: rest,
+        history: state.current
+          ? [...state.history, state.current]
+          : state.history,
+      };
+    }
+    case "SKIP_PREVIOUS": {
+      if (state.history.length === 0) return state;
+      const prev = state.history[state.history.length - 1];
+      return {
+        ...state,
+        current: prev,
+        history: state.history.slice(0, -1),
+        queue: state.current ? [state.current, ...state.queue] : state.queue,
+      };
+    }
+    case "TOGGLE_SHUFFLE": {
+      const nextShuffle = !state.shuffle;
+      const manual = state.queue.filter((item) => item.isManual);
+      if (nextShuffle) {
+        const rest = state.queue.filter((item) => !item.isManual);
+        return {
+          ...state,
+          shuffle: true,
+          queue: [...manual, ...shuffleArray(rest)],
+        };
+      }
+      const playedUids = new Set(state.history.map((item) => item.uid));
+      if (state.current) playedUids.add(state.current.uid);
+      const remaining = state.contextTracks.filter(
+        (item) => !playedUids.has(item.uid),
+      );
+      return { ...state, shuffle: false, queue: [...manual, ...remaining] };
+    }
+    case "PLAY_FROM_QUEUE": {
+      const index = state.queue.findIndex((item) => item.uid === action.uid);
+      if (index === -1) return state;
+      const target = state.queue[index];
+      const skipped = state.queue.slice(0, index);
+      const rest = state.queue.slice(index + 1);
+      const played = state.current
+        ? [...state.history, state.current, ...skipped]
+        : [...state.history, ...skipped];
+      return { ...state, current: target, queue: rest, history: played };
+    }
+    case "QUEUE_PLAY_NEXT":
+      return { ...state, queue: [action.item, ...state.queue] };
+    case "QUEUE_ADD_TO_END":
+      return { ...state, queue: [...state.queue, action.item] };
+    case "REMOVE_FROM_QUEUE":
+      return {
+        ...state,
+        queue: state.queue.filter((item) => item.uid !== action.uid),
+      };
+    case "REORDER_QUEUE":
+      return {
+        ...state,
+        queue: arrayMove(state.queue, action.fromIndex, action.toIndex),
+      };
+    default:
+      return state;
+  }
+}
+
+type PlayContextOptions = { shuffle?: boolean };
 
 type PlayerContextValue = {
   currentTrack: PlayerTrack | null;
@@ -32,6 +214,28 @@ type PlayerContextValue = {
   togglePlay: () => void;
   seek: (time: number) => void;
   setVolume: (volume: number) => void;
+
+  activeContextId: string | null;
+  shuffle: boolean;
+  queue: QueueItem[];
+  playContext: (
+    contextId: string,
+    tracks: PlayerTrack[],
+    startIndex: number,
+    options?: PlayContextOptions,
+  ) => void;
+  toggleShuffle: () => void;
+  skipNext: () => void;
+  skipPrevious: () => void;
+  playFromQueue: (uid: string) => void;
+  queuePlayNext: (track: PlayerTrack) => void;
+  queueAddToEnd: (track: PlayerTrack) => void;
+  removeFromQueue: (uid: string) => void;
+  reorderQueue: (fromIndex: number, toIndex: number) => void;
+
+  isQueueOpen: boolean;
+  toggleQueuePanel: () => void;
+  closeQueuePanel: () => void;
 };
 
 const PlayerContext = createContext<PlayerContextValue | null>(null);
@@ -50,11 +254,24 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const [currentTrack, setCurrentTrack] = useState<PlayerTrack | null>(null);
   const [status, setStatus] = useState<PlayerStatus>("idle");
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolumeState] = useState(DEFAULT_VOLUME);
+  const [isQueueOpen, setIsQueueOpen] = useState(false);
+
+  const [queueState, dispatch] = useReducer(queueReducer, initialQueueState);
+  const { current, queue, history, activeContextId, shuffle } = queueState;
+
+  const currentTimeRef = useRef(0);
+  useEffect(() => {
+    currentTimeRef.current = currentTime;
+  }, [currentTime]);
+
+  const queueRef = useRef(queue);
+  useEffect(() => {
+    queueRef.current = queue;
+  }, [queue]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -65,7 +282,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
     const audioContext = new AudioContextCtor();
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = DEFAULT_VOLUME / 100;
+    gainNode.gain.value = volumeToGain(DEFAULT_VOLUME);
     audioContext
       .createMediaElementSource(audio)
       .connect(gainNode)
@@ -81,6 +298,28 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  // Loads and plays whenever the identity of the current queue item changes
+  // (a genuine track change) — but not for restarts/pause-toggles on the same
+  // track, since those mutate the audio element directly without dispatching.
+  const loadedUidRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!current) {
+      loadedUidRef.current = null;
+      return;
+    }
+    if (current.uid === loadedUidRef.current) return;
+    loadedUidRef.current = current.uid;
+
+    const audio = audioRef.current;
+    if (!audio) return;
+    audioContextRef.current?.resume();
+    setStatus("loading");
+    setCurrentTime(0);
+    setDuration(0);
+    audio.src = `/api/stream/${current.id}`;
+    audio.play().catch(() => setStatus("error"));
+  }, [current]);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -91,8 +330,12 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
     const handleLoadedMetadata = () => setDuration(audio.duration || 0);
     const handleEnded = () => {
-      setStatus("paused");
-      setCurrentTime(0);
+      if (queueRef.current.length > 0) {
+        dispatch({ type: "SKIP_NEXT" });
+      } else {
+        setStatus("paused");
+        setCurrentTime(0);
+      }
     };
     const handleError = () => setStatus("error");
 
@@ -119,9 +362,9 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     (track: PlayerTrack) => {
       const audio = audioRef.current;
       if (!audio) return;
-      audioContextRef.current?.resume();
 
-      if (currentTrack?.id === track.id && status !== "error") {
+      if (current?.id === track.id && status !== "error") {
+        audioContextRef.current?.resume();
         if (audio.paused) {
           audio.play().catch(() => setStatus("error"));
         } else {
@@ -130,26 +373,85 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      setCurrentTrack(track);
-      setStatus("loading");
-      setCurrentTime(0);
-      setDuration(0);
-      audio.src = `/api/stream/${track.id}`;
-      audio.play().catch(() => setStatus("error"));
+      dispatch({ type: "PLAY_TRACK", item: makeQueueItem(track) });
     },
-    [currentTrack, status],
+    [current, status],
   );
+
+  const playContext = useCallback(
+    (
+      contextId: string,
+      tracks: PlayerTrack[],
+      startIndex: number,
+      options?: PlayContextOptions,
+    ) => {
+      if (tracks.length === 0) return;
+      const clampedIndex = Math.min(Math.max(startIndex, 0), tracks.length - 1);
+      const items = tracks.map((track) => makeQueueItem(track));
+      dispatch({
+        type: "PLAY_CONTEXT",
+        contextId,
+        items,
+        startIndex: clampedIndex,
+        shuffleOverride: options?.shuffle,
+      });
+    },
+    [],
+  );
+
+  const toggleShuffle = useCallback(() => {
+    dispatch({ type: "TOGGLE_SHUFFLE" });
+  }, []);
+
+  const skipNext = useCallback(() => {
+    dispatch({ type: "SKIP_NEXT" });
+  }, []);
+
+  const skipPrevious = useCallback(() => {
+    if (
+      currentTimeRef.current > RESTART_THRESHOLD_SECONDS ||
+      history.length === 0
+    ) {
+      const audio = audioRef.current;
+      if (!audio) return;
+      audio.currentTime = 0;
+      setCurrentTime(0);
+      if (audio.paused) audio.play().catch(() => setStatus("error"));
+      return;
+    }
+    dispatch({ type: "SKIP_PREVIOUS" });
+  }, [history.length]);
+
+  const playFromQueue = useCallback((uid: string) => {
+    dispatch({ type: "PLAY_FROM_QUEUE", uid });
+  }, []);
+
+  const queuePlayNext = useCallback((track: PlayerTrack) => {
+    dispatch({ type: "QUEUE_PLAY_NEXT", item: makeQueueItem(track, true) });
+  }, []);
+
+  const queueAddToEnd = useCallback((track: PlayerTrack) => {
+    dispatch({ type: "QUEUE_ADD_TO_END", item: makeQueueItem(track, true) });
+  }, []);
+
+  const removeFromQueue = useCallback((uid: string) => {
+    dispatch({ type: "REMOVE_FROM_QUEUE", uid });
+  }, []);
+
+  const reorderQueue = useCallback((fromIndex: number, toIndex: number) => {
+    dispatch({ type: "REORDER_QUEUE", fromIndex, toIndex });
+  }, []);
 
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;
-    if (!audio || !currentTrack) return;
+    if (!audio || !current) return;
     audioContextRef.current?.resume();
     if (audio.paused) {
       audio.play().catch(() => setStatus("error"));
     } else {
       audio.pause();
     }
-  }, [currentTrack]);
+  }, [current]);
 
   const seek = useCallback((time: number) => {
     const audio = audioRef.current;
@@ -162,9 +464,27 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     const clamped = Math.max(0, Math.min(MAX_VOLUME, Math.round(next)));
     setVolumeState(clamped);
     if (gainNodeRef.current) {
-      gainNodeRef.current.gain.value = clamped / 100;
+      gainNodeRef.current.gain.value = volumeToGain(clamped);
     }
   }, []);
+
+  const toggleQueuePanel = useCallback(() => {
+    setIsQueueOpen((prev) => !prev);
+  }, []);
+
+  const closeQueuePanel = useCallback(() => {
+    setIsQueueOpen(false);
+  }, []);
+
+  const prefetchedIdsRef = useRef<Set<number>>(new Set());
+  useEffect(() => {
+    const upcoming = queue.slice(0, PREFETCH_COUNT);
+    for (const item of upcoming) {
+      if (prefetchedIdsRef.current.has(item.id)) continue;
+      prefetchedIdsRef.current.add(item.id);
+      fetch(`/api/prefetch/${item.id}`, { method: "POST" }).catch(() => {});
+    }
+  }, [queue]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -194,7 +514,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   return (
     <PlayerContext.Provider
       value={{
-        currentTrack,
+        currentTrack: current,
         status,
         currentTime,
         duration,
@@ -203,6 +523,23 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         togglePlay,
         seek,
         setVolume,
+
+        activeContextId,
+        shuffle,
+        queue,
+        playContext,
+        toggleShuffle,
+        skipNext,
+        skipPrevious,
+        playFromQueue,
+        queuePlayNext,
+        queueAddToEnd,
+        removeFromQueue,
+        reorderQueue,
+
+        isQueueOpen,
+        toggleQueuePanel,
+        closeQueuePanel,
       }}
     >
       {children}

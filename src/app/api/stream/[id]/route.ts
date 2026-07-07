@@ -3,10 +3,9 @@ import { stat } from "node:fs/promises";
 import { Readable } from "node:stream";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/session";
+import { resolveTrackFile } from "@/lib/stream";
 
 export const runtime = "nodejs";
-
-const RIP_API_URL = process.env.RIP_API_URL ?? "http://localhost:8081";
 
 const CONTENT_TYPES: Record<string, string> = {
   ".mp3": "audio/mpeg",
@@ -21,27 +20,6 @@ const CONTENT_TYPES: Record<string, string> = {
 function contentTypeFor(filePath: string): string {
   const ext = filePath.slice(filePath.lastIndexOf(".")).toLowerCase();
   return CONTENT_TYPES[ext] ?? "application/octet-stream";
-}
-
-async function resolveTrackFile(id: string): Promise<string> {
-  let response: Response;
-  try {
-    response = await fetch(`${RIP_API_URL}/download`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-  } catch {
-    throw new Error("Le service de téléchargement est indisponible.");
-  }
-
-  const payload = await response.json().catch(() => null);
-
-  if (!response.ok || !payload?.success) {
-    throw new Error(payload?.error ?? "Le téléchargement du titre a échoué.");
-  }
-
-  return payload.file as string;
 }
 
 export async function GET(

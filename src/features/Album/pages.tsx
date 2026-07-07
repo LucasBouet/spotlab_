@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@/components/icons";
-import { TrackList } from "@/components/track-list";
+import { TrackList, toPlayerTrack } from "@/components/track-list";
+import { ContextPlayControls } from "@/features/Player/components/context-play-controls";
 import { useLikeToggle } from "@/features/shared/use-like-toggle";
 import type { DeezerAlbumDetail, DeezerTrack } from "@/lib/deezer";
 
@@ -15,6 +16,7 @@ export default function AlbumPage({
   initialLikedTrackIds: number[];
 }) {
   const { likedTrackIds, toggleLike } = useLikeToggle(initialLikedTrackIds);
+  const contextId = `album:${album.id}`;
 
   const tracks: DeezerTrack[] = album.tracks.data.map((track) => ({
     ...track,
@@ -53,10 +55,16 @@ export default function AlbumPage({
         </div>
       </div>
 
+      <ContextPlayControls
+        contextId={contextId}
+        tracks={tracks.map(toPlayerTrack)}
+      />
+
       <TrackList
         tracks={tracks}
         likedTrackIds={likedTrackIds}
         onToggleLike={toggleLike}
+        queueContextId={contextId}
       />
     </div>
   );

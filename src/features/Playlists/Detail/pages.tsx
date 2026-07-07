@@ -4,7 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon, TrashIcon } from "@/components/icons";
-import { TrackList, type TrackListItem } from "@/components/track-list";
+import {
+  TrackList,
+  type TrackListItem,
+  toPlayerTrack,
+} from "@/components/track-list";
+import { ContextPlayControls } from "@/features/Player/components/context-play-controls";
 import {
   deletePlaylist,
   removeTrackFromPlaylist,
@@ -32,6 +37,7 @@ export default function PlaylistDetailPage({
   const [isEditingName, setIsEditingName] = useState(false);
   const [rows, setRows] = useState(tracks);
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const contextId = `playlist:${playlistId}`;
 
   useEffect(() => {
     if (isEditingName) nameInputRef.current?.focus();
@@ -117,12 +123,19 @@ export default function PlaylistDetailPage({
           votre bibliothèque.
         </p>
       ) : (
-        <TrackList
-          tracks={rows}
-          likedTrackIds={likedTrackIds}
-          onToggleLike={toggleLike}
-          onRemove={handleRemoveTrack}
-        />
+        <>
+          <ContextPlayControls
+            contextId={contextId}
+            tracks={rows.map(toPlayerTrack)}
+          />
+          <TrackList
+            tracks={rows}
+            likedTrackIds={likedTrackIds}
+            onToggleLike={toggleLike}
+            onRemove={handleRemoveTrack}
+            queueContextId={contextId}
+          />
+        </>
       )}
     </div>
   );

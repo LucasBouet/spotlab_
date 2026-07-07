@@ -7,6 +7,8 @@ valid TOTP code, checked against TOTP_SECRET (see .env).
 
 import os
 import subprocess
+import threading
+import time
 from pathlib import Path
 
 import pyotp
@@ -118,6 +120,26 @@ def cleanup_extra_files(folder: Path, before: set[str], keep: str) -> None:
             pass
 
 
+def safe_replace(src: Path, dst: Path, attempts: int = 5, delay: float = 0.3) -> None:
+    """os.replace, retrying briefly on Windows' transient "file in use" errors
+    (antivirus/indexer scans routinely hold a just-written file open for a
+    moment before it can be renamed)."""
+    for attempt in range(1, attempts + 1):
+        try:
+            os.replace(src, dst)
+            return
+        except PermissionError:
+            if attempt == attempts:
+                raise
+            time.sleep(delay)
+
+
+# Downloading and moving files in DOWNLOAD_FOLDER isn't safe to run
+# concurrently (two requests can race on the same "newest file" detection
+# and file moves), so only one /download request is processed at a time.
+download_lock = threading.Lock()
+
+
 load_env_file(BASE_DIR / ".env")
 
 TOTP_SECRET = os.environ.get("TOTP_SECRET")
@@ -170,18 +192,26 @@ def download_track():
     if existing:
         return jsonify(success=True, file=str(existing), already_downloaded=True)
 
-    before = {p.name for p in DOWNLOAD_FOLDER.iterdir() if p.is_file()}
+    with download_lock:
+        # Another request may have downloaded this exact track while we were
+        # waiting for the lock (e.g. a prefetch racing the actual playback
+        # request) — check again before starting a redundant download.
+        existing = find_existing_download(DOWNLOAD_FOLDER, track_id)
+        if existing:
+            return jsonify(success=True, file=str(existing), already_downloaded=True)
 
-    try:
-        run_rip_download(track_id)
-        new_file = find_new_audio_file(DOWNLOAD_FOLDER, before)
-    except RuntimeError as exc:
-        return jsonify(error=str(exc)), 500
+        before = {p.name for p in DOWNLOAD_FOLDER.iterdir() if p.is_file()}
 
-    cleanup_extra_files(DOWNLOAD_FOLDER, before, keep=new_file.name)
+        try:
+            run_rip_download(track_id)
+            new_file = find_new_audio_file(DOWNLOAD_FOLDER, before)
+        except RuntimeError as exc:
+            return jsonify(error=str(exc)), 500
 
-    target = DOWNLOAD_FOLDER / f"{track_id}{new_file.suffix}"
-    os.replace(new_file, target)
+        cleanup_extra_files(DOWNLOAD_FOLDER, before, keep=new_file.name)
+
+        target = DOWNLOAD_FOLDER / f"{track_id}{new_file.suffix}"
+        safe_replace(new_file, target)
 
     return jsonify(success=True, file=str(target), already_downloaded=False)
 

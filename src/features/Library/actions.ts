@@ -19,7 +19,10 @@ export async function likeTrack(input: LikeTrackInput): Promise<void> {
 
   await prisma.likedTrack.upsert({
     where: {
-      userId_deezerTrackId: { userId: user.id, deezerTrackId: input.deezerTrackId },
+      userId_deezerTrackId: {
+        userId: user.id,
+        deezerTrackId: input.deezerTrackId,
+      },
     },
     update: {},
     create: { ...input, userId: user.id },
@@ -37,4 +40,16 @@ export async function unlikeTrack(deezerTrackId: number): Promise<void> {
   });
 
   revalidatePath("/library");
+}
+
+export async function isTrackLiked(deezerTrackId: number): Promise<boolean> {
+  const user = await getCurrentUser();
+  if (!user) return false;
+
+  const existing = await prisma.likedTrack.findUnique({
+    where: { userId_deezerTrackId: { userId: user.id, deezerTrackId } },
+    select: { id: true },
+  });
+
+  return existing !== null;
 }
