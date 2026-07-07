@@ -1,9 +1,11 @@
 # File Tree: spotlab
 
-**Generated:** 7/6/2026, 8:33:28 PM
+**Generated:** 7/7/2026, 8:37:03 PM
 **Root Path:** `c:\Users\lucas\Documents\deezer-dl\spotlab`
 
 ```
+├── .claude
+│   └── settings.local.json
 ├── docs
 │   ├── archive
 │   ├── learnings
@@ -80,8 +82,11 @@
 │   │   │   └── [id]
 │   │   │       └── page.tsx
 │   │   ├── api
-│   │   │   └── search
-│   │   │       └── route.ts
+│   │   │   ├── search
+│   │   │   │   └── route.ts
+│   │   │   └── stream
+│   │   │       └── [id]
+│   │   │           └── route.ts
 │   │   ├── artist
 │   │   │   └── [id]
 │   │   │       └── page.tsx
@@ -134,6 +139,11 @@
 │   │   ├── Library
 │   │   │   ├── actions.ts
 │   │   │   └── pages.tsx
+│   │   ├── Player
+│   │   │   ├── components
+│   │   │   │   ├── player-bar.tsx
+│   │   │   │   └── track-play-button.tsx
+│   │   │   └── player-context.tsx
 │   │   ├── Playlists
 │   │   │   ├── Detail
 │   │   │   │   └── pages.tsx
