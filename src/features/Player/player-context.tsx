@@ -237,6 +237,11 @@ type PlayerContextValue = {
   isQueueOpen: boolean;
   toggleQueuePanel: () => void;
   closeQueuePanel: () => void;
+
+  isFullscreenOpen: boolean;
+  openFullscreen: () => void;
+  closeFullscreen: () => void;
+  toggleFullscreen: () => void;
 };
 
 const PlayerContext = createContext<PlayerContextValue | null>(null);
@@ -260,6 +265,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [duration, setDuration] = useState(0);
   const [volume, setVolumeState] = useState(DEFAULT_VOLUME);
   const [isQueueOpen, setIsQueueOpen] = useState(false);
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
   const [queueState, dispatch] = useReducer(queueReducer, initialQueueState);
   const { current, queue, history, activeContextId, shuffle } = queueState;
@@ -477,6 +483,19 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setIsQueueOpen(false);
   }, []);
 
+  const openFullscreen = useCallback(() => {
+    setIsQueueOpen(false);
+    setIsFullscreenOpen(true);
+  }, []);
+
+  const closeFullscreen = useCallback(() => {
+    setIsFullscreenOpen(false);
+  }, []);
+
+  const toggleFullscreen = useCallback(() => {
+    setIsFullscreenOpen((prev) => !prev);
+  }, []);
+
   const handleMediaSessionPlay = useCallback(() => {
     audioContextRef.current?.resume();
     audioRef.current?.play().catch(() => setStatus("error"));
@@ -563,6 +582,11 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         isQueueOpen,
         toggleQueuePanel,
         closeQueuePanel,
+
+        isFullscreenOpen,
+        openFullscreen,
+        closeFullscreen,
+        toggleFullscreen,
       }}
     >
       {children}

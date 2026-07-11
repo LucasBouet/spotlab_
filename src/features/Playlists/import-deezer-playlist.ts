@@ -4,6 +4,20 @@ import { prisma } from "@/lib/prisma";
 
 export type ImportDestination = "playlist" | "liked";
 
+// SQLite caps the number of bound parameters per query (historically 999),
+// so lookups/inserts over the full track list must be split into batches
+// small enough to stay under that limit.
+const LOOKUP_CHUNK_SIZE = 400;
+const INSERT_CHUNK_SIZE = 70;
+
+function chunk<T>(items: T[], size: number): T[][] {
+  const result: T[][] = [];
+  for (let i = 0; i < items.length; i += size) {
+    result.push(items.slice(i, i + size));
+  }
+  return result;
+}
+
 export async function importDeezerPlaylistForUser(
   userId: string,
   link: string,
@@ -42,19 +56,20 @@ export async function importDeezerPlaylistForUser(
   }
 
   if (destination === "liked") {
-    const existing = await prisma.likedTrack.findMany({
-      where: {
-        userId,
-        deezerTrackId: { in: validTracks.map((track) => track.id) },
-      },
-      select: { deezerTrackId: true },
-    });
-    const existingIds = new Set(existing.map((track) => track.deezerTrackId));
+    const trackIds = validTracks.map((track) => track.id);
+    const existingIds = new Set<number>();
+    for (const idsChunk of chunk(trackIds, LOOKUP_CHUNK_SIZE)) {
+      const existing = await prisma.likedTrack.findMany({
+        where: { userId, deezerTrackId: { in: idsChunk } },
+        select: { deezerTrackId: true },
+      });
+      for (const track of existing) existingIds.add(track.deezerTrackId);
+    }
     const newTracks = validTracks.filter((track) => !existingIds.has(track.id));
 
-    if (newTracks.length > 0) {
+    for (const tracksChunk of chunk(newTracks, INSERT_CHUNK_SIZE)) {
       await prisma.likedTrack.createMany({
-        data: newTracks.map((track) => ({
+        data: tracksChunk.map((track) => ({
           userId,
           deezerTrackId: track.id,
           title: track.title,

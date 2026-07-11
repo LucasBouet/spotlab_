@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   DownloadIcon,
+  ExpandIcon,
   HeartIcon,
   PauseIcon,
   PlayIcon,
@@ -22,14 +23,20 @@ import {
 import { downloadTrack } from "@/features/Player/download-track";
 import { MAX_VOLUME, usePlayer } from "@/features/Player/player-context";
 
-function formatTime(totalSeconds: number) {
+export function formatTime(totalSeconds: number) {
   if (!Number.isFinite(totalSeconds) || totalSeconds < 0) return "0:00";
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = Math.floor(totalSeconds % 60);
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
-function Slider({
+// A vertical swipe steeper than this (relative to the horizontal component)
+// starting on the bar is treated as "open fullscreen" rather than a scrub of
+// the progress slider or an accidental drag.
+const SWIPE_UP_DISTANCE = 48;
+const SWIPE_UP_RATIO = 1.5;
+
+export function Slider({
   value,
   max,
   step,
@@ -94,10 +101,12 @@ export function PlayerBar() {
     queue,
     isQueueOpen,
     toggleQueuePanel,
+    openFullscreen,
   } = usePlayer();
   const previousVolumeRef = useRef(volume || 100);
   const [isLiked, setIsLiked] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
@@ -138,6 +147,27 @@ export function PlayerBar() {
     }
   }
 
+  function handleTouchStart(event: React.TouchEvent) {
+    if (!currentTrack) return;
+    const touch = event.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  }
+
+  function handleTouchEnd(event: React.TouchEvent) {
+    const start = touchStartRef.current;
+    touchStartRef.current = null;
+    if (!start || !currentTrack) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - start.x;
+    const deltaY = touch.clientY - start.y;
+    if (
+      deltaY < -SWIPE_UP_DISTANCE &&
+      Math.abs(deltaY) > Math.abs(deltaX) * SWIPE_UP_RATIO
+    ) {
+      openFullscreen();
+    }
+  }
+
   async function handleToggleLike() {
     if (!currentTrack) return;
     const nextLiked = !isLiked;
@@ -161,7 +191,14 @@ export function PlayerBar() {
   }
 
   return (
-    <div className="border-t border-border bg-surface/95 backdrop-blur">
+    <div
+      className="border-t border-border bg-surface/95 backdrop-blur"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={() => {
+        touchStartRef.current = null;
+      }}
+    >
       <div className="flex flex-col gap-2 px-4 py-3">
         <Slider
           value={Math.min(currentTime, hasDuration ? duration : 0)}
@@ -176,7 +213,7 @@ export function PlayerBar() {
         <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
           <div className="flex min-w-0 items-center gap-3">
             <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
-              {currentTrack && (
+              {currentTrack?.cover && (
                 <Image
                   src={currentTrack.cover}
                   alt=""
@@ -280,6 +317,15 @@ export function PlayerBar() {
               ) : (
                 <DownloadIcon className="h-5 w-5" />
               )}
+            </button>
+            <button
+              type="button"
+              onClick={openFullscreen}
+              disabled={!currentTrack}
+              aria-label="Plein écran"
+              className="hidden shrink-0 items-center justify-center rounded-full p-1.5 text-white/60 transition hover:text-white disabled:opacity-30 sm:flex"
+            >
+              <ExpandIcon className="h-5 w-5" />
             </button>
             <button
               type="button"

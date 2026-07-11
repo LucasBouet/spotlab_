@@ -35,13 +35,15 @@ export default function AlbumPage({
 
       <div className="flex items-center gap-4">
         <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-lg bg-surface-elevated sm:h-36 sm:w-36">
-          <Image
-            src={album.cover_medium}
-            alt=""
-            fill
-            sizes="144px"
-            className="object-cover"
-          />
+          {album.cover_medium && (
+            <Image
+              src={album.cover_medium}
+              alt=""
+              fill
+              sizes="144px"
+              className="object-cover"
+            />
+          )}
         </div>
         <div className="min-w-0">
           <p className="text-xs tracking-wide text-white/50 uppercase">

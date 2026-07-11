@@ -79,13 +79,15 @@ export function TrackList({
             className="flex items-center gap-3 py-2.5"
           >
             <div className="group relative h-11 w-11 shrink-0 overflow-hidden rounded-md bg-surface-elevated">
-              <Image
-                src={track.album.cover_medium}
-                alt=""
-                fill
-                sizes="44px"
-                className="object-cover"
-              />
+              {track.album.cover_medium && (
+                <Image
+                  src={track.album.cover_medium}
+                  alt=""
+                  fill
+                  sizes="44px"
+                  className="object-cover"
+                />
+              )}
               <TrackPlayButton
                 track={playerTrack}
                 onPlay={

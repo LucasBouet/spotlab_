@@ -160,13 +160,15 @@ export default function SearchPage({
               className="flex flex-col gap-2 rounded-lg p-2 transition hover:bg-surface-elevated"
             >
               <div className="relative aspect-square w-full overflow-hidden rounded-md">
-                <Image
-                  src={album.cover_medium}
-                  alt=""
-                  fill
-                  sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-cover"
-                />
+                {album.cover_medium && (
+                  <Image
+                    src={album.cover_medium}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 25vw, 50vw"
+                    className="object-cover"
+                  />
+                )}
               </div>
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium text-white">

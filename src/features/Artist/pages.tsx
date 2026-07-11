@@ -36,13 +36,15 @@ export default function ArtistPage({
 
       <div className="flex items-center gap-4">
         <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-full bg-surface-elevated sm:h-36 sm:w-36">
-          <Image
-            src={artist.picture_medium}
-            alt=""
-            fill
-            sizes="144px"
-            className="object-cover"
-          />
+          {artist.picture_medium && (
+            <Image
+              src={artist.picture_medium}
+              alt=""
+              fill
+              sizes="144px"
+              className="object-cover"
+            />
+          )}
         </div>
         <div className="min-w-0">
           <h1 className="truncate text-xl font-semibold text-white sm:text-2xl">

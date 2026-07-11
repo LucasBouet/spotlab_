@@ -226,6 +226,17 @@ export function DownloadIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function ExpandIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <path d="M9 3H4v5" />
+      <path d="M15 3h5v5" />
+      <path d="M4 15v5h5" />
+      <path d="M20 15v5h-5" />
+    </IconBase>
+  );
+}
+
 export function GripIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <IconBase {...props} fill="currentColor" stroke="none">

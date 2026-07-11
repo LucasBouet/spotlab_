@@ -17,6 +17,14 @@ export async function likeTrack(input: LikeTrackInput): Promise<void> {
   const user = await getCurrentUser();
   if (!user) throw new Error("Non authentifié.");
 
+  // Deezer occasionally returns delisted/withdrawn tracks (missing cover art
+  // or title) from search/album/artist endpoints. Storing one would later
+  // crash next/image when rendering it back (empty `src`), so reject it here
+  // the same way playlist imports already filter these out.
+  if (!input.title || !input.albumCover) {
+    throw new Error("Ce titre n'est pas disponible.");
+  }
+
   await prisma.likedTrack.upsert({
     where: {
       userId_deezerTrackId: {
