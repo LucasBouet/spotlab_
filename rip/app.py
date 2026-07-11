@@ -6,7 +6,9 @@ valid TOTP code, checked against TOTP_SECRET (see .env).
 """
 
 import os
+import shutil
 import subprocess
+import tempfile
 import threading
 import time
 from pathlib import Path
@@ -18,6 +20,7 @@ from flask import Flask, jsonify, request
 BASE_DIR = Path(__file__).resolve().parent
 TEMPLATE_PATH = BASE_DIR / "config.template.toml"
 CONFIG_PATH = BASE_DIR / "config.toml"
+TMP_DIR = BASE_DIR / "tmp"
 
 AUDIO_EXTENSIONS = {".mp3", ".flac", ".m4a", ".aac", ".ogg", ".opus", ".wav"}
 
@@ -84,10 +87,14 @@ def find_existing_download(folder: Path, track_id: str) -> Path | None:
     return matches[0] if matches else None
 
 
-def run_rip_download(track_id: str) -> None:
+def run_rip_download(track_id: str, folder: Path) -> None:
+    # --folder overrides the config file's downloads.folder for just this
+    # invocation, so each call can be pointed at its own private scratch
+    # directory instead of everyone writing into DOWNLOAD_FOLDER at once.
     cmd = [
         "rip",
         "--config-path", str(CONFIG_PATH),
+        "--folder", str(folder),
         "-ndb",
         "--no-progress",
         "id", "deezer", "track", track_id,
@@ -99,25 +106,15 @@ def run_rip_download(track_id: str) -> None:
         )
 
 
-def find_new_audio_file(folder: Path, before: set[str]) -> Path:
-    after = {p.name for p in folder.iterdir() if p.is_file()}
-    new_files = [
-        folder / name
-        for name in (after - before)
-        if Path(name).suffix.lower() in AUDIO_EXTENSIONS
+def find_audio_file(folder: Path) -> Path:
+    candidates = [
+        p
+        for p in folder.rglob("*")
+        if p.is_file() and p.suffix.lower() in AUDIO_EXTENSIONS
     ]
-    if not new_files:
+    if not candidates:
         raise RuntimeError("rip did not produce an audio file")
-    return max(new_files, key=lambda p: p.stat().st_mtime)
-
-
-def cleanup_extra_files(folder: Path, before: set[str], keep: str) -> None:
-    after = {p.name for p in folder.iterdir() if p.is_file()}
-    for name in (after - before) - {keep}:
-        try:
-            (folder / name).unlink()
-        except OSError:
-            pass
+    return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
 def safe_replace(src: Path, dst: Path, attempts: int = 5, delay: float = 0.3) -> None:
@@ -134,10 +131,23 @@ def safe_replace(src: Path, dst: Path, attempts: int = 5, delay: float = 0.3) ->
             time.sleep(delay)
 
 
-# Downloading and moving files in DOWNLOAD_FOLDER isn't safe to run
-# concurrently (two requests can race on the same "newest file" detection
-# and file moves), so only one /download request is processed at a time.
-download_lock = threading.Lock()
+# Each /download call now runs `rip` against its own private tmp subfolder
+# (see run_rip_download), so different tracks can download concurrently
+# without racing on shared directory state. We still serialize *same-track*
+# requests (e.g. a prefetch racing the actual playback request) so we don't
+# pay for the same download twice; each track id gets its own lock instead
+# of one lock for the whole server.
+_track_locks: dict[str, threading.Lock] = {}
+_track_locks_guard = threading.Lock()
+
+
+def get_track_lock(track_id: str) -> threading.Lock:
+    with _track_locks_guard:
+        lock = _track_locks.get(track_id)
+        if lock is None:
+            lock = threading.Lock()
+            _track_locks[track_id] = lock
+        return lock
 
 
 load_env_file(BASE_DIR / ".env")
@@ -152,6 +162,11 @@ DOWNLOAD_FOLDER = Path(FOLDER) if FOLDER else BASE_DIR / "songs"
 ensure_config_exists(CONFIG_PATH)
 sync_downloads_folder(CONFIG_PATH, DOWNLOAD_FOLDER)
 DOWNLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
+
+# Wipe any scratch dirs left behind by a previous run that got killed
+# mid-download, then start fresh.
+shutil.rmtree(TMP_DIR, ignore_errors=True)
+TMP_DIR.mkdir(parents=True, exist_ok=True)
 
 app = Flask(__name__)
 
@@ -192,7 +207,7 @@ def download_track():
     if existing:
         return jsonify(success=True, file=str(existing), already_downloaded=True)
 
-    with download_lock:
+    with get_track_lock(track_id):
         # Another request may have downloaded this exact track while we were
         # waiting for the lock (e.g. a prefetch racing the actual playback
         # request) — check again before starting a redundant download.
@@ -200,18 +215,16 @@ def download_track():
         if existing:
             return jsonify(success=True, file=str(existing), already_downloaded=True)
 
-        before = {p.name for p in DOWNLOAD_FOLDER.iterdir() if p.is_file()}
-
+        tmp_dir = Path(tempfile.mkdtemp(prefix=f"{track_id}-", dir=TMP_DIR))
         try:
-            run_rip_download(track_id)
-            new_file = find_new_audio_file(DOWNLOAD_FOLDER, before)
+            run_rip_download(track_id, tmp_dir)
+            new_file = find_audio_file(tmp_dir)
+            target = DOWNLOAD_FOLDER / f"{track_id}{new_file.suffix}"
+            safe_replace(new_file, target)
         except RuntimeError as exc:
             return jsonify(error=str(exc)), 500
-
-        cleanup_extra_files(DOWNLOAD_FOLDER, before, keep=new_file.name)
-
-        target = DOWNLOAD_FOLDER / f"{track_id}{new_file.suffix}"
-        safe_replace(new_file, target)
+        finally:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
 
     return jsonify(success=True, file=str(target), already_downloaded=False)
 
@@ -219,4 +232,8 @@ def download_track():
 if __name__ == "__main__":
     host = os.environ.get("HOST", "0.0.0.0")
     port = int(os.environ.get("PORT", 8081))
-    app.run(host=host, port=port)
+    # threaded=True lets independent requests (e.g. a fast "already
+    # downloaded" check, or downloads of two different tracks) run
+    # concurrently instead of queueing behind whichever request happened
+    # to arrive first.
+    app.run(host=host, port=port, threaded=True)
