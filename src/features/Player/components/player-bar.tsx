@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
+  DownloadIcon,
   HeartIcon,
   PauseIcon,
   PlayIcon,
@@ -18,6 +19,7 @@ import {
   likeTrack,
   unlikeTrack,
 } from "@/features/Library/actions";
+import { downloadTrack } from "@/features/Player/download-track";
 import { MAX_VOLUME, usePlayer } from "@/features/Player/player-context";
 
 function formatTime(totalSeconds: number) {
@@ -95,6 +97,7 @@ export function PlayerBar() {
   } = usePlayer();
   const previousVolumeRef = useRef(volume || 100);
   const [isLiked, setIsLiked] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
@@ -120,6 +123,18 @@ export function PlayerBar() {
       setVolume(0);
     } else {
       setVolume(previousVolumeRef.current || 100);
+    }
+  }
+
+  async function handleDownload() {
+    if (!currentTrack || isDownloading) return;
+    setIsDownloading(true);
+    try {
+      await downloadTrack(currentTrack);
+    } catch {
+      // Le téléchargement a échoué ; l'utilisateur peut réessayer.
+    } finally {
+      setIsDownloading(false);
     }
   }
 
@@ -253,6 +268,19 @@ export function PlayerBar() {
             <span className="hidden shrink-0 text-xs text-white/40 tabular-nums sm:inline">
               {formatTime(currentTime)} / {formatTime(duration)}
             </span>
+            <button
+              type="button"
+              onClick={handleDownload}
+              disabled={!currentTrack || isDownloading}
+              aria-label="Télécharger le titre"
+              className="flex shrink-0 items-center justify-center rounded-full p-1.5 text-white/80 transition hover:text-white disabled:opacity-30"
+            >
+              {isDownloading ? (
+                <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+              ) : (
+                <DownloadIcon className="h-5 w-5" />
+              )}
+            </button>
             <button
               type="button"
               onClick={toggleQueuePanel}

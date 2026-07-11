@@ -19,7 +19,7 @@ export async function AppShell({
   const admin = isAdmin(user);
 
   return (
-    <div className="flex min-h-screen w-full bg-background text-foreground">
+    <div className="flex min-h-screen w-full bg-background text-foreground md:h-screen md:overflow-hidden">
       <ResizableSidebar>
         <div className="mb-8 flex items-center gap-2 px-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white">
@@ -33,8 +33,8 @@ export async function AppShell({
         <SidebarNav isAdmin={admin} />
       </ResizableSidebar>
 
-      <div className="flex flex-1 flex-col">
-        <header className="flex items-center justify-between gap-3 border-b border-border bg-surface/60 px-4 py-3 backdrop-blur sm:px-6 sm:py-4">
+      <div className="flex flex-1 flex-col md:min-h-0">
+        <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-surface/60 px-4 py-3 backdrop-blur sm:px-6 sm:py-4">
           <div className="flex shrink-0 items-center gap-2 md:hidden">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-xs font-bold text-white">
               {siteName.charAt(0).toUpperCase()}
@@ -59,7 +59,9 @@ export async function AppShell({
           </form>
         </header>
 
-        <main className="flex flex-1 flex-col pb-40 md:pb-24">{children}</main>
+        <main className="flex flex-1 flex-col pb-40 md:min-h-0 md:overflow-y-auto md:pb-24">
+          {children}
+        </main>
       </div>
 
       <QueuePanel />

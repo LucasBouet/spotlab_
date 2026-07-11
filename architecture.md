@@ -1,14 +1,12 @@
-# File Tree: spotlab
+# File Tree: spotlab_
 
-**Generated:** 7/7/2026, 9:56:42 PM
-**Root Path:** `c:\Users\lucas\Documents\deezer-dl\spotlab`
+**Generated:** 7/11/2026, 11:23:25 AM
+**Root Path:** `/home/lucas/spotlab_`
 
 ```
 ├── .claude
 │   └── settings.local.json
 ├── docs
-│   ├── archive
-│   ├── learnings
 │   └── INDEX.md
 ├── prisma
 │   ├── migrations
@@ -109,7 +107,9 @@
 │   │   │   └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
+│   │   ├── icon.tsx
 │   │   ├── layout.tsx
+│   │   ├── manifest.ts
 │   │   └── page.tsx
 │   ├── components
 │   │   ├── app-shell.tsx
@@ -150,7 +150,9 @@
 │   │   │   │   ├── queue-panel.tsx
 │   │   │   │   ├── track-play-button.tsx
 │   │   │   │   └── track-queue-menu.tsx
-│   │   │   └── player-context.tsx
+│   │   │   ├── download-track.ts
+│   │   │   ├── player-context.tsx
+│   │   │   └── use-media-session.ts
 │   │   ├── Playlists
 │   │   │   ├── Detail
 │   │   │   │   └── pages.tsx
@@ -180,7 +182,6 @@
 │   │   ├── stream.ts
 │   │   ├── use-resizable-width.ts
 │   │   └── validation.ts
-│   ├── utils
 │   └── proxy.ts
 ├── .claudeignore
 ├── .gitignore

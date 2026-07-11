@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useCallback, useRef, useState } from "react";
 import { HeartIcon, XIcon } from "@/components/icons";
 import { TrackPlayButton } from "@/features/Player/components/track-play-button";
 import { TrackQueueMenu } from "@/features/Player/components/track-queue-menu";
@@ -27,6 +28,9 @@ export function toPlayerTrack(track: DeezerTrack): PlayerTrack {
   };
 }
 
+const INITIAL_VISIBLE = 100;
+const LOAD_STEP = 100;
+
 export function TrackList({
   tracks,
   likedTrackIds,
@@ -44,10 +48,29 @@ export function TrackList({
 }) {
   const { playContext } = usePlayer();
   const playerTracks = tracks.map(toPlayerTrack);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const sentinelRef = useCallback((node: HTMLLIElement | null) => {
+    observerRef.current?.disconnect();
+    if (!node) return;
+
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setVisibleCount((count) => count + LOAD_STEP);
+        }
+      },
+      { rootMargin: "600px" },
+    );
+    observerRef.current.observe(node);
+  }, []);
+
+  const visibleTracks = tracks.slice(0, visibleCount);
 
   return (
     <ul className="flex flex-col divide-y divide-border">
-      {tracks.map((track, index) => {
+      {visibleTracks.map((track, index) => {
         const isLiked = likedTrackIds.has(track.id);
         const playerTrack = playerTracks[index];
         return (
@@ -113,6 +136,13 @@ export function TrackList({
           </li>
         );
       })}
+      {visibleCount < tracks.length && (
+        <li ref={sentinelRef} aria-hidden className="py-4 text-center">
+          <span className="text-xs text-white/30">
+            Chargement des titres suivants...
+          </span>
+        </li>
+      )}
     </ul>
   );
 }

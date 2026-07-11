@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { AppShell } from "@/components/app-shell";
 import LibraryPage from "@/features/Library/pages";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
@@ -24,9 +23,5 @@ export default async function Page() {
       SORT_ORDER_BY.recent,
   });
 
-  return (
-    <AppShell user={user}>
-      <LibraryPage likedTracks={likedTracks} />
-    </AppShell>
-  );
+  return <LibraryPage likedTracks={likedTracks} />;
 }

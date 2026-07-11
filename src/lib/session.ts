@@ -1,5 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { cookies, headers } from "next/headers";
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 
 export const SESSION_COOKIE = "spotlab_session";
@@ -26,7 +27,7 @@ export async function createSession(userId: string) {
   });
 }
 
-export async function getSession() {
+export const getSession = cache(async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get(SESSION_COOKIE)?.value;
   if (!token) return null;
@@ -44,7 +45,7 @@ export async function getSession() {
   }
 
   return session;
-}
+});
 
 export async function getCurrentUser() {
   const session = await getSession();

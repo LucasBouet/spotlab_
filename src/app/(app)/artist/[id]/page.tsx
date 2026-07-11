@@ -1,5 +1,4 @@
 import { notFound, redirect } from "next/navigation";
-import { AppShell } from "@/components/app-shell";
 import ArtistPage from "@/features/Artist/pages";
 import type { DeezerArtistDetail, DeezerTrack } from "@/lib/deezer";
 import { fetchDeezer } from "@/lib/deezer";
@@ -28,12 +27,10 @@ export default async function Page({
   });
 
   return (
-    <AppShell user={user}>
-      <ArtistPage
-        artist={artist}
-        topTracks={topTracksPayload?.data ?? []}
-        initialLikedTrackIds={likedTracks.map((track) => track.deezerTrackId)}
-      />
-    </AppShell>
+    <ArtistPage
+      artist={artist}
+      topTracks={topTracksPayload?.data ?? []}
+      initialLikedTrackIds={likedTracks.map((track) => track.deezerTrackId)}
+    />
   );
 }

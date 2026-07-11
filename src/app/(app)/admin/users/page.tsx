@@ -1,4 +1,3 @@
-import { AppShell } from "@/components/app-shell";
 import AdminUsersPage from "@/features/Admin/Users/pages";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/rbac";
@@ -11,9 +10,5 @@ export default async function Page() {
     orderBy: { createdAt: "asc" },
   });
 
-  return (
-    <AppShell user={user}>
-      <AdminUsersPage users={users} currentUserId={user.id} />
-    </AppShell>
-  );
+  return <AdminUsersPage users={users} currentUserId={user.id} />;
 }

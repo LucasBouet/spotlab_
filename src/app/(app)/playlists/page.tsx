@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { AppShell } from "@/components/app-shell";
 import PlaylistsPage from "@/features/Playlists/List/pages";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
@@ -22,15 +21,13 @@ export default async function Page() {
   });
 
   return (
-    <AppShell user={user}>
-      <PlaylistsPage
-        playlists={playlists.map((playlist) => ({
-          id: playlist.id,
-          name: playlist.name,
-          trackCount: playlist._count.tracks,
-          covers: playlist.tracks.map((track) => track.albumCover),
-        }))}
-      />
-    </AppShell>
+    <PlaylistsPage
+      playlists={playlists.map((playlist) => ({
+        id: playlist.id,
+        name: playlist.name,
+        trackCount: playlist._count.tracks,
+        covers: playlist.tracks.map((track) => track.albumCover),
+      }))}
+    />
   );
 }

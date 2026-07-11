@@ -1,4 +1,5 @@
 import type { UserSettingKey } from "@/config/settings";
+import { ImportPlaylistForm } from "@/features/Settings/components/import-playlist-form";
 import { PasswordForm } from "@/features/Settings/components/password-form";
 import { PreferencesForm } from "@/features/Settings/components/preferences-form";
 import { ProfileForm } from "@/features/Settings/components/profile-form";
@@ -18,6 +19,7 @@ export default function SettingsPage({
 
       <ProfileForm name={name} email={email} />
       <PreferencesForm settings={userSettings} />
+      <ImportPlaylistForm />
       <PasswordForm />
     </div>
   );

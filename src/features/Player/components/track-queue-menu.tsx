@@ -2,12 +2,26 @@
 
 import { useEffect, useRef, useState } from "react";
 import { DotsIcon } from "@/components/icons";
+import { downloadTrack } from "@/features/Player/download-track";
 import { type PlayerTrack, usePlayer } from "@/features/Player/player-context";
 
 export function TrackQueueMenu({ track }: { track: PlayerTrack }) {
   const { queuePlayNext, queueAddToEnd } = usePlayer();
   const [isOpen, setIsOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  async function handleDownload() {
+    if (isDownloading) return;
+    setIsDownloading(true);
+    try {
+      await downloadTrack(track);
+    } catch {
+      // Le téléchargement a échoué ; l'utilisateur peut réessayer.
+    } finally {
+      setIsDownloading(false);
+    }
+  }
 
   useEffect(() => {
     if (!isOpen) return;
@@ -57,6 +71,17 @@ export function TrackQueueMenu({ track }: { track: PlayerTrack }) {
             className="w-full rounded-md px-3 py-2 text-left text-sm text-white transition hover:bg-surface"
           >
             Ajouter à la file d'attente
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              handleDownload();
+              setIsOpen(false);
+            }}
+            disabled={isDownloading}
+            className="w-full rounded-md px-3 py-2 text-left text-sm text-white transition hover:bg-surface disabled:opacity-50"
+          >
+            {isDownloading ? "Téléchargement…" : "Télécharger"}
           </button>
         </div>
       )}
