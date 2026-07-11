@@ -24,6 +24,7 @@ model User {
   likedTracks  LikedTrack[]
   settings     UserSetting[]
   playlists    Playlist[]
+  devices      Device[]
 }
 
 model Session {
@@ -87,4 +88,17 @@ model UserSetting {
   updatedAt DateTime @updatedAt
 
   @@unique([userId, key])
+}
+
+model Device {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deviceId   String
+  name       String
+  platform   String
+  lastSeenAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, deviceId])
 }

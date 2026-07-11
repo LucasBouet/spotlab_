@@ -1,6 +1,6 @@
 # File Tree: spotlab_
 
-**Generated:** 7/11/2026, 3:51:31 PM
+**Generated:** 7/11/2026, 5:27:09 PM
 **Root Path:** `/home/lucas/spotlab_`
 
 ```
@@ -19,6 +19,8 @@
 │   │   ├── 20260705182706_add_roles_and_settings
 │   │   │   └── migration.sql
 │   │   ├── 20260706161543_add_playlists
+│   │   │   └── migration.sql
+│   │   ├── 20260711144346_add_devices
 │   │   │   └── migration.sql
 │   │   └── migration_lock.toml
 │   ├── prisma_db
@@ -96,6 +98,14 @@
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
 │   │   ├── api
+│   │   │   ├── devices
+│   │   │   │   ├── [deviceId]
+│   │   │   │   │   └── route.ts
+│   │   │   │   ├── register
+│   │   │   │   │   └── route.ts
+│   │   │   │   └── route.ts
+│   │   │   ├── lyrics
+│   │   │   │   └── route.ts
 │   │   │   ├── playlists
 │   │   │   │   └── import
 │   │   │   │       └── route.ts
@@ -104,8 +114,13 @@
 │   │   │   │       └── route.ts
 │   │   │   ├── search
 │   │   │   │   └── route.ts
-│   │   │   └── stream
-│   │   │       └── [id]
+│   │   │   ├── stream
+│   │   │   │   └── [id]
+│   │   │   │       └── route.ts
+│   │   │   └── sync
+│   │   │       ├── command
+│   │   │       │   └── route.ts
+│   │   │       └── stream
 │   │   │           └── route.ts
 │   │   ├── login
 │   │   │   └── page.tsx
@@ -151,6 +166,8 @@
 │   │   ├── Player
 │   │   │   ├── components
 │   │   │   │   ├── context-play-controls.tsx
+│   │   │   │   ├── devices-panel.tsx
+│   │   │   │   ├── lyrics-view.tsx
 │   │   │   │   ├── now-playing.tsx
 │   │   │   │   ├── player-bar.tsx
 │   │   │   │   ├── queue-panel.tsx
@@ -158,7 +175,11 @@
 │   │   │   │   └── track-queue-menu.tsx
 │   │   │   ├── download-track.ts
 │   │   │   ├── player-context.tsx
-│   │   │   └── use-media-session.ts
+│   │   │   ├── queue-reducer.ts
+│   │   │   ├── use-device-id.ts
+│   │   │   ├── use-lyrics.ts
+│   │   │   ├── use-media-session.ts
+│   │   │   └── use-playback-sync.ts
 │   │   ├── Playlists
 │   │   │   ├── Detail
 │   │   │   │   └── pages.tsx
@@ -182,17 +203,23 @@
 │   │       └── use-like-toggle.ts
 │   ├── lib
 │   │   ├── deezer.ts
+│   │   ├── device-label.ts
+│   │   ├── lrc.ts
 │   │   ├── password.ts
+│   │   ├── playback-position.ts
+│   │   ├── playback-sync.ts
 │   │   ├── prisma.ts
 │   │   ├── rbac.ts
 │   │   ├── session.ts
 │   │   ├── settings.ts
 │   │   ├── stream.ts
+│   │   ├── sync-types.ts
 │   │   ├── use-resizable-width.ts
 │   │   └── validation.ts
 │   └── proxy.ts
 ├── .claudeignore
 ├── .gitignore
+├── CLAUDE.md
 ├── README.md
 ├── architecture.md
 ├── biome.json

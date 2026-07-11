@@ -248,6 +248,17 @@ export function MicIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function DevicesIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <rect x="6" y="2" width="12" height="20" rx="2" />
+      <circle cx="12" cy="7.5" r="1.4" />
+      <circle cx="12" cy="15" r="4" />
+      <circle cx="12" cy="15" r="1" fill="currentColor" stroke="none" />
+    </IconBase>
+  );
+}
+
 export function GripIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <IconBase {...props} fill="currentColor" stroke="none">

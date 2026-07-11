@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { MobileNav, SidebarNav } from "@/components/nav-items";
 import { ResizableSidebar } from "@/components/resizable-sidebar";
 import { signOut } from "@/features/Auth/actions";
+import { DevicesPanel } from "@/features/Player/components/devices-panel";
 import { NowPlayingView } from "@/features/Player/components/now-playing";
 import { PlayerBar } from "@/features/Player/components/player-bar";
 import { QueuePanel } from "@/features/Player/components/queue-panel";
@@ -71,6 +72,7 @@ export async function AppShell({
       </div>
 
       <QueuePanel />
+      <DevicesPanel />
       <NowPlayingView />
     </div>
   );

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
+  DevicesIcon,
   DownloadIcon,
   ExpandIcon,
   HeartIcon,
@@ -105,6 +106,8 @@ export function PlayerBar() {
     openFullscreen,
     isLyricsOpen,
     openLyrics,
+    isDevicesOpen,
+    toggleDevicesPanel,
   } = usePlayer();
   const previousVolumeRef = useRef(volume || 100);
   const [isLiked, setIsLiked] = useState(false);
@@ -339,6 +342,15 @@ export function PlayerBar() {
               className="hidden shrink-0 items-center justify-center rounded-full p-1.5 text-white/60 transition hover:text-white disabled:opacity-30 sm:flex"
             >
               <ExpandIcon className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={toggleDevicesPanel}
+              aria-pressed={isDevicesOpen}
+              aria-label="Appareils"
+              className={`flex shrink-0 items-center justify-center rounded-full p-1.5 transition ${isDevicesOpen ? "bg-brand/20 text-brand" : "text-white/60 hover:text-white"}`}
+            >
+              <DevicesIcon className="h-5 w-5" />
             </button>
             <button
               type="button"

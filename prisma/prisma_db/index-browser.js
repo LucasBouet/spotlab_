@@ -180,6 +180,16 @@ exports.Prisma.UserSettingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DeviceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  deviceId: 'deviceId',
+  name: 'name',
+  platform: 'platform',
+  lastSeenAt: 'lastSeenAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -201,7 +211,8 @@ exports.Prisma.ModelName = {
   Playlist: 'Playlist',
   PlaylistTrack: 'PlaylistTrack',
   AppSetting: 'AppSetting',
-  UserSetting: 'UserSetting'
+  UserSetting: 'UserSetting',
+  Device: 'Device'
 };
 
 /**

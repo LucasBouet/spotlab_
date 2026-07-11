@@ -1,6 +1,5 @@
 "use client";
 
-import { arrayMove } from "@dnd-kit/sortable";
 import {
   createContext,
   type ReactNode,
@@ -11,18 +10,30 @@ import {
   useRef,
   useState,
 } from "react";
+import {
+  initialQueueState,
+  makeQueueItem,
+  type PlayerTrack,
+  type QueueAction,
+  type QueueItem,
+  type QueueState,
+  queueReducer,
+} from "@/features/Player/queue-reducer";
+import { useDeviceId } from "@/features/Player/use-device-id";
 import { useMediaSession } from "@/features/Player/use-media-session";
+import { usePlaybackSync } from "@/features/Player/use-playback-sync";
+import { detectDeviceLabel } from "@/lib/device-label";
+import { extrapolatePosition } from "@/lib/playback-position";
+import type { CanonicalPlaybackStateDTO, DeviceDTO } from "@/lib/sync-types";
 
-export type PlayerTrack = {
-  id: number;
-  title: string;
-  artist: string;
-  album: string;
-  cover: string;
-  duration: number;
-};
+// Position drift beyond this is corrected with a hard snap rather than left
+// to catch up naturally — multi-device simultaneous audio is explicitly
+// best-effort, not sample-accurate, so this is the tolerance band, not a
+// precision guarantee.
+const DRIFT_TOLERANCE_SECONDS = 1.5;
+const POSITION_TICK_MS = 250;
 
-export type QueueItem = PlayerTrack & { uid: string; isManual: boolean };
+export type { PlayerTrack, QueueItem };
 
 export type PlayerStatus = "idle" | "loading" | "playing" | "paused" | "error";
 
@@ -44,163 +55,20 @@ function volumeToGain(volume: number): number {
   return (volume / 100) ** 2;
 }
 
-let uidCounter = 0;
+// Wraps the shared queueReducer with one client-only case for applying a
+// server-authoritative snapshot wholesale — kept out of queue-reducer.ts so
+// that file's QueueAction stays exactly the set the server also accepts as a
+// wire command (REPLACE_STATE is a local concept, never sent to the server).
+type ClientQueueAction =
+  | QueueAction
+  | { type: "REPLACE_STATE"; state: QueueState };
 
-function generateUid(): string {
-  if (
-    typeof crypto !== "undefined" &&
-    typeof crypto.randomUUID === "function"
-  ) {
-    return crypto.randomUUID();
-  }
-  uidCounter += 1;
-  return `${Date.now().toString(36)}-${uidCounter}-${Math.random().toString(36).slice(2)}`;
-}
-
-function makeQueueItem(track: PlayerTrack, isManual = false): QueueItem {
-  return { ...track, uid: generateUid(), isManual };
-}
-
-function shuffleArray<T>(items: T[]): T[] {
-  const result = [...items];
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
-}
-
-type QueueState = {
-  current: QueueItem | null;
-  queue: QueueItem[];
-  history: QueueItem[];
-  contextTracks: QueueItem[];
-  activeContextId: string | null;
-  shuffle: boolean;
-};
-
-const initialQueueState: QueueState = {
-  current: null,
-  queue: [],
-  history: [],
-  contextTracks: [],
-  activeContextId: null,
-  shuffle: false,
-};
-
-type QueueAction =
-  | { type: "PLAY_TRACK"; item: QueueItem }
-  | {
-      type: "PLAY_CONTEXT";
-      contextId: string;
-      items: QueueItem[];
-      startIndex: number;
-      shuffleOverride?: boolean;
-    }
-  | { type: "SKIP_NEXT" }
-  | { type: "SKIP_PREVIOUS" }
-  | { type: "TOGGLE_SHUFFLE" }
-  | { type: "PLAY_FROM_QUEUE"; uid: string }
-  | { type: "QUEUE_PLAY_NEXT"; item: QueueItem }
-  | { type: "QUEUE_ADD_TO_END"; item: QueueItem }
-  | { type: "REMOVE_FROM_QUEUE"; uid: string }
-  | { type: "REORDER_QUEUE"; fromIndex: number; toIndex: number };
-
-function queueReducer(state: QueueState, action: QueueAction): QueueState {
-  switch (action.type) {
-    case "PLAY_TRACK": {
-      return {
-        ...state,
-        current: action.item,
-        queue: [],
-        history: [],
-        contextTracks: [],
-        activeContextId: null,
-      };
-    }
-    case "PLAY_CONTEXT": {
-      const { items, startIndex, contextId, shuffleOverride } = action;
-      const before = items.slice(0, startIndex);
-      let after = items.slice(startIndex + 1);
-      const nextShuffle = shuffleOverride ?? state.shuffle;
-      if (nextShuffle) after = shuffleArray(after);
-      return {
-        current: items[startIndex],
-        queue: after,
-        history: before,
-        contextTracks: items,
-        activeContextId: contextId,
-        shuffle: nextShuffle,
-      };
-    }
-    case "SKIP_NEXT": {
-      if (state.queue.length === 0) return state;
-      const [next, ...rest] = state.queue;
-      return {
-        ...state,
-        current: next,
-        queue: rest,
-        history: state.current
-          ? [...state.history, state.current]
-          : state.history,
-      };
-    }
-    case "SKIP_PREVIOUS": {
-      if (state.history.length === 0) return state;
-      const prev = state.history[state.history.length - 1];
-      return {
-        ...state,
-        current: prev,
-        history: state.history.slice(0, -1),
-        queue: state.current ? [state.current, ...state.queue] : state.queue,
-      };
-    }
-    case "TOGGLE_SHUFFLE": {
-      const nextShuffle = !state.shuffle;
-      const manual = state.queue.filter((item) => item.isManual);
-      if (nextShuffle) {
-        const rest = state.queue.filter((item) => !item.isManual);
-        return {
-          ...state,
-          shuffle: true,
-          queue: [...manual, ...shuffleArray(rest)],
-        };
-      }
-      const playedUids = new Set(state.history.map((item) => item.uid));
-      if (state.current) playedUids.add(state.current.uid);
-      const remaining = state.contextTracks.filter(
-        (item) => !playedUids.has(item.uid),
-      );
-      return { ...state, shuffle: false, queue: [...manual, ...remaining] };
-    }
-    case "PLAY_FROM_QUEUE": {
-      const index = state.queue.findIndex((item) => item.uid === action.uid);
-      if (index === -1) return state;
-      const target = state.queue[index];
-      const skipped = state.queue.slice(0, index);
-      const rest = state.queue.slice(index + 1);
-      const played = state.current
-        ? [...state.history, state.current, ...skipped]
-        : [...state.history, ...skipped];
-      return { ...state, current: target, queue: rest, history: played };
-    }
-    case "QUEUE_PLAY_NEXT":
-      return { ...state, queue: [action.item, ...state.queue] };
-    case "QUEUE_ADD_TO_END":
-      return { ...state, queue: [...state.queue, action.item] };
-    case "REMOVE_FROM_QUEUE":
-      return {
-        ...state,
-        queue: state.queue.filter((item) => item.uid !== action.uid),
-      };
-    case "REORDER_QUEUE":
-      return {
-        ...state,
-        queue: arrayMove(state.queue, action.fromIndex, action.toIndex),
-      };
-    default:
-      return state;
-  }
+function clientQueueReducer(
+  state: QueueState,
+  action: ClientQueueAction,
+): QueueState {
+  if (action.type === "REPLACE_STATE") return action.state;
+  return queueReducer(state, action);
 }
 
 type PlayContextOptions = { shuffle?: boolean };
@@ -246,6 +114,15 @@ type PlayerContextValue = {
   isLyricsOpen: boolean;
   openLyrics: () => void;
   toggleLyrics: () => void;
+
+  deviceId: string;
+  isDevicesOpen: boolean;
+  toggleDevicesPanel: () => void;
+  closeDevicesPanel: () => void;
+  devices: DeviceDTO[];
+  activeDeviceIds: string[];
+  isActiveOutput: boolean;
+  setActiveDevices: (deviceIds: string[]) => void;
 };
 
 const PlayerContext = createContext<PlayerContextValue | null>(null);
@@ -271,9 +148,80 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [isQueueOpen, setIsQueueOpen] = useState(false);
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const [isLyricsOpen, setIsLyricsOpen] = useState(false);
+  const [isDevicesOpen, setIsDevicesOpen] = useState(false);
+  const deviceId = useDeviceId();
 
-  const [queueState, dispatch] = useReducer(queueReducer, initialQueueState);
+  const [queueState, dispatch] = useReducer(
+    clientQueueReducer,
+    initialQueueState,
+  );
   const { current, queue, history, activeContextId, shuffle } = queueState;
+
+  // Revision starts at -1 (not 0) so the very first snapshot — whose
+  // revision is 0 when nothing has ever played on this account — is not
+  // mistaken for a stale/duplicate broadcast and dropped by the `<=` gate
+  // below.
+  const revisionRef = useRef(-1);
+  const [syncedIsPlaying, setSyncedIsPlaying] = useState(false);
+  const [activeDeviceIds, setActiveDeviceIdsState] = useState<string[]>([]);
+  const isActiveOutput = deviceId !== "" && activeDeviceIds.includes(deviceId);
+  // The (positionSeconds, atMs) anchor extrapolatePosition() extrapolates
+  // from — refreshed by every broadcast (and optimistically, by this
+  // device's own transport actions below) so both the drift-correction check
+  // and the non-active-device position ticker always read a fresh anchor.
+  const positionAnchorRef = useRef({ positionSeconds: 0, atMs: Date.now() });
+
+  const applyRemoteState = useCallback(
+    (dto: CanonicalPlaybackStateDTO) => {
+      if (dto.revision <= revisionRef.current) return;
+      revisionRef.current = dto.revision;
+      dispatch({
+        type: "REPLACE_STATE",
+        state: {
+          current: dto.current,
+          queue: dto.queue,
+          history: dto.history,
+          contextTracks: dto.contextTracks,
+          activeContextId: dto.activeContextId,
+          shuffle: dto.shuffle,
+        },
+      });
+      setSyncedIsPlaying(dto.isPlaying);
+      setActiveDeviceIdsState(dto.activeDeviceIds);
+      positionAnchorRef.current = {
+        positionSeconds: dto.positionSeconds,
+        atMs: Date.parse(dto.positionUpdatedAt),
+      };
+
+      // Best-effort drift correction, only meaningful once this device is
+      // actually the one making sound.
+      const audio = audioRef.current;
+      if (audio && dto.current && dto.activeDeviceIds.includes(deviceId)) {
+        const target = extrapolatePosition({
+          positionSeconds: dto.positionSeconds,
+          positionUpdatedAtMs: Date.parse(dto.positionUpdatedAt),
+          isPlaying: dto.isPlaying,
+          durationSeconds: dto.current.duration,
+        });
+        if (Math.abs(audio.currentTime - target) > DRIFT_TOLERANCE_SECONDS) {
+          audio.currentTime = target;
+        }
+      }
+    },
+    [deviceId],
+  );
+
+  const { postCommand, devices } = usePlaybackSync({
+    deviceId,
+    onState: applyRemoteState,
+  });
+
+  const setActiveDevices = useCallback(
+    (deviceIds: string[]) => {
+      postCommand({ type: "SET_ACTIVE_DEVICES", deviceIds });
+    },
+    [postCommand],
+  );
 
   const currentTimeRef = useRef(0);
   useEffect(() => {
@@ -311,14 +259,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Loads and plays whenever the identity of the current queue item changes
-  // (a genuine track change) — but not for restarts/pause-toggles on the same
-  // track, since those mutate the audio element directly without dispatching.
+  // while this device is an active output — but not for restarts/pause
+  // toggles on the same track, since those mutate the audio element directly
+  // without dispatching. The same effect also handles a device newly
+  // *becoming* an active output mid-session (current.uid unchanged from the
+  // broadcast's perspective, but never loaded locally before): it seeks to
+  // the extrapolated position instead of always starting at 0, so joining a
+  // song already in progress doesn't restart it for everyone.
   const loadedUidRef = useRef<string | null>(null);
   useEffect(() => {
-    if (!current) {
-      loadedUidRef.current = null;
-      return;
-    }
+    if (!current || !isActiveOutput) return;
     if (current.uid === loadedUidRef.current) return;
     loadedUidRef.current = current.uid;
 
@@ -326,11 +276,67 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     if (!audio) return;
     audioContextRef.current?.resume();
     setStatus("loading");
-    setCurrentTime(0);
+    const startPosition = extrapolatePosition({
+      positionSeconds: positionAnchorRef.current.positionSeconds,
+      positionUpdatedAtMs: positionAnchorRef.current.atMs,
+      isPlaying: syncedIsPlaying,
+      durationSeconds: current.duration,
+    });
+    setCurrentTime(startPosition);
     setDuration(0);
     audio.src = `/api/stream/${current.id}`;
-    audio.play().catch(() => setStatus("error"));
-  }, [current]);
+    audio.currentTime = startPosition;
+    if (syncedIsPlaying) {
+      audio.play().catch(() => setStatus("error"));
+    } else {
+      setStatus("paused");
+    }
+  }, [current, isActiveOutput, syncedIsPlaying]);
+
+  // Tears down local audio when this device stops being an active output
+  // (and resets loadedUidRef so a later reactivation for the same track
+  // reloads and re-seeks rather than being treated as already-loaded).
+  const wasActiveOutputRef = useRef(false);
+  useEffect(() => {
+    if (isActiveOutput) {
+      wasActiveOutputRef.current = true;
+      return;
+    }
+    if (!wasActiveOutputRef.current) return;
+    wasActiveOutputRef.current = false;
+    loadedUidRef.current = null;
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
+  }, [isActiveOutput]);
+
+  // Non-active devices have no real audio element driving status/duration/
+  // currentTime, so those are derived from the synced state instead —
+  // status/duration once per change, currentTime on a light ticker.
+  useEffect(() => {
+    if (isActiveOutput) return;
+    setStatus(!current ? "idle" : syncedIsPlaying ? "playing" : "paused");
+    setDuration(current?.duration ?? 0);
+  }, [isActiveOutput, current, syncedIsPlaying]);
+
+  useEffect(() => {
+    if (isActiveOutput || !current) return;
+    const tick = () => {
+      setCurrentTime(
+        extrapolatePosition({
+          positionSeconds: positionAnchorRef.current.positionSeconds,
+          positionUpdatedAtMs: positionAnchorRef.current.atMs,
+          isPlaying: syncedIsPlaying,
+          durationSeconds: current.duration,
+        }),
+      );
+    };
+    tick();
+    const interval = setInterval(tick, POSITION_TICK_MS);
+    return () => clearInterval(interval);
+  }, [isActiveOutput, current, syncedIsPlaying]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -344,9 +350,11 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     const handleEnded = () => {
       if (queueRef.current.length > 0) {
         dispatch({ type: "SKIP_NEXT" });
+        postCommand({ type: "SKIP_NEXT" });
       } else {
         setStatus("paused");
         setCurrentTime(0);
+        postCommand({ type: "SET_PLAYING", isPlaying: false });
       }
     };
     const handleError = () => setStatus("error");
@@ -368,7 +376,25 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("error", handleError);
     };
-  }, []);
+  }, [postCommand]);
+
+  // Reconciles this device's audio element with a play/pause state that
+  // arrived from another device. A no-op on the device that originated the
+  // change (it already toggled audio.play()/pause() directly, below, before
+  // the broadcast round-trips back), on a track-change broadcast (the
+  // audio-loading effect above already starts/stops playback for those), and
+  // on a non-active device (no audio element to reconcile).
+  useEffect(() => {
+    if (!isActiveOutput) return;
+    const audio = audioRef.current;
+    if (!audio || !current) return;
+    if (syncedIsPlaying && audio.paused) {
+      audioContextRef.current?.resume();
+      audio.play().catch(() => setStatus("error"));
+    } else if (!syncedIsPlaying && !audio.paused) {
+      audio.pause();
+    }
+  }, [syncedIsPlaying, current, isActiveOutput]);
 
   const playTrack = useCallback(
     (track: PlayerTrack) => {
@@ -376,18 +402,32 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       if (!audio) return;
 
       if (current?.id === track.id && status !== "error") {
-        audioContextRef.current?.resume();
-        if (audio.paused) {
-          audio.play().catch(() => setStatus("error"));
+        if (isActiveOutput) {
+          audioContextRef.current?.resume();
+          if (audio.paused) {
+            audio.play().catch(() => setStatus("error"));
+          } else {
+            audio.pause();
+          }
+          postCommand({ type: "TOGGLE_PLAY" });
         } else {
-          audio.pause();
+          postCommand({ type: "SET_PLAYING", isPlaying: !syncedIsPlaying });
         }
         return;
       }
 
-      dispatch({ type: "PLAY_TRACK", item: makeQueueItem(track) });
+      // A fresh session (nothing was playing anywhere) defaults to this
+      // device as the sole output — mirrors the server's own auto-claim so
+      // the audio-loading effect doesn't wait on a round trip to start
+      // playing locally.
+      if (!current) setActiveDeviceIdsState([deviceId]);
+      positionAnchorRef.current = { positionSeconds: 0, atMs: Date.now() };
+      setSyncedIsPlaying(true);
+      const item = makeQueueItem(track);
+      dispatch({ type: "PLAY_TRACK", item });
+      postCommand({ type: "PLAY_TRACK", item });
     },
-    [current, status],
+    [current, status, postCommand, deviceId, isActiveOutput, syncedIsPlaying],
   );
 
   const playContext = useCallback(
@@ -400,77 +440,135 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       if (tracks.length === 0) return;
       const clampedIndex = Math.min(Math.max(startIndex, 0), tracks.length - 1);
       const items = tracks.map((track) => makeQueueItem(track));
-      dispatch({
-        type: "PLAY_CONTEXT",
+      const action = {
+        type: "PLAY_CONTEXT" as const,
         contextId,
         items,
         startIndex: clampedIndex,
         shuffleOverride: options?.shuffle,
-      });
+      };
+      if (!current) setActiveDeviceIdsState([deviceId]);
+      positionAnchorRef.current = { positionSeconds: 0, atMs: Date.now() };
+      setSyncedIsPlaying(true);
+      dispatch(action);
+      postCommand(action);
     },
-    [],
+    [postCommand, current, deviceId],
   );
 
   const toggleShuffle = useCallback(() => {
     dispatch({ type: "TOGGLE_SHUFFLE" });
-  }, []);
+    postCommand({ type: "TOGGLE_SHUFFLE" });
+  }, [postCommand]);
 
   const skipNext = useCallback(() => {
+    positionAnchorRef.current = { positionSeconds: 0, atMs: Date.now() };
+    setSyncedIsPlaying(true);
     dispatch({ type: "SKIP_NEXT" });
-  }, []);
+    postCommand({ type: "SKIP_NEXT" });
+  }, [postCommand]);
 
   const skipPrevious = useCallback(() => {
     if (
       currentTimeRef.current > RESTART_THRESHOLD_SECONDS ||
       history.length === 0
     ) {
-      const audio = audioRef.current;
-      if (!audio) return;
-      audio.currentTime = 0;
+      if (isActiveOutput) {
+        const audio = audioRef.current;
+        if (audio) {
+          audio.currentTime = 0;
+          if (audio.paused) audio.play().catch(() => setStatus("error"));
+        }
+      }
       setCurrentTime(0);
-      if (audio.paused) audio.play().catch(() => setStatus("error"));
+      positionAnchorRef.current = { positionSeconds: 0, atMs: Date.now() };
+      setSyncedIsPlaying(true);
+      postCommand({ type: "SEEK", positionSeconds: 0 });
+      postCommand({ type: "SET_PLAYING", isPlaying: true });
       return;
     }
+    positionAnchorRef.current = { positionSeconds: 0, atMs: Date.now() };
+    setSyncedIsPlaying(true);
     dispatch({ type: "SKIP_PREVIOUS" });
-  }, [history.length]);
+    postCommand({ type: "SKIP_PREVIOUS" });
+  }, [history.length, postCommand, isActiveOutput]);
 
-  const playFromQueue = useCallback((uid: string) => {
-    dispatch({ type: "PLAY_FROM_QUEUE", uid });
-  }, []);
+  const playFromQueue = useCallback(
+    (uid: string) => {
+      positionAnchorRef.current = { positionSeconds: 0, atMs: Date.now() };
+      setSyncedIsPlaying(true);
+      dispatch({ type: "PLAY_FROM_QUEUE", uid });
+      postCommand({ type: "PLAY_FROM_QUEUE", uid });
+    },
+    [postCommand],
+  );
 
-  const queuePlayNext = useCallback((track: PlayerTrack) => {
-    dispatch({ type: "QUEUE_PLAY_NEXT", item: makeQueueItem(track, true) });
-  }, []);
+  const queuePlayNext = useCallback(
+    (track: PlayerTrack) => {
+      const item = makeQueueItem(track, true);
+      dispatch({ type: "QUEUE_PLAY_NEXT", item });
+      postCommand({ type: "QUEUE_PLAY_NEXT", item });
+    },
+    [postCommand],
+  );
 
-  const queueAddToEnd = useCallback((track: PlayerTrack) => {
-    dispatch({ type: "QUEUE_ADD_TO_END", item: makeQueueItem(track, true) });
-  }, []);
+  const queueAddToEnd = useCallback(
+    (track: PlayerTrack) => {
+      const item = makeQueueItem(track, true);
+      dispatch({ type: "QUEUE_ADD_TO_END", item });
+      postCommand({ type: "QUEUE_ADD_TO_END", item });
+    },
+    [postCommand],
+  );
 
-  const removeFromQueue = useCallback((uid: string) => {
-    dispatch({ type: "REMOVE_FROM_QUEUE", uid });
-  }, []);
+  const removeFromQueue = useCallback(
+    (uid: string) => {
+      dispatch({ type: "REMOVE_FROM_QUEUE", uid });
+      postCommand({ type: "REMOVE_FROM_QUEUE", uid });
+    },
+    [postCommand],
+  );
 
-  const reorderQueue = useCallback((fromIndex: number, toIndex: number) => {
-    dispatch({ type: "REORDER_QUEUE", fromIndex, toIndex });
-  }, []);
+  const reorderQueue = useCallback(
+    (fromIndex: number, toIndex: number) => {
+      dispatch({ type: "REORDER_QUEUE", fromIndex, toIndex });
+      postCommand({ type: "REORDER_QUEUE", fromIndex, toIndex });
+    },
+    [postCommand],
+  );
 
   const togglePlay = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio || !current) return;
-    audioContextRef.current?.resume();
-    if (audio.paused) {
-      audio.play().catch(() => setStatus("error"));
+    if (!current) return;
+    if (isActiveOutput) {
+      const audio = audioRef.current;
+      if (audio) {
+        audioContextRef.current?.resume();
+        if (audio.paused) {
+          audio.play().catch(() => setStatus("error"));
+        } else {
+          audio.pause();
+        }
+      }
+      postCommand({ type: "TOGGLE_PLAY" });
     } else {
-      audio.pause();
+      // No local audio state to toggle against on a remote-control-only
+      // device — flip the explicit synced state instead.
+      postCommand({ type: "SET_PLAYING", isPlaying: !syncedIsPlaying });
     }
-  }, [current]);
+  }, [current, isActiveOutput, postCommand, syncedIsPlaying]);
 
-  const seek = useCallback((time: number) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.currentTime = time;
-    setCurrentTime(time);
-  }, []);
+  const seek = useCallback(
+    (time: number) => {
+      if (isActiveOutput) {
+        const audio = audioRef.current;
+        if (audio) audio.currentTime = time;
+      }
+      setCurrentTime(time);
+      positionAnchorRef.current = { positionSeconds: time, atMs: Date.now() };
+      postCommand({ type: "SEEK", positionSeconds: time });
+    },
+    [isActiveOutput, postCommand],
+  );
 
   const setVolume = useCallback((next: number) => {
     const clamped = Math.max(0, Math.min(MAX_VOLUME, Math.round(next)));
@@ -512,14 +610,45 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setIsLyricsOpen((prev) => !prev);
   }, []);
 
-  const handleMediaSessionPlay = useCallback(() => {
-    audioContextRef.current?.resume();
-    audioRef.current?.play().catch(() => setStatus("error"));
+  const toggleDevicesPanel = useCallback(() => {
+    setIsDevicesOpen((prev) => !prev);
   }, []);
 
-  const handleMediaSessionPause = useCallback(() => {
-    audioRef.current?.pause();
+  const closeDevicesPanel = useCallback(() => {
+    setIsDevicesOpen(false);
   }, []);
+
+  // Registers this browser as a device on the account so it shows up in the
+  // "Appareils" panel. PlayerProvider mounts above the auth gate (root
+  // layout), so this silently no-ops with a 401 when nobody is logged in yet.
+  useEffect(() => {
+    if (!deviceId) return;
+    const { name, platform } = detectDeviceLabel(navigator.userAgent);
+    fetch("/api/devices/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ deviceId, name, platform }),
+    }).catch(() => {});
+  }, [deviceId]);
+
+  // The OS play/pause handlers are inherently target-based (not toggles), so
+  // SET_PLAYING with an explicit value is used regardless of active-output
+  // status — local audio is only touched when this device actually outputs
+  // sound.
+  const handleMediaSessionPlay = useCallback(() => {
+    if (isActiveOutput) {
+      audioContextRef.current?.resume();
+      audioRef.current?.play().catch(() => setStatus("error"));
+    }
+    postCommand({ type: "SET_PLAYING", isPlaying: true });
+  }, [isActiveOutput, postCommand]);
+
+  const handleMediaSessionPause = useCallback(() => {
+    if (isActiveOutput) {
+      audioRef.current?.pause();
+    }
+    postCommand({ type: "SET_PLAYING", isPlaying: false });
+  }, [isActiveOutput, postCommand]);
 
   useMediaSession({
     track: current,
@@ -536,13 +665,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   const prefetchedIdsRef = useRef<Set<number>>(new Set());
   useEffect(() => {
+    // Only worth prefetching on a device that will actually stream the
+    // audio itself.
+    if (!isActiveOutput) return;
     const upcoming = queue.slice(0, PREFETCH_COUNT);
     for (const item of upcoming) {
       if (prefetchedIdsRef.current.has(item.id)) continue;
       prefetchedIdsRef.current.add(item.id);
       fetch(`/api/prefetch/${item.id}`, { method: "POST" }).catch(() => {});
     }
-  }, [queue]);
+  }, [queue, isActiveOutput]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -607,6 +739,15 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
         isLyricsOpen,
         openLyrics,
         toggleLyrics,
+
+        deviceId,
+        isDevicesOpen,
+        toggleDevicesPanel,
+        closeDevicesPanel,
+        devices,
+        activeDeviceIds,
+        isActiveOutput,
+        setActiveDevices,
       }}
     >
       {children}

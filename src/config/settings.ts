@@ -8,7 +8,7 @@ export type AppSettingDefinition =
       type: "string";
       default: string;
     }
-   | {
+  | {
       key: AppSettingKey;
       label: string;
       description: string;
@@ -35,8 +35,7 @@ export const APP_SETTINGS: AppSettingDefinition[] = [
   {
     key: "arl_token",
     label: "Token ARL Deezer",
-    description:
-      "Sera utilisé afin de télécharger les musiques localement.",
+    description: "Sera utilisé afin de télécharger les musiques localement.",
     type: "string",
     default: "qwerty",
   },

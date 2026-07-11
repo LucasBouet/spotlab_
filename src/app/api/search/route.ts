@@ -28,7 +28,10 @@ export async function GET(request: Request) {
   }
 
   if (!isSearchType(type)) {
-    return NextResponse.json({ error: "Type de recherche invalide." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Type de recherche invalide." },
+      { status: 400 },
+    );
   }
 
   const deezerUrl = new URL(DEEZER_ENDPOINTS[type]);
@@ -39,17 +42,26 @@ export async function GET(request: Request) {
   try {
     deezerResponse = await fetch(deezerUrl, { cache: "no-store" });
   } catch {
-    return NextResponse.json({ error: "Le service de recherche est indisponible." }, { status: 502 });
+    return NextResponse.json(
+      { error: "Le service de recherche est indisponible." },
+      { status: 502 },
+    );
   }
 
   if (!deezerResponse.ok) {
-    return NextResponse.json({ error: "Le service de recherche est indisponible." }, { status: 502 });
+    return NextResponse.json(
+      { error: "Le service de recherche est indisponible." },
+      { status: 502 },
+    );
   }
 
   const payload = await deezerResponse.json();
 
   if (payload?.error) {
-    return NextResponse.json({ error: "La recherche a échoué." }, { status: 502 });
+    return NextResponse.json(
+      { error: "La recherche a échoué." },
+      { status: 502 },
+    );
   }
 
   return NextResponse.json({ data: payload.data ?? [] });

@@ -18,7 +18,9 @@ export default function LoginPage() {
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand text-lg font-bold text-white shadow-lg shadow-brand/30">
             S
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-white">Spotlab</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-white">
+            Spotlab
+          </h1>
           <p className="text-sm text-white/50">Connectez-vous pour continuer</p>
         </div>
 
@@ -27,7 +29,10 @@ export default function LoginPage() {
           className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6 shadow-2xl shadow-black/40"
         >
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-xs font-medium text-white/70">
+            <label
+              htmlFor="email"
+              className="text-xs font-medium text-white/70"
+            >
               E-mail
             </label>
             <input
@@ -42,7 +47,10 @@ export default function LoginPage() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" className="text-xs font-medium text-white/70">
+            <label
+              htmlFor="password"
+              className="text-xs font-medium text-white/70"
+            >
               Mot de passe
             </label>
             <input
@@ -73,7 +81,10 @@ export default function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-white/50">
           Pas encore de compte ?{" "}
-          <Link href="/register" className="font-medium text-brand hover:text-brand-hover">
+          <Link
+            href="/register"
+            className="font-medium text-brand hover:text-brand-hover"
+          >
             Créer un compte
           </Link>
         </p>

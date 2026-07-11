@@ -18,7 +18,9 @@ export default function RegisterPage() {
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand text-lg font-bold text-white shadow-lg shadow-brand/30">
             S
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-white">Spotlab</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-white">
+            Spotlab
+          </h1>
           <p className="text-sm text-white/50">Créez votre compte</p>
         </div>
 
@@ -41,7 +43,10 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-xs font-medium text-white/70">
+            <label
+              htmlFor="email"
+              className="text-xs font-medium text-white/70"
+            >
               E-mail
             </label>
             <input
@@ -56,7 +61,10 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" className="text-xs font-medium text-white/70">
+            <label
+              htmlFor="password"
+              className="text-xs font-medium text-white/70"
+            >
               Mot de passe
             </label>
             <input
@@ -72,7 +80,10 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="confirmPassword" className="text-xs font-medium text-white/70">
+            <label
+              htmlFor="confirmPassword"
+              className="text-xs font-medium text-white/70"
+            >
               Confirmer le mot de passe
             </label>
             <input
@@ -104,7 +115,10 @@ export default function RegisterPage() {
 
         <p className="mt-6 text-center text-sm text-white/50">
           Déjà un compte ?{" "}
-          <Link href="/login" className="font-medium text-brand hover:text-brand-hover">
+          <Link
+            href="/login"
+            className="font-medium text-brand hover:text-brand-hover"
+          >
             Se connecter
           </Link>
         </p>
