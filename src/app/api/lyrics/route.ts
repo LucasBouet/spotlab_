@@ -5,6 +5,10 @@ import { getCurrentUser } from "@/lib/session";
 // (LRC) lyrics support — no API key or paid tier required.
 const LRCLIB_BASE = "https://lrclib.net/api";
 const LRCLIB_USER_AGENT = "Spotlab/1.0 (self-hosted music player)";
+// lrclib's free hosting routinely takes 6-8s to respond, so the timeout
+// needs real headroom above that or it aborts requests that were about to
+// succeed.
+const REQUEST_TIMEOUT_MS = 15000;
 
 type LrclibResult = {
   instrumental?: boolean;
@@ -12,17 +16,24 @@ type LrclibResult = {
   syncedLyrics?: string | null;
 };
 
-async function fetchLrclib<T>(path: string): Promise<T | null> {
+// Keyed by track/artist/album/duration; avoids re-hitting lrclib for a track
+// that's already been looked up in this server process (repeat plays,
+// several users, React effect re-runs). Only genuine "not found" results are
+// cached — a timeout/network hiccup shouldn't permanently poison a track.
+const resultCache = new Map<string, LrclibResult | null>();
+
+async function fetchLrclib<T>(path: string): Promise<T | null | undefined> {
   let response: Response;
   try {
     response = await fetch(`${LRCLIB_BASE}${path}`, {
       headers: { "User-Agent": LRCLIB_USER_AGENT },
       cache: "no-store",
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
   } catch {
-    return null;
+    return undefined;
   }
-  if (!response.ok) return null;
+  if (!response.ok) return response.status === 404 ? null : undefined;
   return (await response.json()) as T;
 }
 
@@ -45,6 +56,14 @@ export async function GET(request: Request) {
     );
   }
 
+  const cacheKey = `${track}::${artist}::${album}::${duration}`;
+  if (resultCache.has(cacheKey)) {
+    const cached = resultCache.get(cacheKey) ?? null;
+    return cached
+      ? NextResponse.json(cached)
+      : NextResponse.json({ error: "Paroles introuvables." }, { status: 404 });
+  }
+
   const exactParams = new URLSearchParams({
     track_name: track,
     artist_name: artist,
@@ -52,21 +71,29 @@ export async function GET(request: Request) {
   if (album) exactParams.set("album_name", album);
   if (duration) exactParams.set("duration", duration);
 
-  const exact = await fetchLrclib<LrclibResult>(`/get?${exactParams}`);
-  if (exact) return NextResponse.json(exact);
-
-  // Fall back to fuzzy search when there's no exact title/artist/duration
-  // match (e.g. slightly different album edition or rounded duration).
   const searchParamsQuery = new URLSearchParams({
     track_name: track,
     artist_name: artist,
   });
-  const results = await fetchLrclib<LrclibResult[]>(
-    `/search?${searchParamsQuery}`,
-  );
-  if (results && results.length > 0) {
-    return NextResponse.json(results[0]);
+
+  // Fire the exact lookup and the fuzzy-search fallback at the same time
+  // instead of waiting for the exact match to fail first — lrclib's exact
+  // endpoint is picky about duration, so it misses often, and running the
+  // two requests sequentially doubled the wait on that (common) path.
+  const [exact, results] = await Promise.all([
+    fetchLrclib<LrclibResult>(`/get?${exactParams}`),
+    fetchLrclib<LrclibResult[]>(`/search?${searchParamsQuery}`),
+  ]);
+
+  const result = exact ?? (results && results.length > 0 ? results[0] : null);
+
+  // A genuine "nothing found" (both lookups came back 404) is worth
+  // caching; a timeout or network failure (undefined) is not — it should be
+  // retried on the next request rather than remembered as unavailable.
+  if (exact !== undefined && results !== undefined) {
+    resultCache.set(cacheKey, result ?? null);
   }
 
+  if (result) return NextResponse.json(result);
   return NextResponse.json({ error: "Paroles introuvables." }, { status: 404 });
 }

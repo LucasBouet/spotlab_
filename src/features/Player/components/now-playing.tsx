@@ -57,7 +57,11 @@ export function NowPlayingView() {
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const touchStartYRef = useRef<number | null>(null);
-  const lyricsState = useLyrics(isFullscreenOpen ? currentTrack : null);
+  // Fetched as soon as a track starts playing (not gated on the fullscreen
+  // view being open) so the lrclib round-trip happens in the background
+  // during normal listening, and is already cached by the time the user
+  // taps the mic button.
+  const lyricsState = useLyrics(currentTrack);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
