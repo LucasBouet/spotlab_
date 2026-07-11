@@ -1,0 +1,1 @@
+You can find the architecture.md at the root folder. Dont test your changes by yourself i will do it. You can lint / biome / tsx check tho. If you have any questions, ask them before. Make a plan if the task is too complicated.

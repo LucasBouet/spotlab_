@@ -6,6 +6,7 @@ import {
   DownloadIcon,
   ExpandIcon,
   HeartIcon,
+  MicIcon,
   PauseIcon,
   PlayIcon,
   QueueIcon,
@@ -102,6 +103,8 @@ export function PlayerBar() {
     isQueueOpen,
     toggleQueuePanel,
     openFullscreen,
+    isLyricsOpen,
+    openLyrics,
   } = usePlayer();
   const previousVolumeRef = useRef(volume || 100);
   const [isLiked, setIsLiked] = useState(false);
@@ -317,6 +320,16 @@ export function PlayerBar() {
               ) : (
                 <DownloadIcon className="h-5 w-5" />
               )}
+            </button>
+            <button
+              type="button"
+              onClick={openLyrics}
+              disabled={!currentTrack}
+              aria-pressed={isLyricsOpen}
+              aria-label="Paroles"
+              className={`flex shrink-0 items-center justify-center rounded-full p-1.5 transition disabled:opacity-30 ${isLyricsOpen ? "bg-brand/20 text-brand" : "text-white/60 hover:text-white"}`}
+            >
+              <MicIcon className="h-5 w-5" />
             </button>
             <button
               type="button"

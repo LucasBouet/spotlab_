@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   DownloadIcon,
   HeartIcon,
+  MicIcon,
   PauseIcon,
   PlayIcon,
   ShuffleIcon,
@@ -19,9 +20,11 @@ import {
   likeTrack,
   unlikeTrack,
 } from "@/features/Library/actions";
+import { LyricsView } from "@/features/Player/components/lyrics-view";
 import { formatTime, Slider } from "@/features/Player/components/player-bar";
 import { downloadTrack } from "@/features/Player/download-track";
 import { MAX_VOLUME, usePlayer } from "@/features/Player/player-context";
+import { useLyrics } from "@/features/Player/use-lyrics";
 
 // How far down the sheet has to be dragged (in px) before a release is
 // treated as "close" rather than "snap back open".
@@ -44,6 +47,8 @@ export function NowPlayingView() {
     queue,
     isFullscreenOpen,
     closeFullscreen,
+    isLyricsOpen,
+    toggleLyrics,
   } = usePlayer();
 
   const previousVolumeRef = useRef(volume || 100);
@@ -52,6 +57,7 @@ export function NowPlayingView() {
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const touchStartYRef = useRef<number | null>(null);
+  const lyricsState = useLyrics(isFullscreenOpen ? currentTrack : null);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
@@ -175,13 +181,23 @@ export function NowPlayingView() {
       )}
 
       <div
-        className="relative flex shrink-0 items-center justify-end px-4 pb-2 sm:px-8"
+        className="relative flex shrink-0 items-center justify-between px-4 pb-2 sm:px-8"
         style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
       >
         <span
           className="-translate-x-1/2 absolute top-2 left-1/2 h-1 w-10 rounded-full bg-white/20 sm:hidden"
           aria-hidden="true"
         />
+        <button
+          type="button"
+          onClick={toggleLyrics}
+          disabled={!currentTrack}
+          aria-pressed={isLyricsOpen}
+          aria-label="Paroles"
+          className={`rounded-full p-2 transition disabled:opacity-30 ${isLyricsOpen ? "bg-brand/20 text-brand" : "text-white/70 hover:bg-white/10 hover:text-white"}`}
+        >
+          <MicIcon className="h-6 w-6" />
+        </button>
         <button
           type="button"
           onClick={closeFullscreen}
@@ -192,19 +208,33 @@ export function NowPlayingView() {
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 overflow-y-auto px-6 pb-8 sm:gap-8">
-        <div className="relative aspect-square w-full max-w-[min(80vw,420px)] shrink-0 overflow-hidden rounded-2xl bg-surface-elevated shadow-2xl sm:max-w-[440px]">
-          {currentTrack?.cover && (
-            <Image
-              src={currentTrack.cover}
-              alt=""
-              fill
-              sizes="(max-width: 640px) 80vw, 440px"
-              className="object-cover"
-              priority
-            />
-          )}
-        </div>
+      <div
+        className={`flex min-h-0 flex-1 flex-col items-center px-6 pb-8 sm:gap-8 ${
+          isLyricsOpen
+            ? "justify-between gap-4"
+            : "justify-center gap-6 overflow-y-auto"
+        }`}
+      >
+        {isLyricsOpen ? (
+          <LyricsView
+            state={lyricsState}
+            currentTime={currentTime}
+            onSeek={seek}
+          />
+        ) : (
+          <div className="relative aspect-square w-full max-w-[min(80vw,420px)] shrink-0 overflow-hidden rounded-2xl bg-surface-elevated shadow-2xl sm:max-w-[440px]">
+            {currentTrack?.cover && (
+              <Image
+                src={currentTrack.cover}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 80vw, 440px"
+                className="object-cover"
+                priority
+              />
+            )}
+          </div>
+        )}
 
         <div className="w-full max-w-[min(80vw,420px)] shrink-0 sm:max-w-[440px]">
           <div className="flex items-center justify-between gap-4">
