@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   DevicesIcon,
+  DotsIcon,
   DownloadIcon,
   ExpandIcon,
   HeartIcon,
@@ -112,7 +113,9 @@ export function PlayerBar() {
   const previousVolumeRef = useRef(volume || 100);
   const [isLiked, setIsLiked] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const moreMenuRef = useRef<HTMLDivElement>(null);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
@@ -131,6 +134,22 @@ export function PlayerBar() {
       cancelled = true;
     };
   }, [currentTrack]);
+
+  useEffect(() => {
+    if (!isMoreMenuOpen) return;
+
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        moreMenuRef.current &&
+        !moreMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsMoreMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMoreMenuOpen]);
 
   function toggleMute() {
     if (volume > 0) {
@@ -316,7 +335,7 @@ export function PlayerBar() {
               onClick={handleDownload}
               disabled={!currentTrack || isDownloading}
               aria-label="Télécharger le titre"
-              className="flex shrink-0 items-center justify-center rounded-full p-1.5 text-white/80 transition hover:text-white disabled:opacity-30"
+              className="hidden shrink-0 items-center justify-center rounded-full p-1.5 text-white/80 transition hover:text-white disabled:opacity-30 sm:flex"
             >
               {isDownloading ? (
                 <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-white" />
@@ -330,7 +349,7 @@ export function PlayerBar() {
               disabled={!currentTrack}
               aria-pressed={isLyricsOpen}
               aria-label="Paroles"
-              className={`flex shrink-0 items-center justify-center rounded-full p-1.5 transition disabled:opacity-30 ${isLyricsOpen ? "bg-brand/20 text-brand" : "text-white/60 hover:text-white"}`}
+              className={`hidden shrink-0 items-center justify-center rounded-full p-1.5 transition disabled:opacity-30 sm:flex ${isLyricsOpen ? "bg-brand/20 text-brand" : "text-white/60 hover:text-white"}`}
             >
               <MicIcon className="h-5 w-5" />
             </button>
@@ -348,10 +367,65 @@ export function PlayerBar() {
               onClick={toggleDevicesPanel}
               aria-pressed={isDevicesOpen}
               aria-label="Appareils"
-              className={`flex shrink-0 items-center justify-center rounded-full p-1.5 transition ${isDevicesOpen ? "bg-brand/20 text-brand" : "text-white/60 hover:text-white"}`}
+              className={`hidden shrink-0 items-center justify-center rounded-full p-1.5 transition sm:flex ${isDevicesOpen ? "bg-brand/20 text-brand" : "text-white/60 hover:text-white"}`}
             >
               <DevicesIcon className="h-5 w-5" />
             </button>
+            <div ref={moreMenuRef} className="relative shrink-0 sm:hidden">
+              <button
+                type="button"
+                onClick={() => setIsMoreMenuOpen((prev) => !prev)}
+                aria-label="Plus d'options"
+                aria-expanded={isMoreMenuOpen}
+                className={`flex items-center justify-center rounded-full p-1.5 transition ${
+                  isMoreMenuOpen || isLyricsOpen || isDevicesOpen
+                    ? "bg-brand/20 text-brand"
+                    : "text-white/60 hover:text-white"
+                }`}
+              >
+                <DotsIcon className="h-5 w-5" />
+              </button>
+
+              {isMoreMenuOpen && (
+                <div className="absolute right-0 bottom-full z-30 mb-2 w-48 rounded-lg border border-border bg-surface-elevated p-1 shadow-lg">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleDownload();
+                      setIsMoreMenuOpen(false);
+                    }}
+                    disabled={!currentTrack || isDownloading}
+                    className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-white transition hover:bg-surface disabled:opacity-40"
+                  >
+                    <DownloadIcon className="h-4 w-4" />
+                    {isDownloading ? "Téléchargement…" : "Télécharger"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      openLyrics();
+                      setIsMoreMenuOpen(false);
+                    }}
+                    disabled={!currentTrack}
+                    className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition hover:bg-surface disabled:opacity-40 ${isLyricsOpen ? "text-brand" : "text-white"}`}
+                  >
+                    <MicIcon className="h-4 w-4" />
+                    Paroles
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      toggleDevicesPanel();
+                      setIsMoreMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition hover:bg-surface ${isDevicesOpen ? "text-brand" : "text-white"}`}
+                  >
+                    <DevicesIcon className="h-4 w-4" />
+                    Appareils
+                  </button>
+                </div>
+              )}
+            </div>
             <button
               type="button"
               onClick={toggleQueuePanel}

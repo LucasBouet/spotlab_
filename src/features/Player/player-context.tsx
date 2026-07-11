@@ -39,6 +39,7 @@ export type PlayerStatus = "idle" | "loading" | "playing" | "paused" | "error";
 
 export const MAX_VOLUME = 120;
 export const DEFAULT_VOLUME = 100;
+const VOLUME_STORAGE_KEY = "spotlab:volume";
 const RESTART_THRESHOLD_SECONDS = 3;
 const PREFETCH_COUNT = 1;
 
@@ -256,6 +257,21 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       audioContextRef.current = null;
       gainNodeRef.current = null;
     };
+  }, []);
+
+  // Restores the volume the user last set, once the audio graph above exists
+  // to apply it to. Deliberately not read into the initial useState (which
+  // would mismatch the server-rendered DEFAULT_VOLUME and cause a hydration
+  // warning) — this runs after mount instead, client-only.
+  useEffect(() => {
+    const stored = window.localStorage.getItem(VOLUME_STORAGE_KEY);
+    const parsed = stored ? Number.parseInt(stored, 10) : Number.NaN;
+    if (!Number.isFinite(parsed)) return;
+    const clamped = Math.max(0, Math.min(MAX_VOLUME, parsed));
+    setVolumeState(clamped);
+    if (gainNodeRef.current) {
+      gainNodeRef.current.gain.value = volumeToGain(clamped);
+    }
   }, []);
 
   // Loads and plays whenever the identity of the current queue item changes
@@ -576,6 +592,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     if (gainNodeRef.current) {
       gainNodeRef.current.gain.value = volumeToGain(clamped);
     }
+    window.localStorage.setItem(VOLUME_STORAGE_KEY, String(clamped));
   }, []);
 
   const toggleQueuePanel = useCallback(() => {

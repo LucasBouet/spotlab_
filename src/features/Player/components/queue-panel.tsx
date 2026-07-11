@@ -160,7 +160,7 @@ export function QueuePanel() {
             className="absolute inset-y-0 -left-0.5 z-10 hidden w-1.5 cursor-col-resize touch-none hover:bg-brand/40 active:bg-brand/60 md:block"
           />
         )}
-        <div className="flex w-80 shrink-0 flex-col overflow-hidden md:w-(--queue-w)">
+        <div className="flex h-full min-h-0 w-80 shrink-0 flex-col overflow-hidden md:w-(--queue-w)">
           <div className="flex items-center justify-between border-b border-border p-4">
             <h2 className="text-sm font-semibold text-white">File d'attente</h2>
             <button
@@ -222,7 +222,7 @@ export function QueuePanel() {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-2">
+          <div className="min-h-0 flex-1 overflow-y-auto p-2">
             {queue.length === 0 ? (
               <p className="p-2 text-sm text-white/40">Aucun titre à venir.</p>
             ) : (
