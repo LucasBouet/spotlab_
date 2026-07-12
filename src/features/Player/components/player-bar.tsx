@@ -24,7 +24,11 @@ import {
   unlikeTrack,
 } from "@/features/Library/actions";
 import { downloadTrack } from "@/features/Player/download-track";
-import { MAX_VOLUME, usePlayer } from "@/features/Player/player-context";
+import {
+  MAX_VOLUME,
+  usePlayer,
+  usePlayerTime,
+} from "@/features/Player/player-context";
 
 export function formatTime(totalSeconds: number) {
   if (!Number.isFinite(totalSeconds) || totalSeconds < 0) return "0:00";
@@ -91,7 +95,6 @@ export function PlayerBar() {
   const {
     currentTrack,
     status,
-    currentTime,
     duration,
     volume,
     togglePlay,
@@ -110,6 +113,7 @@ export function PlayerBar() {
     isDevicesOpen,
     toggleDevicesPanel,
   } = usePlayer();
+  const currentTime = usePlayerTime();
   const previousVolumeRef = useRef(volume || 100);
   const [isLiked, setIsLiked] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);

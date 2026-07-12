@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { HeartIcon, XIcon } from "@/components/icons";
 import { TrackPlayButton } from "@/features/Player/components/track-play-button";
 import { TrackQueueMenu } from "@/features/Player/components/track-queue-menu";
@@ -47,7 +47,7 @@ export function TrackList({
   queueContextId?: string;
 }) {
   const { playContext } = usePlayer();
-  const playerTracks = tracks.map(toPlayerTrack);
+  const playerTracks = useMemo(() => tracks.map(toPlayerTrack), [tracks]);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
   const observerRef = useRef<IntersectionObserver | null>(null);
 

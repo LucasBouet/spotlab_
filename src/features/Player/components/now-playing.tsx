@@ -23,7 +23,11 @@ import {
 import { LyricsView } from "@/features/Player/components/lyrics-view";
 import { formatTime, Slider } from "@/features/Player/components/player-bar";
 import { downloadTrack } from "@/features/Player/download-track";
-import { MAX_VOLUME, usePlayer } from "@/features/Player/player-context";
+import {
+  MAX_VOLUME,
+  usePlayer,
+  usePlayerTime,
+} from "@/features/Player/player-context";
 import { useLyrics } from "@/features/Player/use-lyrics";
 
 // How far down the sheet has to be dragged (in px) before a release is
@@ -34,7 +38,6 @@ export function NowPlayingView() {
   const {
     currentTrack,
     status,
-    currentTime,
     duration,
     volume,
     togglePlay,
@@ -50,6 +53,7 @@ export function NowPlayingView() {
     isLyricsOpen,
     toggleLyrics,
   } = usePlayer();
+  const currentTime = usePlayerTime();
 
   const previousVolumeRef = useRef(volume || 100);
   const [isLiked, setIsLiked] = useState(false);

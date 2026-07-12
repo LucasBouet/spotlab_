@@ -6,6 +6,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -77,7 +78,6 @@ type PlayContextOptions = { shuffle?: boolean };
 type PlayerContextValue = {
   currentTrack: PlayerTrack | null;
   status: PlayerStatus;
-  currentTime: number;
   duration: number;
   volume: number;
   playTrack: (track: PlayerTrack) => void;
@@ -127,6 +127,14 @@ type PlayerContextValue = {
 };
 
 const PlayerContext = createContext<PlayerContextValue | null>(null);
+
+// Split from PlayerContext because currentTime updates several times a
+// second during playback (timeupdate events / the non-active-device
+// ticker). Keeping it in the main context would force every usePlayer()
+// consumer in the tree — including large track lists — to re-render on
+// every tick; isolating it here means only components that actually read
+// live progress (the player bar, the fullscreen view) do.
+const PlayerTimeContext = createContext<number | null>(null);
 
 function getAudioContextConstructor(): typeof AudioContext | null {
   if (typeof window === "undefined") return null;
@@ -718,59 +726,102 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [togglePlay]);
 
+  const playerContextValue = useMemo<PlayerContextValue>(
+    () => ({
+      currentTrack: current,
+      status,
+      duration,
+      volume,
+      playTrack,
+      togglePlay,
+      seek,
+      setVolume,
+
+      activeContextId,
+      shuffle,
+      queue,
+      playContext,
+      toggleShuffle,
+      skipNext,
+      skipPrevious,
+      playFromQueue,
+      queuePlayNext,
+      queueAddToEnd,
+      removeFromQueue,
+      reorderQueue,
+
+      isQueueOpen,
+      toggleQueuePanel,
+      closeQueuePanel,
+
+      isFullscreenOpen,
+      openFullscreen,
+      closeFullscreen,
+      toggleFullscreen,
+
+      isLyricsOpen,
+      openLyrics,
+      toggleLyrics,
+
+      deviceId,
+      isDevicesOpen,
+      toggleDevicesPanel,
+      closeDevicesPanel,
+      devices,
+      activeDeviceIds,
+      isActiveOutput,
+      setActiveDevices,
+    }),
+    [
+      current,
+      status,
+      duration,
+      volume,
+      playTrack,
+      togglePlay,
+      seek,
+      setVolume,
+      activeContextId,
+      shuffle,
+      queue,
+      playContext,
+      toggleShuffle,
+      skipNext,
+      skipPrevious,
+      playFromQueue,
+      queuePlayNext,
+      queueAddToEnd,
+      removeFromQueue,
+      reorderQueue,
+      isQueueOpen,
+      toggleQueuePanel,
+      closeQueuePanel,
+      isFullscreenOpen,
+      openFullscreen,
+      closeFullscreen,
+      toggleFullscreen,
+      isLyricsOpen,
+      openLyrics,
+      toggleLyrics,
+      deviceId,
+      isDevicesOpen,
+      toggleDevicesPanel,
+      closeDevicesPanel,
+      devices,
+      activeDeviceIds,
+      isActiveOutput,
+      setActiveDevices,
+    ],
+  );
+
   return (
-    <PlayerContext.Provider
-      value={{
-        currentTrack: current,
-        status,
-        currentTime,
-        duration,
-        volume,
-        playTrack,
-        togglePlay,
-        seek,
-        setVolume,
-
-        activeContextId,
-        shuffle,
-        queue,
-        playContext,
-        toggleShuffle,
-        skipNext,
-        skipPrevious,
-        playFromQueue,
-        queuePlayNext,
-        queueAddToEnd,
-        removeFromQueue,
-        reorderQueue,
-
-        isQueueOpen,
-        toggleQueuePanel,
-        closeQueuePanel,
-
-        isFullscreenOpen,
-        openFullscreen,
-        closeFullscreen,
-        toggleFullscreen,
-
-        isLyricsOpen,
-        openLyrics,
-        toggleLyrics,
-
-        deviceId,
-        isDevicesOpen,
-        toggleDevicesPanel,
-        closeDevicesPanel,
-        devices,
-        activeDeviceIds,
-        isActiveOutput,
-        setActiveDevices,
-      }}
-    >
-      {children}
-      <audio ref={audioRef} preload="none">
-        <track kind="captions" />
-      </audio>
+    <PlayerContext.Provider value={playerContextValue}>
+      <PlayerTimeContext.Provider value={currentTime}>
+        {children}
+        <audio ref={audioRef} preload="none">
+          <track kind="captions" />
+        </audio>
+      </PlayerTimeContext.Provider>
     </PlayerContext.Provider>
   );
 }
@@ -778,5 +829,15 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 export function usePlayer(): PlayerContextValue {
   const ctx = useContext(PlayerContext);
   if (!ctx) throw new Error("usePlayer must be used within a PlayerProvider");
+  return ctx;
+}
+
+// Kept separate from usePlayer() so only components that need live playback
+// progress subscribe to its high-frequency updates — see PlayerTimeContext.
+export function usePlayerTime(): number {
+  const ctx = useContext(PlayerTimeContext);
+  if (ctx === null) {
+    throw new Error("usePlayerTime must be used within a PlayerProvider");
+  }
   return ctx;
 }
