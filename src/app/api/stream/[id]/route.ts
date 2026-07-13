@@ -15,6 +15,7 @@ const CONTENT_TYPES: Record<string, string> = {
   ".ogg": "audio/ogg",
   ".opus": "audio/opus",
   ".wav": "audio/wav",
+  ".webm": "audio/webm",
 };
 
 function contentTypeFor(filePath: string): string {

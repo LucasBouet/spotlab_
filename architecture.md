@@ -1,6 +1,6 @@
 # File Tree: spotlab_
 
-**Generated:** 7/12/2026, 11:49:35 AM
+**Generated:** 7/13/2026, 9:27:24 PM
 **Root Path:** `/home/lucas/spotlab_`
 
 ```
@@ -63,6 +63,7 @@
 │   ├── file.svg
 │   ├── globe.svg
 │   ├── next.svg
+│   ├── sw.js
 │   ├── vercel.svg
 │   └── window.svg
 ├── rip
@@ -136,6 +137,7 @@
 │   │   ├── icons.tsx
 │   │   ├── nav-items.tsx
 │   │   ├── resizable-sidebar.tsx
+│   │   ├── service-worker-register.tsx
 │   │   └── track-list.tsx
 │   ├── config
 │   │   └── settings.ts

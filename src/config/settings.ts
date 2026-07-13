@@ -1,4 +1,4 @@
-export type AppSettingKey = "site_name" | "registration_enabled" | "arl_token";
+export type AppSettingKey = "site_name" | "registration_enabled";
 
 export type AppSettingDefinition =
   | {
@@ -31,13 +31,6 @@ export const APP_SETTINGS: AppSettingDefinition[] = [
       "Affiché dans la barre latérale et l'en-tête de l'application.",
     type: "string",
     default: "Spotlab",
-  },
-  {
-    key: "arl_token",
-    label: "Token ARL Deezer",
-    description: "Sera utilisé afin de télécharger les musiques localement.",
-    type: "string",
-    default: "qwerty",
   },
   {
     key: "registration_enabled",
