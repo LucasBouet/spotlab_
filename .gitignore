@@ -51,3 +51,4 @@ next-env.d.ts
 /rip/failed_downloads.db
 # scratch dirs used for concurrent per-track downloads
 /rip/tmp
+/certs
