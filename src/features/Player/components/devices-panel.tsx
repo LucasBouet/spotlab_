@@ -147,9 +147,14 @@ export function DevicesPanel() {
   } = usePlayer();
 
   function toggleOutput(targetDeviceId: string) {
-    const next = activeDeviceIds.includes(targetDeviceId)
-      ? activeDeviceIds.filter((id) => id !== targetDeviceId)
-      : [...activeDeviceIds, targetDeviceId];
+    // Only ever send this account's own devices: in a jam, activeDeviceIds also
+    // holds other members' output devices, which this user neither owns nor may
+    // change. `devices` is always exactly this account's devices.
+    const ownIds = new Set(devices.map((device) => device.deviceId));
+    const ownActive = activeDeviceIds.filter((id) => ownIds.has(id));
+    const next = ownActive.includes(targetDeviceId)
+      ? ownActive.filter((id) => id !== targetDeviceId)
+      : [...ownActive, targetDeviceId];
     setActiveDevices(next);
   }
 

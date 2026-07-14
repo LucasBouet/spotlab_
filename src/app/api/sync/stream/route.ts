@@ -1,9 +1,9 @@
 import {
   broadcastDevices,
-  getOrCreateState,
   listDeviceDTOs,
+  pendingInvitesFor,
+  playbackDTOFor,
   subscribe,
-  toPlaybackDTO,
   unsubscribe,
 } from "@/lib/playback-sync";
 import { prisma } from "@/lib/prisma";
@@ -79,8 +79,9 @@ export async function GET(request: Request) {
         .then((devices) => {
           safeEnqueue(
             `event: snapshot\ndata: ${JSON.stringify({
-              playback: toPlaybackDTO(getOrCreateState(user.id)),
+              playback: playbackDTOFor(user.id),
               devices,
+              jamInvites: pendingInvitesFor(user.id),
             })}\n\n`,
           );
         })

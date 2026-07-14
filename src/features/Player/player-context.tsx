@@ -24,8 +24,11 @@ import { useDeviceId } from "@/features/Player/use-device-id";
 import { useMediaSession } from "@/features/Player/use-media-session";
 import { usePlaybackSync } from "@/features/Player/use-playback-sync";
 import { detectDeviceLabel } from "@/lib/device-label";
+import type { JamInviteDTO, JamStateDTO } from "@/lib/jam-types";
 import { extrapolatePosition } from "@/lib/playback-position";
 import type { CanonicalPlaybackStateDTO, DeviceDTO } from "@/lib/sync-types";
+
+export type CurrentUser = { id: string; name: string };
 
 // Position drift beyond this is corrected with a hard snap rather than left
 // to catch up naturally — multi-device simultaneous audio is explicitly
@@ -125,6 +128,16 @@ type PlayerContextValue = {
   activeDeviceIds: string[];
   isActiveOutput: boolean;
   setActiveDevices: (deviceIds: string[]) => void;
+
+  currentUserId: string | null;
+  jam: JamStateDTO | null;
+  isJamHost: boolean;
+  jamInvites: JamInviteDTO[];
+  inviteToJam: (friendUserId: string) => Promise<string | null>;
+  acceptJamInvite: (jamId: string) => Promise<void>;
+  declineJamInvite: (jamId: string) => Promise<void>;
+  leaveJam: () => Promise<void>;
+  stopJam: () => Promise<void>;
 };
 
 const PlayerContext = createContext<PlayerContextValue | null>(null);
@@ -147,7 +160,13 @@ function getAudioContextConstructor(): typeof AudioContext | null {
   );
 }
 
-export function PlayerProvider({ children }: { children: ReactNode }) {
+export function PlayerProvider({
+  children,
+  currentUser = null,
+}: {
+  children: ReactNode;
+  currentUser?: CurrentUser | null;
+}) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -175,6 +194,36 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [syncedIsPlaying, setSyncedIsPlaying] = useState(false);
   const [activeDeviceIds, setActiveDeviceIdsState] = useState<string[]>([]);
   const isActiveOutput = deviceId !== "" && activeDeviceIds.includes(deviceId);
+
+  // Which shared state the latest broadcast belonged to (own id when solo, jam
+  // id while in a jam). A change means we switched rooms, so the revision gate
+  // below is reset — the new room's counter is independent and its first
+  // (lower-numbered) broadcast must not be dropped as stale.
+  const roomRef = useRef<string | null>(null);
+  const [jam, setJam] = useState<JamStateDTO | null>(null);
+  const [jamInvites, setJamInvites] = useState<JamInviteDTO[]>([]);
+
+  // Kept in a ref so the queue callbacks can stamp attribution without being
+  // re-created every time the parent re-renders this (identity-unstable) prop.
+  const currentUserRef = useRef(currentUser);
+  useEffect(() => {
+    currentUserRef.current = currentUser;
+  }, [currentUser]);
+  const currentUserId = currentUser?.id ?? null;
+
+  const jamRef = useRef<JamStateDTO | null>(null);
+  useEffect(() => {
+    jamRef.current = jam;
+  }, [jam]);
+
+  // Who to attribute a freshly-queued track to: the current user while in a
+  // jam, undefined when solo (the server stamps the authoritative copy either
+  // way; this just makes the optimistic local item show it immediately).
+  const jamAttribution = useCallback(() => {
+    if (!jamRef.current) return undefined;
+    const user = currentUserRef.current;
+    return user ? { id: user.id, name: user.name } : undefined;
+  }, []);
   // The (positionSeconds, atMs) anchor extrapolatePosition() extrapolates
   // from — refreshed by every broadcast (and optimistically, by this
   // device's own transport actions below) so both the drift-correction check
@@ -183,8 +232,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   const applyRemoteState = useCallback(
     (dto: CanonicalPlaybackStateDTO) => {
+      // Room switch (solo <-> jam, or jam -> jam): the new room's revision
+      // counter is independent, so reset the gate before applying rather than
+      // dropping its first broadcast as a stale duplicate.
+      if (dto.room !== roomRef.current) {
+        roomRef.current = dto.room;
+        revisionRef.current = -1;
+      }
       if (dto.revision <= revisionRef.current) return;
       revisionRef.current = dto.revision;
+      setJam(dto.jam);
       dispatch({
         type: "REPLACE_STATE",
         state: {
@@ -221,9 +278,14 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     [deviceId],
   );
 
+  const handleInvites = useCallback((invites: JamInviteDTO[]) => {
+    setJamInvites(invites);
+  }, []);
+
   const { postCommand, devices } = usePlaybackSync({
     deviceId,
     onState: applyRemoteState,
+    onInvites: handleInvites,
   });
 
   const setActiveDevices = useCallback(
@@ -232,6 +294,62 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     },
     [postCommand],
   );
+
+  // Jam membership goes through /api/jam rather than the sync command channel;
+  // the server switches the affected users' rooms and broadcasts the shared
+  // state, which arrives back over the same SSE and flips this client into (or
+  // out of) the jam. No optimistic local mutation needed.
+  const postJam = useCallback(
+    async (body: Record<string, unknown>): Promise<Response | null> => {
+      try {
+        return await fetch("/api/jam", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+      } catch {
+        return null;
+      }
+    },
+    [],
+  );
+
+  const inviteToJam = useCallback(
+    async (friendUserId: string): Promise<string | null> => {
+      if (!deviceId) return null;
+      const res = await postJam({ op: "invite", friendUserId, deviceId });
+      if (!res?.ok) return null;
+      const data = (await res.json().catch(() => null)) as {
+        jamId?: string;
+      } | null;
+      return data?.jamId ?? null;
+    },
+    [postJam, deviceId],
+  );
+
+  const acceptJamInvite = useCallback(
+    async (jamId: string) => {
+      if (!deviceId) return;
+      await postJam({ op: "accept", jamId, deviceId });
+    },
+    [postJam, deviceId],
+  );
+
+  const declineJamInvite = useCallback(
+    async (jamId: string) => {
+      setJamInvites((prev) => prev.filter((invite) => invite.jamId !== jamId));
+      await postJam({ op: "decline", jamId });
+    },
+    [postJam],
+  );
+
+  const leaveJam = useCallback(async () => {
+    await postJam({ op: "leave" });
+  }, [postJam]);
+
+  const stopJam = useCallback(async () => {
+    await postJam({ op: "stop" });
+  }, [postJam]);
 
   const currentTimeRef = useRef(0);
   useEffect(() => {
@@ -448,11 +566,19 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       if (!current) setActiveDeviceIdsState([deviceId]);
       positionAnchorRef.current = { positionSeconds: 0, atMs: Date.now() };
       setSyncedIsPlaying(true);
-      const item = makeQueueItem(track);
+      const item = makeQueueItem(track, false, jamAttribution());
       dispatch({ type: "PLAY_TRACK", item });
       postCommand({ type: "PLAY_TRACK", item });
     },
-    [current, status, postCommand, deviceId, isActiveOutput, syncedIsPlaying],
+    [
+      current,
+      status,
+      postCommand,
+      deviceId,
+      isActiveOutput,
+      syncedIsPlaying,
+      jamAttribution,
+    ],
   );
 
   const playContext = useCallback(
@@ -464,7 +590,8 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     ) => {
       if (tracks.length === 0) return;
       const clampedIndex = Math.min(Math.max(startIndex, 0), tracks.length - 1);
-      const items = tracks.map((track) => makeQueueItem(track));
+      const addedBy = jamAttribution();
+      const items = tracks.map((track) => makeQueueItem(track, false, addedBy));
       const action = {
         type: "PLAY_CONTEXT" as const,
         contextId,
@@ -478,7 +605,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       dispatch(action);
       postCommand(action);
     },
-    [postCommand, current, deviceId],
+    [postCommand, current, deviceId, jamAttribution],
   );
 
   const toggleShuffle = useCallback(() => {
@@ -530,20 +657,20 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
 
   const queuePlayNext = useCallback(
     (track: PlayerTrack) => {
-      const item = makeQueueItem(track, true);
+      const item = makeQueueItem(track, true, jamAttribution());
       dispatch({ type: "QUEUE_PLAY_NEXT", item });
       postCommand({ type: "QUEUE_PLAY_NEXT", item });
     },
-    [postCommand],
+    [postCommand, jamAttribution],
   );
 
   const queueAddToEnd = useCallback(
     (track: PlayerTrack) => {
-      const item = makeQueueItem(track, true);
+      const item = makeQueueItem(track, true, jamAttribution());
       dispatch({ type: "QUEUE_ADD_TO_END", item });
       postCommand({ type: "QUEUE_ADD_TO_END", item });
     },
-    [postCommand],
+    [postCommand, jamAttribution],
   );
 
   const removeFromQueue = useCallback(
@@ -797,6 +924,16 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       activeDeviceIds,
       isActiveOutput,
       setActiveDevices,
+
+      currentUserId,
+      jam,
+      isJamHost: jam !== null && jam.hostId === currentUserId,
+      jamInvites,
+      inviteToJam,
+      acceptJamInvite,
+      declineJamInvite,
+      leaveJam,
+      stopJam,
     }),
     [
       current,
@@ -838,6 +975,14 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       activeDeviceIds,
       isActiveOutput,
       setActiveDevices,
+      currentUserId,
+      jam,
+      jamInvites,
+      inviteToJam,
+      acceptJamInvite,
+      declineJamInvite,
+      leaveJam,
+      stopJam,
     ],
   );
 

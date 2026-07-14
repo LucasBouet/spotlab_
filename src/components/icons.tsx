@@ -291,3 +291,15 @@ export function GripIcon(props: SVGProps<SVGSVGElement>) {
     </IconBase>
   );
 }
+
+// Group of people — used for the jam (shared listening) affordances.
+export function JamIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+      <path d="M16 5.2a3 3 0 0 1 0 5.6" />
+      <path d="M17.5 14.3A5.5 5.5 0 0 1 20.5 19" />
+    </IconBase>
+  );
+}

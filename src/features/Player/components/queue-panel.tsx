@@ -84,6 +84,11 @@ function QueueRow({ item }: { item: QueueItem }) {
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm text-white">{item.title}</p>
           <p className="truncate text-xs text-white/50">{item.artist}</p>
+          {item.addedBy && (
+            <p className="truncate text-[11px] text-brand/90">
+              Ajouté par {item.addedBy.name}
+            </p>
+          )}
         </div>
       </button>
       <span className="shrink-0 text-xs text-white/40">

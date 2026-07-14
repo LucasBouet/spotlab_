@@ -1,4 +1,5 @@
 import type { QueueAction, QueueItem } from "@/features/Player/queue-reducer";
+import type { JamStateDTO } from "@/lib/jam-types";
 
 export type DeviceDTO = {
   deviceId: string;
@@ -32,4 +33,12 @@ export type CanonicalPlaybackStateDTO = {
   activeDeviceIds: string[];
   originDeviceId: string | null;
   revision: number;
+  // Identifies which shared state this snapshot belongs to: the user's own id
+  // in solo mode, or the jam id while in a jam. The client resets its revision
+  // gate whenever this changes, so switching rooms (solo <-> jam) never drops
+  // the new room's first, lower-numbered broadcast as a stale duplicate.
+  room: string;
+  // Non-null while the state above is a shared jam; carries the member roster
+  // so any client can render the "jam en cours" indicator and roster.
+  jam: JamStateDTO | null;
 };

@@ -8,7 +8,14 @@ import {
   useState,
   useTransition,
 } from "react";
-import { CheckIcon, PlusIcon, TrashIcon, XIcon } from "@/components/icons";
+import {
+  CheckIcon,
+  JamIcon,
+  PlusIcon,
+  TrashIcon,
+  XIcon,
+} from "@/components/icons";
+import { usePlayer } from "@/features/Player/player-context";
 import {
   acceptFriendRequest,
   cancelFriendRequest,
@@ -32,6 +39,26 @@ function displayName(name: string | null, email: string): string {
 
 export function SocialPanel({ initialData }: { initialData: SocialData }) {
   const { friends, incoming, outgoing } = initialData;
+  const { jam, inviteToJam } = usePlayer();
+
+  // userIds already in the jam (so their row shows "dans la jam" instead of an
+  // invite button), and userIds we've just invited this session (optimistic —
+  // the server doesn't echo an outgoing-invite list back).
+  const memberIds = new Set(jam?.members.map((member) => member.userId) ?? []);
+  const [invitedIds, setInvitedIds] = useState<Set<string>>(new Set());
+
+  async function handleInvite(friendUserId: string) {
+    setInvitedIds((prev) => new Set(prev).add(friendUserId));
+    const jamId = await inviteToJam(friendUserId);
+    if (!jamId) {
+      // Invite failed — let them try again.
+      setInvitedIds((prev) => {
+        const next = new Set(prev);
+        next.delete(friendUserId);
+        return next;
+      });
+    }
+  }
 
   // Live presence keyed by friend user id, refreshed by polling. Overrides the
   // snapshot embedded in `initialData` (which is only as fresh as the last page
@@ -73,6 +100,8 @@ export function SocialPanel({ initialData }: { initialData: SocialData }) {
 
   return (
     <div className="flex flex-col gap-6">
+      <JamInvitesSection />
+      {jam && <JamCard />}
       <AddFriendForm />
 
       {incoming.length > 0 && (
@@ -115,6 +144,9 @@ export function SocialPanel({ initialData }: { initialData: SocialData }) {
                 friendshipId={friend.friendshipId}
                 label={displayName(friend.name, friend.email)}
                 activity={liveActivity[friend.userId] ?? friend.activity}
+                isInJam={memberIds.has(friend.userId)}
+                isInvited={invitedIds.has(friend.userId)}
+                onInvite={() => handleInvite(friend.userId)}
               />
             ))}
           </ul>
@@ -286,10 +318,16 @@ function FriendRow({
   friendshipId,
   label,
   activity,
+  isInJam,
+  isInvited,
+  onInvite,
 }: {
   friendshipId: string;
   label: string;
   activity: FriendActivity;
+  isInJam: boolean;
+  isInvited: boolean;
+  onInvite: () => void;
 }) {
   const [isPending, startTransition] = useTransition();
 
@@ -328,6 +366,23 @@ function FriendRow({
         )}
       </div>
 
+      {isInJam ? (
+        <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand/15 px-2.5 py-1 text-xs font-medium text-brand">
+          <JamIcon className="h-3.5 w-3.5" />
+          Dans la jam
+        </span>
+      ) : (
+        <button
+          type="button"
+          onClick={onInvite}
+          disabled={isInvited}
+          className="flex shrink-0 items-center gap-1.5 rounded-full border border-brand/40 px-2.5 py-1 text-xs font-medium text-brand transition hover:bg-brand/10 disabled:opacity-60"
+        >
+          <JamIcon className="h-3.5 w-3.5" />
+          {isInvited ? "Invité" : "Inviter à une jam"}
+        </button>
+      )}
+
       <button
         type="button"
         disabled={isPending}
@@ -342,5 +397,151 @@ function FriendRow({
         <TrashIcon className="h-4 w-4" />
       </button>
     </li>
+  );
+}
+
+// The active-jam control card, shown at the top of the Social tab while the user
+// is in a jam: the roster (with host badge + live dots), plus Leave for anyone
+// and Stop-for-everyone for the host.
+function JamCard() {
+  const { jam, isJamHost, leaveJam, stopJam } = usePlayer();
+  const [isBusy, setIsBusy] = useState(false);
+  if (!jam) return null;
+
+  async function run(action: () => Promise<void>) {
+    setIsBusy(true);
+    try {
+      await action();
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
+  return (
+    <section className="flex flex-col gap-3 rounded-2xl border border-brand/40 bg-brand/5 p-5">
+      <div className="flex items-center gap-2">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/20 text-brand">
+          <JamIcon className="h-4 w-4" />
+        </span>
+        <div className="flex-1">
+          <h2 className="text-sm font-semibold text-white">Jam en cours</h2>
+          <p className="text-xs text-white/50">
+            File d'attente et lecture synchronisées entre les participants.
+          </p>
+        </div>
+      </div>
+
+      <ul className="flex flex-col gap-1">
+        {jam.members.map((member) => (
+          <li
+            key={member.userId}
+            className="flex items-center gap-2.5 rounded-lg bg-surface-elevated px-3 py-2"
+          >
+            <span
+              className={`h-2 w-2 shrink-0 rounded-full ${
+                member.online ? "bg-emerald-400" : "bg-white/25"
+              }`}
+              aria-hidden="true"
+            />
+            <span className="min-w-0 flex-1 truncate text-sm text-white">
+              {member.name}
+            </span>
+            {member.isHost && (
+              <span className="shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium text-white/70">
+                Hôte
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      <div className="flex gap-2">
+        <button
+          type="button"
+          disabled={isBusy}
+          onClick={() => run(leaveJam)}
+          className="flex-1 rounded-lg border border-border px-3 py-2 text-sm text-white/70 transition hover:text-white disabled:opacity-60"
+        >
+          Quitter la jam
+        </button>
+        {isJamHost && (
+          <button
+            type="button"
+            disabled={isBusy}
+            onClick={() => run(stopJam)}
+            className="flex-1 rounded-lg bg-red-500/15 px-3 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500/25 disabled:opacity-60"
+          >
+            Arrêter pour tous
+          </button>
+        )}
+      </div>
+    </section>
+  );
+}
+
+// Incoming jam invites, mirrored here from the global toast so they're also
+// actionable from the Social tab.
+function JamInvitesSection() {
+  const { jamInvites, acceptJamInvite, declineJamInvite } = usePlayer();
+  const [busyId, setBusyId] = useState<string | null>(null);
+  if (jamInvites.length === 0) return null;
+
+  return (
+    <section className="flex flex-col gap-3 rounded-2xl border border-brand/40 bg-surface p-5">
+      <h2 className="text-sm font-semibold text-white">
+        Invitations à une jam
+        <span className="ml-2 text-xs font-normal text-white/50">
+          {jamInvites.length}
+        </span>
+      </h2>
+      <ul className="flex flex-col gap-2">
+        {jamInvites.map((invite) => {
+          const isBusy = busyId === invite.jamId;
+          return (
+            <li
+              key={invite.jamId}
+              className="flex items-center gap-3 rounded-lg bg-surface-elevated px-3 py-2"
+            >
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/20 text-brand">
+                <JamIcon className="h-4 w-4" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm text-white">{invite.hostName}</p>
+                <p className="truncate text-xs text-white/50">
+                  vous invite à écouter ensemble
+                </p>
+              </div>
+              <button
+                type="button"
+                disabled={isBusy}
+                onClick={async () => {
+                  setBusyId(invite.jamId);
+                  try {
+                    await acceptJamInvite(invite.jamId);
+                  } finally {
+                    setBusyId(null);
+                  }
+                }}
+                className="shrink-0 rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-hover disabled:opacity-60"
+              >
+                Rejoindre
+              </button>
+              <button
+                type="button"
+                disabled={isBusy}
+                onClick={() => {
+                  setBusyId(invite.jamId);
+                  declineJamInvite(invite.jamId);
+                }}
+                aria-label="Refuser"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border text-white/60 transition hover:text-white disabled:opacity-60"
+              >
+                <XIcon className="h-4 w-4" />
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }

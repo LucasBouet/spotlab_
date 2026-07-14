@@ -7,7 +7,14 @@ export type PlayerTrack = {
   duration: number;
 };
 
-export type QueueItem = PlayerTrack & { uid: string; isManual: boolean };
+// `addedBy` is only populated inside a jam (stamped server-side with the member
+// who queued the track, optionally optimistically client-side). It stays
+// undefined for solo playback, where attribution is meaningless.
+export type QueueItem = PlayerTrack & {
+  uid: string;
+  isManual: boolean;
+  addedBy?: { id: string; name: string };
+};
 
 let uidCounter = 0;
 
@@ -22,8 +29,12 @@ export function generateUid(): string {
   return `${Date.now().toString(36)}-${uidCounter}-${Math.random().toString(36).slice(2)}`;
 }
 
-export function makeQueueItem(track: PlayerTrack, isManual = false): QueueItem {
-  return { ...track, uid: generateUid(), isManual };
+export function makeQueueItem(
+  track: PlayerTrack,
+  isManual = false,
+  addedBy?: { id: string; name: string },
+): QueueItem {
+  return { ...track, uid: generateUid(), isManual, addedBy };
 }
 
 export function shuffleArray<T>(items: T[]): T[] {

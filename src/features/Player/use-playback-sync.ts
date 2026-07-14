@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { JamInviteDTO } from "@/lib/jam-types";
 import type {
   CanonicalPlaybackStateDTO,
   DeviceDTO,
@@ -10,15 +11,21 @@ import type {
 export function usePlaybackSync({
   deviceId,
   onState,
+  onInvites,
 }: {
   deviceId: string;
   onState: (dto: CanonicalPlaybackStateDTO) => void;
+  onInvites: (invites: JamInviteDTO[]) => void;
 }) {
   const [devices, setDevices] = useState<DeviceDTO[]>([]);
   const onStateRef = useRef(onState);
+  const onInvitesRef = useRef(onInvites);
   useEffect(() => {
     onStateRef.current = onState;
   }, [onState]);
+  useEffect(() => {
+    onInvitesRef.current = onInvites;
+  }, [onInvites]);
 
   // EventSource auto-reconnects on transient drops, but on mobile it can be
   // left with a socket that's silently dead while still reported as OPEN
@@ -64,9 +71,11 @@ export function usePlaybackSync({
         const data = JSON.parse((event as MessageEvent<string>).data) as {
           playback: CanonicalPlaybackStateDTO;
           devices: DeviceDTO[];
+          jamInvites: JamInviteDTO[];
         };
         onStateRef.current(data.playback);
         setDevices(data.devices);
+        onInvitesRef.current(data.jamInvites);
       });
 
       es.addEventListener("playback", (event) => {
@@ -83,6 +92,14 @@ export function usePlaybackSync({
           (event as MessageEvent<string>).data,
         ) as DeviceDTO[];
         setDevices(list);
+      });
+
+      es.addEventListener("jam-invites", (event) => {
+        markAlive();
+        const invites = JSON.parse(
+          (event as MessageEvent<string>).data,
+        ) as JamInviteDTO[];
+        onInvitesRef.current(invites);
       });
 
       es.addEventListener("ping", markAlive);

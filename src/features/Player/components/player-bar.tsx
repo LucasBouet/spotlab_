@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   DevicesIcon,
@@ -8,6 +9,7 @@ import {
   DownloadIcon,
   ExpandIcon,
   HeartIcon,
+  JamIcon,
   MicIcon,
   PauseIcon,
   PlayIcon,
@@ -112,6 +114,7 @@ export function PlayerBar() {
     openLyrics,
     isDevicesOpen,
     toggleDevicesPanel,
+    jam,
   } = usePlayer();
   const currentTime = usePlayerTime();
   const previousVolumeRef = useRef(volume || 100);
@@ -331,6 +334,19 @@ export function PlayerBar() {
           </div>
 
           <div className="flex min-w-0 items-center justify-end gap-3">
+            {jam && (
+              <Link
+                href="/settings"
+                aria-label="Jam en cours — gérer dans les réglages"
+                title={`Jam en cours · ${jam.members.length} participant${
+                  jam.members.length > 1 ? "s" : ""
+                }`}
+                className="flex shrink-0 items-center gap-1 rounded-full bg-brand/20 px-2 py-1 text-xs font-semibold text-brand transition hover:bg-brand/30"
+              >
+                <JamIcon className="h-4 w-4" />
+                <span className="tabular-nums">{jam.members.length}</span>
+              </Link>
+            )}
             <span className="hidden shrink-0 text-xs text-white/40 tabular-nums sm:inline">
               {formatTime(currentTime)} / {formatTime(duration)}
             </span>
