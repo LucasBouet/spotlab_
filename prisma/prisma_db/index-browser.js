@@ -190,6 +190,15 @@ exports.Prisma.DeviceScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.FriendshipScalarFieldEnum = {
+  id: 'id',
+  requesterId: 'requesterId',
+  addresseeId: 'addresseeId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -204,6 +213,11 @@ exports.Role = exports.$Enums.Role = {
   USER: 'USER'
 };
 
+exports.FriendshipStatus = exports.$Enums.FriendshipStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Session: 'Session',
@@ -212,7 +226,8 @@ exports.Prisma.ModelName = {
   PlaylistTrack: 'PlaylistTrack',
   AppSetting: 'AppSetting',
   UserSetting: 'UserSetting',
-  Device: 'Device'
+  Device: 'Device',
+  Friendship: 'Friendship'
 };
 
 /**

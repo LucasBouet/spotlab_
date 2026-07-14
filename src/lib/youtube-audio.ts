@@ -59,8 +59,16 @@ export class TrackDownload extends EventEmitter {
     if (this.filePath) return Promise.resolve();
     if (this.error) return Promise.reject(this.error);
     return new Promise((resolve, reject) => {
-      this.once("ext", resolve);
-      this.once("error", reject);
+      const onExt = () => {
+        this.off("error", onError);
+        resolve();
+      };
+      const onError = (err: Error) => {
+        this.off("ext", onExt);
+        reject(err);
+      };
+      this.once("ext", onExt);
+      this.once("error", onError);
     });
   }
 
@@ -69,20 +77,36 @@ export class TrackDownload extends EventEmitter {
     if (this.finished && this.filePath) return Promise.resolve(this.filePath);
     if (this.error) return Promise.reject(this.error);
     return new Promise((resolve, reject) => {
-      this.once("done", () => resolve(this.filePath as string));
-      this.once("error", reject);
+      const onDone = () => {
+        this.off("error", onError);
+        resolve(this.filePath as string);
+      };
+      const onError = (err: Error) => {
+        this.off("done", onDone);
+        reject(err);
+      };
+      this.once("done", onDone);
+      this.once("error", onError);
     });
   }
 
   // Resolves the next time new bytes are available (or the download
   // finishes/fails) — used by tailers to wake back up after catching up to
-  // whatever has been written so far.
+  // whatever has been written so far. All three listeners share one handler
+  // that removes the other two when any fires, so a long download (which emits
+  // `progress` on every chunk) can't leak the unfired `done`/`error` listeners.
   waitForProgress(): Promise<void> {
     if (this.finished || this.error) return Promise.resolve();
     return new Promise((resolve) => {
-      this.once("progress", resolve);
-      this.once("done", resolve);
-      this.once("error", resolve);
+      const settle = () => {
+        this.off("progress", settle);
+        this.off("done", settle);
+        this.off("error", settle);
+        resolve();
+      };
+      this.once("progress", settle);
+      this.once("done", settle);
+      this.once("error", settle);
     });
   }
 }
@@ -249,7 +273,25 @@ export async function* tailTrackDownload(
   if (!download.filePath) await download.waitForExt();
   const filePath = download.filePath as string;
 
-  const fd = await open(filePath, "r");
+  // The download can finish between openTrackStream deciding to tail and this
+  // generator running: on completion the `.part` is renamed to its final name,
+  // so the path captured above may already be gone. Readers that opened before
+  // the rename keep their fd (rename doesn't invalidate it), but one opening
+  // after it must fall back to the final name — deterministically the same path
+  // without the `.part` suffix.
+  let fd: Awaited<ReturnType<typeof open>>;
+  try {
+    fd = await open(filePath, "r");
+  } catch (err) {
+    if (
+      (err as NodeJS.ErrnoException).code === "ENOENT" &&
+      filePath.endsWith(".part")
+    ) {
+      fd = await open(filePath.slice(0, -".part".length), "r");
+    } else {
+      throw err;
+    }
+  }
   try {
     let position = 0;
     const chunkSize = 256 * 1024;

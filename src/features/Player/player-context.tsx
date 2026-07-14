@@ -83,6 +83,7 @@ type PlayerContextValue = {
   playTrack: (track: PlayerTrack) => void;
   togglePlay: () => void;
   seek: (time: number) => void;
+  resyncTime: () => void;
   setVolume: (volume: number) => void;
 
   activeContextId: string | null;
@@ -594,6 +595,30 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     [isActiveOutput, postCommand],
   );
 
+  // Snaps the exposed currentTime back to the true playback position on demand
+  // — the audio element's own clock when this device is the one making sound,
+  // otherwise a fresh extrapolation from the latest synced anchor. Used by the
+  // lyrics "Resync" button to recover from a highlight that has drifted (most
+  // often after a mobile tab was backgrounded and its timers throttled).
+  // Unlike seek() this only re-reads the position, it never moves playback or
+  // broadcasts a command.
+  const resyncTime = useCallback(() => {
+    const audio = audioRef.current;
+    if (isActiveOutput && audio) {
+      setCurrentTime(audio.currentTime);
+      return;
+    }
+    if (!current) return;
+    setCurrentTime(
+      extrapolatePosition({
+        positionSeconds: positionAnchorRef.current.positionSeconds,
+        positionUpdatedAtMs: positionAnchorRef.current.atMs,
+        isPlaying: syncedIsPlaying,
+        durationSeconds: current.duration,
+      }),
+    );
+  }, [isActiveOutput, current, syncedIsPlaying]);
+
   const setVolume = useCallback((next: number) => {
     const clamped = Math.max(0, Math.min(MAX_VOLUME, Math.round(next)));
     setVolumeState(clamped);
@@ -735,6 +760,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       playTrack,
       togglePlay,
       seek,
+      resyncTime,
       setVolume,
 
       activeContextId,
@@ -780,6 +806,7 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       playTrack,
       togglePlay,
       seek,
+      resyncTime,
       setVolume,
       activeContextId,
       shuffle,

@@ -216,6 +216,15 @@ export function DotsIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function RefreshIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <path d="M20 11a8 8 0 1 0-.6 4" />
+      <path d="M20 4v6h-6" />
+    </IconBase>
+  );
+}
+
 export function DownloadIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <IconBase {...props}>

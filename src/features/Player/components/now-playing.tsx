@@ -29,6 +29,7 @@ import {
   usePlayerTime,
 } from "@/features/Player/player-context";
 import { useLyrics } from "@/features/Player/use-lyrics";
+import { useLyricsOffset } from "@/features/Player/use-lyrics-offset";
 
 // How far down the sheet has to be dragged (in px) before a release is
 // treated as "close" rather than "snap back open".
@@ -42,6 +43,7 @@ export function NowPlayingView() {
     volume,
     togglePlay,
     seek,
+    resyncTime,
     setVolume,
     shuffle,
     toggleShuffle,
@@ -66,6 +68,11 @@ export function NowPlayingView() {
   // during normal listening, and is already cached by the time the user
   // taps the mic button.
   const lyricsState = useLyrics(currentTrack);
+  const {
+    offset: lyricsOffset,
+    nudge: nudgeLyricsOffset,
+    reset: resetLyricsOffset,
+  } = useLyricsOffset(currentTrack?.id ?? null);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
@@ -227,6 +234,10 @@ export function NowPlayingView() {
           <LyricsView
             state={lyricsState}
             currentTime={currentTime}
+            offset={lyricsOffset}
+            onNudge={nudgeLyricsOffset}
+            onReset={resetLyricsOffset}
+            onResync={resyncTime}
             onSeek={seek}
           />
         ) : (

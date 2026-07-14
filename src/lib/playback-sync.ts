@@ -114,6 +114,31 @@ export function isOnline(userId: string, deviceId: string): boolean {
   return false;
 }
 
+// Presence for the social/friends view — reuses the exact same in-memory state
+// as device sync. A user is "online" while they hold at least one live SSE
+// connection (every open app tab keeps one), and their "now playing" is read
+// straight from their canonical playback state. No extra bookkeeping and no DB.
+export function isUserOnline(userId: string): boolean {
+  const userConnections = connections.get(userId);
+  return userConnections !== undefined && userConnections.size > 0;
+}
+
+export function getNowPlaying(userId: string): {
+  title: string;
+  artist: string;
+  cover: string;
+  isPlaying: boolean;
+} | null {
+  const state = playbackState.get(userId);
+  if (!state || !state.current) return null;
+  return {
+    title: state.current.title,
+    artist: state.current.artist,
+    cover: state.current.cover,
+    isPlaying: state.isPlaying,
+  };
+}
+
 export async function listDeviceDTOs(userId: string): Promise<DeviceDTO[]> {
   const devices = await prisma.device.findMany({
     where: { userId },
