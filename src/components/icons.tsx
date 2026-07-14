@@ -128,6 +128,17 @@ export function ShieldIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function KeyIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <circle cx="8" cy="16" r="4" />
+      <path d="M11 13 20 4" />
+      <path d="m17 7 2.5 2.5" />
+      <path d="m14.5 9.5 2 2" />
+    </IconBase>
+  );
+}
+
 export function PlayIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <IconBase {...props} fill="currentColor" stroke="none">

@@ -25,6 +25,7 @@ model User {
   settings     UserSetting[]
   playlists    Playlist[]
   devices      Device[]
+  passkeys     Passkey[]
 
   sentFriendRequests     Friendship[] @relation("SentFriendRequests")
   receivedFriendRequests Friendship[] @relation("ReceivedFriendRequests")
@@ -106,6 +107,27 @@ model Device {
   createdAt  DateTime @default(now())
 
   @@unique([userId, deviceId])
+}
+
+// A WebAuthn credential (passkey) the user can log in with. Works with platform
+// authenticators (Face/Touch ID, Windows Hello) and roaming providers such as
+// Bitwarden. `credentialId`/`publicKey` come straight from the authenticator;
+// `counter` is bumped on every login to help detect cloned authenticators.
+model Passkey {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialId String   @unique
+  publicKey    Bytes
+  counter      Int      @default(0)
+  transports   String?
+  deviceType   String?
+  backedUp     Boolean  @default(false)
+  name         String
+  createdAt    DateTime @default(now())
+  lastUsedAt   DateTime @default(now())
+
+  @@index([userId])
 }
 
 enum FriendshipStatus {

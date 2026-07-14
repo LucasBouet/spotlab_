@@ -192,6 +192,20 @@ exports.Prisma.DeviceScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PasskeyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  credentialId: 'credentialId',
+  publicKey: 'publicKey',
+  counter: 'counter',
+  transports: 'transports',
+  deviceType: 'deviceType',
+  backedUp: 'backedUp',
+  name: 'name',
+  createdAt: 'createdAt',
+  lastUsedAt: 'lastUsedAt'
+};
+
 exports.Prisma.FriendshipScalarFieldEnum = {
   id: 'id',
   requesterId: 'requesterId',
@@ -229,6 +243,7 @@ exports.Prisma.ModelName = {
   AppSetting: 'AppSetting',
   UserSetting: 'UserSetting',
   Device: 'Device',
+  Passkey: 'Passkey',
   Friendship: 'Friendship'
 };
 

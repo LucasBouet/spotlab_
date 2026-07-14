@@ -3,6 +3,10 @@
 import { useState } from "react";
 import type { UserSettingKey } from "@/config/settings";
 import { ImportPlaylistForm } from "@/features/Settings/components/import-playlist-form";
+import {
+  type PasskeyInfo,
+  PasskeyPanel,
+} from "@/features/Settings/components/passkey-panel";
 import { PasswordForm } from "@/features/Settings/components/password-form";
 import { PreferencesForm } from "@/features/Settings/components/preferences-form";
 import { ProfileForm } from "@/features/Settings/components/profile-form";
@@ -22,11 +26,13 @@ export function SettingsView({
   email,
   userSettings,
   social,
+  passkeys,
 }: {
   name: string | null;
   email: string;
   userSettings: Record<UserSettingKey, string>;
   social: SocialData;
+  passkeys: PasskeyInfo[];
 }) {
   const [tab, setTab] = useState<Tab>("social");
 
@@ -67,6 +73,7 @@ export function SettingsView({
         <div className="flex flex-col gap-6">
           <ProfileForm name={name} email={email} />
           <PasswordForm />
+          <PasskeyPanel passkeys={passkeys} />
         </div>
       )}
     </div>
