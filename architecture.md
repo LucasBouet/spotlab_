@@ -1,6 +1,6 @@
 # File Tree: spotlab_
 
-**Generated:** 7/13/2026, 9:27:24 PM
+**Generated:** 7/14/2026, 1:50:57 PM
 **Root Path:** `/home/lucas/spotlab_`
 
 ```
@@ -66,12 +66,6 @@
 │   ├── sw.js
 │   ├── vercel.svg
 │   └── window.svg
-├── rip
-│   ├── API.md
-│   ├── README.md
-│   ├── app.py
-│   ├── config.template.toml
-│   └── requirements.txt
 ├── src
 │   ├── app
 │   │   ├── (app)
@@ -105,6 +99,9 @@
 │   │   │   │   ├── register
 │   │   │   │   │   └── route.ts
 │   │   │   │   └── route.ts
+│   │   │   ├── download
+│   │   │   │   └── [id]
+│   │   │   │       └── route.ts
 │   │   │   ├── lyrics
 │   │   │   │   └── route.ts
 │   │   │   ├── playlists
@@ -217,7 +214,9 @@
 │   │   ├── stream.ts
 │   │   ├── sync-types.ts
 │   │   ├── use-resizable-width.ts
-│   │   └── validation.ts
+│   │   ├── validation.ts
+│   │   ├── youtube-audio.ts
+│   │   └── ytmusic.ts
 │   └── proxy.ts
 ├── .claudeignore
 ├── .gitignore

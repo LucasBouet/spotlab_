@@ -3,7 +3,7 @@ import { stat } from "node:fs/promises";
 import { Readable } from "node:stream";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/session";
-import { resolveTrackFile } from "@/lib/stream";
+import { openTrackStream } from "@/lib/stream";
 
 export const runtime = "nodejs";
 
@@ -40,9 +40,9 @@ export async function GET(
     );
   }
 
-  let filePath: string;
+  let result: Awaited<ReturnType<typeof openTrackStream>>;
   try {
-    filePath = await resolveTrackFile(id);
+    result = await openTrackStream(id);
   } catch (err) {
     return NextResponse.json(
       {
@@ -55,6 +55,25 @@ export async function GET(
     );
   }
 
+  if (result.kind === "live") {
+    // Track isn't cached yet: stream bytes straight from yt-dlp as they
+    // arrive instead of waiting for the whole file, so playback can start
+    // almost as soon as YouTube starts sending data. Range requests aren't
+    // honored here (the final size isn't known yet) — the client just gets
+    // the full body from the start; once the file finishes caching, later
+    // requests hit the normal path below with full Range support.
+    const nodeStream = Readable.from(result.read());
+    return new NextResponse(Readable.toWeb(nodeStream) as ReadableStream, {
+      status: 200,
+      headers: {
+        "Content-Type": result.contentType,
+        "Accept-Ranges": "none",
+        "Cache-Control": "no-store",
+      },
+    });
+  }
+
+  const filePath = result.filePath;
   const fileStat = await stat(filePath).catch(() => null);
   if (!fileStat) {
     return NextResponse.json(

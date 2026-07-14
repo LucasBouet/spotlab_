@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { isOnline } from "@/lib/playback-sync";
+import { broadcastDevices, isOnline } from "@/lib/playback-sync";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 import type { DeviceDTO } from "@/lib/sync-types";
@@ -45,6 +45,12 @@ export async function POST(request: Request) {
     online: isOnline(user.id, device.deviceId),
     lastSeenAt: device.lastSeenAt.toISOString(),
   };
+
+  // Push the updated roster to every connected panel. Without this, a
+  // brand-new device's row would only reach already-connected peers on their
+  // next refresh (or some unrelated later broadcast), which is what made new
+  // devices appear to "not show up until I reload".
+  await broadcastDevices(user.id);
 
   return NextResponse.json({ device: dto });
 }

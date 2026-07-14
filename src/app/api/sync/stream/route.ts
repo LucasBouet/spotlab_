@@ -12,7 +12,7 @@ import { getCurrentUser } from "@/lib/session";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const PING_INTERVAL_MS = 25000;
+const PING_INTERVAL_MS = 20000;
 
 function touchLastSeen(userId: string, deviceId: string) {
   prisma.device
@@ -41,19 +41,20 @@ export async function GET(request: Request) {
 
   const encoder = new TextEncoder();
   let pingInterval: ReturnType<typeof setInterval> | undefined;
+  let connectionId = "";
   let closed = false;
 
   const cleanup = () => {
     if (closed) return;
     closed = true;
     if (pingInterval) clearInterval(pingInterval);
-    unsubscribe(user.id, deviceId);
+    unsubscribe(user.id, connectionId);
     broadcastDevices(user.id).catch(() => {});
   };
 
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
-      subscribe(user.id, deviceId, controller);
+      connectionId = subscribe(user.id, deviceId, controller);
       touchLastSeen(user.id, deviceId);
 
       // Enqueuing can throw if the underlying connection died before our own
@@ -69,6 +70,11 @@ export async function GET(request: Request) {
         }
       };
 
+      // Bound the browser's auto-reconnect delay (the default is UA-specific
+      // and often several seconds) so a dropped mobile connection comes back
+      // quickly.
+      safeEnqueue("retry: 3000\n\n");
+
       listDeviceDTOs(user.id)
         .then((devices) => {
           safeEnqueue(
@@ -82,7 +88,12 @@ export async function GET(request: Request) {
       broadcastDevices(user.id).catch(() => {});
 
       pingInterval = setInterval(() => {
-        safeEnqueue(": ping\n\n");
+        // A real named event (not an SSE `: comment`, which EventSource never
+        // surfaces) so the client can treat pings as a liveness signal and
+        // force a reconnect when they stop — a half-dead socket the browser
+        // still reports as OPEN (common for a backgrounded mobile tab)
+        // otherwise never recovers on its own.
+        safeEnqueue(`event: ping\ndata: ${Date.now()}\n\n`);
         if (!closed) touchLastSeen(user.id, deviceId);
       }, PING_INTERVAL_MS);
     },

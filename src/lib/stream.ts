@@ -1,7 +1,13 @@
 import { mkdir, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { type DeezerTrack, fetchDeezer } from "@/lib/deezer";
-import { downloadAudio, isIncompleteCacheFile } from "@/lib/youtube-audio";
+import {
+  completedDownload,
+  isIncompleteCacheFile,
+  startDownload,
+  type TrackDownload,
+  tailTrackDownload,
+} from "@/lib/youtube-audio";
 import { findBestMatch } from "@/lib/ytmusic";
 
 const CACHE_DIR = process.env.STREAM_CACHE_DIR
@@ -31,12 +37,12 @@ async function findExistingCacheFile(trackId: string): Promise<string | null> {
   return exists ? filePath : null;
 }
 
-async function downloadTrack(id: string): Promise<string> {
+async function startTrackDownload(id: string): Promise<TrackDownload> {
   // Another request may have finished caching this exact track while we
   // were waiting to be scheduled (e.g. a prefetch racing the actual
   // playback request) — skip the redundant work if so.
   const existing = await findExistingCacheFile(id);
-  if (existing) return existing;
+  if (existing) return completedDownload(existing);
 
   const track = await fetchDeezer<DeezerTrack>(`/track/${id}`);
   if (!track) {
@@ -53,31 +59,66 @@ async function downloadTrack(id: string): Promise<string> {
   }
 
   await ensureCacheDir();
-
-  try {
-    return await downloadAudio(videoId, CACHE_DIR, id);
-  } catch (err) {
-    console.error(`Failed to cache track ${id}:`, err);
-    const detail = err instanceof Error ? err.message : String(err);
-    throw new Error(`Le téléchargement du titre a échoué : ${detail}`);
-  }
+  return startDownload(videoId, CACHE_DIR, id);
 }
 
 // Per-track de-dupe so a prefetch racing the real playback request (or two
 // devices starting the same track at once) share one download instead of
-// each kicking off their own.
-const inFlight = new Map<string, Promise<string>>();
+// each kicking off their own. Keyed on the promise that resolves once the
+// yt-dlp process has actually been spawned, so two calls arriving before
+// that happens still collapse onto the same download (the map entry is set
+// synchronously, before the metadata lookup above ever awaits).
+const inFlight = new Map<string, Promise<TrackDownload>>();
+
+function getOrStartDownload(id: string): Promise<TrackDownload> {
+  const pending = inFlight.get(id);
+  if (pending) return pending;
+
+  const promise = startTrackDownload(id);
+  inFlight.set(id, promise);
+
+  promise
+    .then((download) => download.waitForDone())
+    .catch(() => {})
+    .finally(() => inFlight.delete(id));
+
+  return promise;
+}
 
 export async function resolveTrackFile(id: string): Promise<string> {
   const existing = await findExistingCacheFile(id);
   if (existing) return existing;
 
-  const pending = inFlight.get(id);
-  if (pending) return pending;
+  const download = await getOrStartDownload(id);
+  return download.waitForDone();
+}
 
-  const promise = downloadTrack(id).finally(() => {
-    inFlight.delete(id);
-  });
-  inFlight.set(id, promise);
-  return promise;
+export type TrackStreamResult =
+  | { kind: "file"; filePath: string }
+  | {
+      kind: "live";
+      contentType: string;
+      read: () => AsyncGenerator<Buffer>;
+    };
+
+// Like resolveTrackFile, but for a track that isn't cached yet, returns a
+// live stream that starts producing bytes as soon as yt-dlp has picked a
+// format — instead of making the caller wait for the entire download (which
+// is what made first-time playback slow, especially over a mobile network).
+export async function openTrackStream(id: string): Promise<TrackStreamResult> {
+  const existing = await findExistingCacheFile(id);
+  if (existing) return { kind: "file", filePath: existing };
+
+  const download = await getOrStartDownload(id);
+  if (download.finished && download.filePath) {
+    return { kind: "file", filePath: download.filePath };
+  }
+
+  await download.waitForExt();
+
+  return {
+    kind: "live",
+    contentType: download.contentType ?? "application/octet-stream",
+    read: () => tailTrackDownload(download),
+  };
 }
