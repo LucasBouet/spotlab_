@@ -28,6 +28,14 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Disable pull-to-refresh / scroll-chaining on touch devices */
+@media (pointer: coarse) {
+  html,
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
+
 @keyframes progress-indeterminate {
   0% {
     transform: translateX(-100%);

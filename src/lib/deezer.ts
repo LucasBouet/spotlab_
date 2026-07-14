@@ -4,7 +4,10 @@ export type DeezerTrack = {
   id: number;
   title: string;
   duration: number;
-  artist: { name: string };
+  // `id` is present on tracks that come straight from the Deezer API
+  // (search/album/artist), but absent on tracks rebuilt from our DB rows that
+  // predate artist-id storage — so it stays optional.
+  artist: { id?: number; name: string };
   album: { title: string; cover_medium: string };
 };
 

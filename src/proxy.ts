@@ -25,6 +25,11 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // PWA install assets (manifest, icon route, service worker) must stay
+    // publicly reachable: the manifest link is fetched by Chrome without
+    // cookies, and on Android the icon/manifest are fetched server-side by
+    // Google's WebAPK minting server. Redirecting them to /login breaks
+    // installability, so they are excluded from the auth gate here.
+    "/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|icon|apple-icon|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

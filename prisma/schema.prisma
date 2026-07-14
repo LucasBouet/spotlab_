@@ -45,6 +45,7 @@ model LikedTrack {
   deezerTrackId Int
   title         String
   artistName    String
+  artistId      Int?
   albumTitle    String
   albumCover    String
   duration      Int
@@ -70,6 +71,7 @@ model PlaylistTrack {
   deezerTrackId Int
   title         String
   artistName    String
+  artistId      Int?
   albumTitle    String
   albumCover    String
   duration      Int

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { HeartIcon, XIcon } from "@/components/icons";
 import { TrackPlayButton } from "@/features/Player/components/track-play-button";
@@ -46,10 +47,25 @@ export function TrackList({
   removeLabel?: string;
   queueContextId?: string;
 }) {
-  const { playContext } = usePlayer();
+  const { playContext, playTrack, togglePlay, currentTrack } = usePlayer();
   const playerTracks = useMemo(() => tracks.map(toPlayerTrack), [tracks]);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
   const observerRef = useRef<IntersectionObserver | null>(null);
+
+  // Mirror the cover play button so tapping the title starts playback too —
+  // handy on mobile where the hover-reveal overlay isn't discoverable.
+  function playTrackAt(index: number) {
+    const playerTrack = playerTracks[index];
+    if (currentTrack?.id === playerTrack.id) {
+      togglePlay();
+      return;
+    }
+    if (queueContextId) {
+      playContext(queueContextId, playerTracks, index);
+    } else {
+      playTrack(playerTrack);
+    }
+  }
 
   const sentinelRef = useCallback((node: HTMLLIElement | null) => {
     observerRef.current?.disconnect();
@@ -98,12 +114,25 @@ export function TrackList({
               />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-white">
+              <button
+                type="button"
+                onClick={() => playTrackAt(index)}
+                className="block max-w-full truncate text-left text-sm font-medium text-white hover:underline"
+              >
                 {track.title}
-              </p>
-              <p className="truncate text-xs text-white/50">
-                {track.artist.name}
-              </p>
+              </button>
+              {track.artist.id ? (
+                <Link
+                  href={`/artist/${track.artist.id}`}
+                  className="block max-w-full truncate text-left text-xs text-white/50 transition hover:text-white hover:underline"
+                >
+                  {track.artist.name}
+                </Link>
+              ) : (
+                <p className="truncate text-xs text-white/50">
+                  {track.artist.name}
+                </p>
+              )}
             </div>
             <span className="shrink-0 text-xs text-white/40">
               {formatDuration(track.duration)}

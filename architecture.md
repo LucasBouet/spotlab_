@@ -1,6 +1,6 @@
 # File Tree: spotlab_
 
-**Generated:** 7/14/2026, 1:50:57 PM
+**Generated:** 7/14/2026, 6:00:59 PM
 **Root Path:** `/home/lucas/spotlab_`
 
 ```
@@ -21,6 +21,8 @@
 │   │   ├── 20260706161543_add_playlists
 │   │   │   └── migration.sql
 │   │   ├── 20260711144346_add_devices
+│   │   │   └── migration.sql
+│   │   ├── 20260714120000_add_friendships
 │   │   │   └── migration.sql
 │   │   └── migration_lock.toml
 │   ├── prisma_db
@@ -102,6 +104,9 @@
 │   │   │   ├── download
 │   │   │   │   └── [id]
 │   │   │   │       └── route.ts
+│   │   │   ├── friends
+│   │   │   │   └── activity
+│   │   │   │       └── route.ts
 │   │   │   ├── lyrics
 │   │   │   │   └── route.ts
 │   │   │   ├── playlists
@@ -176,6 +181,7 @@
 │   │   │   ├── player-context.tsx
 │   │   │   ├── queue-reducer.ts
 │   │   │   ├── use-device-id.ts
+│   │   │   ├── use-lyrics-offset.ts
 │   │   │   ├── use-lyrics.ts
 │   │   │   ├── use-media-session.ts
 │   │   │   └── use-playback-sync.ts
@@ -195,14 +201,18 @@
 │   │   │   │   ├── import-playlist-form.tsx
 │   │   │   │   ├── password-form.tsx
 │   │   │   │   ├── preferences-form.tsx
-│   │   │   │   └── profile-form.tsx
+│   │   │   │   ├── profile-form.tsx
+│   │   │   │   ├── settings-view.tsx
+│   │   │   │   └── social-panel.tsx
 │   │   │   ├── actions.ts
-│   │   │   └── pages.tsx
+│   │   │   ├── pages.tsx
+│   │   │   └── social-actions.ts
 │   │   └── shared
 │   │       └── use-like-toggle.ts
 │   ├── lib
 │   │   ├── deezer.ts
 │   │   ├── device-label.ts
+│   │   ├── friends.ts
 │   │   ├── lrc.ts
 │   │   ├── password.ts
 │   │   ├── playback-position.ts
@@ -211,6 +221,7 @@
 │   │   ├── rbac.ts
 │   │   ├── session.ts
 │   │   ├── settings.ts
+│   │   ├── social-types.ts
 │   │   ├── stream.ts
 │   │   ├── sync-types.ts
 │   │   ├── use-resizable-width.ts

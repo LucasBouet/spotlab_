@@ -33,7 +33,7 @@ export default async function Page({
         rowKey: track.id,
         title: track.title,
         duration: track.duration,
-        artist: { name: track.artistName },
+        artist: { id: track.artistId ?? undefined, name: track.artistName },
         album: { title: track.albumTitle, cover_medium: track.albumCover },
       }))}
     />

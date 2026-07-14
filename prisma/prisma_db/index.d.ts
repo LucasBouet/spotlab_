@@ -4067,11 +4067,13 @@ export namespace Prisma {
 
   export type LikedTrackAvgAggregateOutputType = {
     deezerTrackId: number | null
+    artistId: number | null
     duration: number | null
   }
 
   export type LikedTrackSumAggregateOutputType = {
     deezerTrackId: number | null
+    artistId: number | null
     duration: number | null
   }
 
@@ -4081,6 +4083,7 @@ export namespace Prisma {
     deezerTrackId: number | null
     title: string | null
     artistName: string | null
+    artistId: number | null
     albumTitle: string | null
     albumCover: string | null
     duration: number | null
@@ -4093,6 +4096,7 @@ export namespace Prisma {
     deezerTrackId: number | null
     title: string | null
     artistName: string | null
+    artistId: number | null
     albumTitle: string | null
     albumCover: string | null
     duration: number | null
@@ -4105,6 +4109,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: number
     artistName: number
+    artistId: number
     albumTitle: number
     albumCover: number
     duration: number
@@ -4115,11 +4120,13 @@ export namespace Prisma {
 
   export type LikedTrackAvgAggregateInputType = {
     deezerTrackId?: true
+    artistId?: true
     duration?: true
   }
 
   export type LikedTrackSumAggregateInputType = {
     deezerTrackId?: true
+    artistId?: true
     duration?: true
   }
 
@@ -4129,6 +4136,7 @@ export namespace Prisma {
     deezerTrackId?: true
     title?: true
     artistName?: true
+    artistId?: true
     albumTitle?: true
     albumCover?: true
     duration?: true
@@ -4141,6 +4149,7 @@ export namespace Prisma {
     deezerTrackId?: true
     title?: true
     artistName?: true
+    artistId?: true
     albumTitle?: true
     albumCover?: true
     duration?: true
@@ -4153,6 +4162,7 @@ export namespace Prisma {
     deezerTrackId?: true
     title?: true
     artistName?: true
+    artistId?: true
     albumTitle?: true
     albumCover?: true
     duration?: true
@@ -4252,6 +4262,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -4283,6 +4294,7 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
@@ -4296,6 +4308,7 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
@@ -4309,6 +4322,7 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
@@ -4322,13 +4336,14 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
     createdAt?: boolean
   }
 
-  export type LikedTrackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "deezerTrackId" | "title" | "artistName" | "albumTitle" | "albumCover" | "duration" | "createdAt", ExtArgs["result"]["likedTrack"]>
+  export type LikedTrackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "deezerTrackId" | "title" | "artistName" | "artistId" | "albumTitle" | "albumCover" | "duration" | "createdAt", ExtArgs["result"]["likedTrack"]>
   export type LikedTrackInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -4350,6 +4365,7 @@ export namespace Prisma {
       deezerTrackId: number
       title: string
       artistName: string
+      artistId: number | null
       albumTitle: string
       albumCover: string
       duration: number
@@ -4783,6 +4799,7 @@ export namespace Prisma {
     readonly deezerTrackId: FieldRef<"LikedTrack", 'Int'>
     readonly title: FieldRef<"LikedTrack", 'String'>
     readonly artistName: FieldRef<"LikedTrack", 'String'>
+    readonly artistId: FieldRef<"LikedTrack", 'Int'>
     readonly albumTitle: FieldRef<"LikedTrack", 'String'>
     readonly albumCover: FieldRef<"LikedTrack", 'String'>
     readonly duration: FieldRef<"LikedTrack", 'Int'>
@@ -6309,11 +6326,13 @@ export namespace Prisma {
 
   export type PlaylistTrackAvgAggregateOutputType = {
     deezerTrackId: number | null
+    artistId: number | null
     duration: number | null
   }
 
   export type PlaylistTrackSumAggregateOutputType = {
     deezerTrackId: number | null
+    artistId: number | null
     duration: number | null
   }
 
@@ -6323,6 +6342,7 @@ export namespace Prisma {
     deezerTrackId: number | null
     title: string | null
     artistName: string | null
+    artistId: number | null
     albumTitle: string | null
     albumCover: string | null
     duration: number | null
@@ -6335,6 +6355,7 @@ export namespace Prisma {
     deezerTrackId: number | null
     title: string | null
     artistName: string | null
+    artistId: number | null
     albumTitle: string | null
     albumCover: string | null
     duration: number | null
@@ -6347,6 +6368,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: number
     artistName: number
+    artistId: number
     albumTitle: number
     albumCover: number
     duration: number
@@ -6357,11 +6379,13 @@ export namespace Prisma {
 
   export type PlaylistTrackAvgAggregateInputType = {
     deezerTrackId?: true
+    artistId?: true
     duration?: true
   }
 
   export type PlaylistTrackSumAggregateInputType = {
     deezerTrackId?: true
+    artistId?: true
     duration?: true
   }
 
@@ -6371,6 +6395,7 @@ export namespace Prisma {
     deezerTrackId?: true
     title?: true
     artistName?: true
+    artistId?: true
     albumTitle?: true
     albumCover?: true
     duration?: true
@@ -6383,6 +6408,7 @@ export namespace Prisma {
     deezerTrackId?: true
     title?: true
     artistName?: true
+    artistId?: true
     albumTitle?: true
     albumCover?: true
     duration?: true
@@ -6395,6 +6421,7 @@ export namespace Prisma {
     deezerTrackId?: true
     title?: true
     artistName?: true
+    artistId?: true
     albumTitle?: true
     albumCover?: true
     duration?: true
@@ -6494,6 +6521,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -6525,6 +6553,7 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
@@ -6538,6 +6567,7 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
@@ -6551,6 +6581,7 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
@@ -6564,13 +6595,14 @@ export namespace Prisma {
     deezerTrackId?: boolean
     title?: boolean
     artistName?: boolean
+    artistId?: boolean
     albumTitle?: boolean
     albumCover?: boolean
     duration?: boolean
     addedAt?: boolean
   }
 
-  export type PlaylistTrackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playlistId" | "deezerTrackId" | "title" | "artistName" | "albumTitle" | "albumCover" | "duration" | "addedAt", ExtArgs["result"]["playlistTrack"]>
+  export type PlaylistTrackOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playlistId" | "deezerTrackId" | "title" | "artistName" | "artistId" | "albumTitle" | "albumCover" | "duration" | "addedAt", ExtArgs["result"]["playlistTrack"]>
   export type PlaylistTrackInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     playlist?: boolean | PlaylistDefaultArgs<ExtArgs>
   }
@@ -6592,6 +6624,7 @@ export namespace Prisma {
       deezerTrackId: number
       title: string
       artistName: string
+      artistId: number | null
       albumTitle: string
       albumCover: string
       duration: number
@@ -7025,6 +7058,7 @@ export namespace Prisma {
     readonly deezerTrackId: FieldRef<"PlaylistTrack", 'Int'>
     readonly title: FieldRef<"PlaylistTrack", 'String'>
     readonly artistName: FieldRef<"PlaylistTrack", 'String'>
+    readonly artistId: FieldRef<"PlaylistTrack", 'Int'>
     readonly albumTitle: FieldRef<"PlaylistTrack", 'String'>
     readonly albumCover: FieldRef<"PlaylistTrack", 'String'>
     readonly duration: FieldRef<"PlaylistTrack", 'Int'>
@@ -11688,6 +11722,7 @@ export namespace Prisma {
     deezerTrackId: 'deezerTrackId',
     title: 'title',
     artistName: 'artistName',
+    artistId: 'artistId',
     albumTitle: 'albumTitle',
     albumCover: 'albumCover',
     duration: 'duration',
@@ -11714,6 +11749,7 @@ export namespace Prisma {
     deezerTrackId: 'deezerTrackId',
     title: 'title',
     artistName: 'artistName',
+    artistId: 'artistId',
     albumTitle: 'albumTitle',
     albumCover: 'albumCover',
     duration: 'duration',
@@ -11976,6 +12012,7 @@ export namespace Prisma {
     deezerTrackId?: IntFilter<"LikedTrack"> | number
     title?: StringFilter<"LikedTrack"> | string
     artistName?: StringFilter<"LikedTrack"> | string
+    artistId?: IntNullableFilter<"LikedTrack"> | number | null
     albumTitle?: StringFilter<"LikedTrack"> | string
     albumCover?: StringFilter<"LikedTrack"> | string
     duration?: IntFilter<"LikedTrack"> | number
@@ -11989,6 +12026,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrderInput | SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -12006,6 +12044,7 @@ export namespace Prisma {
     deezerTrackId?: IntFilter<"LikedTrack"> | number
     title?: StringFilter<"LikedTrack"> | string
     artistName?: StringFilter<"LikedTrack"> | string
+    artistId?: IntNullableFilter<"LikedTrack"> | number | null
     albumTitle?: StringFilter<"LikedTrack"> | string
     albumCover?: StringFilter<"LikedTrack"> | string
     duration?: IntFilter<"LikedTrack"> | number
@@ -12019,6 +12058,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrderInput | SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -12039,6 +12079,7 @@ export namespace Prisma {
     deezerTrackId?: IntWithAggregatesFilter<"LikedTrack"> | number
     title?: StringWithAggregatesFilter<"LikedTrack"> | string
     artistName?: StringWithAggregatesFilter<"LikedTrack"> | string
+    artistId?: IntNullableWithAggregatesFilter<"LikedTrack"> | number | null
     albumTitle?: StringWithAggregatesFilter<"LikedTrack"> | string
     albumCover?: StringWithAggregatesFilter<"LikedTrack"> | string
     duration?: IntWithAggregatesFilter<"LikedTrack"> | number
@@ -12112,6 +12153,7 @@ export namespace Prisma {
     deezerTrackId?: IntFilter<"PlaylistTrack"> | number
     title?: StringFilter<"PlaylistTrack"> | string
     artistName?: StringFilter<"PlaylistTrack"> | string
+    artistId?: IntNullableFilter<"PlaylistTrack"> | number | null
     albumTitle?: StringFilter<"PlaylistTrack"> | string
     albumCover?: StringFilter<"PlaylistTrack"> | string
     duration?: IntFilter<"PlaylistTrack"> | number
@@ -12125,6 +12167,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrderInput | SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -12141,6 +12184,7 @@ export namespace Prisma {
     deezerTrackId?: IntFilter<"PlaylistTrack"> | number
     title?: StringFilter<"PlaylistTrack"> | string
     artistName?: StringFilter<"PlaylistTrack"> | string
+    artistId?: IntNullableFilter<"PlaylistTrack"> | number | null
     albumTitle?: StringFilter<"PlaylistTrack"> | string
     albumCover?: StringFilter<"PlaylistTrack"> | string
     duration?: IntFilter<"PlaylistTrack"> | number
@@ -12154,6 +12198,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrderInput | SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -12174,6 +12219,7 @@ export namespace Prisma {
     deezerTrackId?: IntWithAggregatesFilter<"PlaylistTrack"> | number
     title?: StringWithAggregatesFilter<"PlaylistTrack"> | string
     artistName?: StringWithAggregatesFilter<"PlaylistTrack"> | string
+    artistId?: IntNullableWithAggregatesFilter<"PlaylistTrack"> | number | null
     albumTitle?: StringWithAggregatesFilter<"PlaylistTrack"> | string
     albumCover?: StringWithAggregatesFilter<"PlaylistTrack"> | string
     duration?: IntWithAggregatesFilter<"PlaylistTrack"> | number
@@ -12559,6 +12605,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -12572,6 +12619,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -12583,6 +12631,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -12596,6 +12645,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -12608,6 +12658,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -12619,6 +12670,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -12631,6 +12683,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -12701,6 +12754,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -12714,6 +12768,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -12725,6 +12780,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -12738,6 +12794,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -12750,6 +12807,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -12761,6 +12819,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -12773,6 +12832,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -13242,6 +13302,17 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type LikedTrackUserIdDeezerTrackIdCompoundUniqueInput = {
     userId: string
     deezerTrackId: number
@@ -13253,6 +13324,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -13261,6 +13333,7 @@ export namespace Prisma {
 
   export type LikedTrackAvgOrderByAggregateInput = {
     deezerTrackId?: SortOrder
+    artistId?: SortOrder
     duration?: SortOrder
   }
 
@@ -13270,6 +13343,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -13282,6 +13356,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -13290,6 +13365,7 @@ export namespace Prisma {
 
   export type LikedTrackSumOrderByAggregateInput = {
     deezerTrackId?: SortOrder
+    artistId?: SortOrder
     duration?: SortOrder
   }
 
@@ -13307,6 +13383,22 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type PlaylistTrackListRelationFilter = {
@@ -13354,6 +13446,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -13362,6 +13455,7 @@ export namespace Prisma {
 
   export type PlaylistTrackAvgOrderByAggregateInput = {
     deezerTrackId?: SortOrder
+    artistId?: SortOrder
     duration?: SortOrder
   }
 
@@ -13371,6 +13465,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -13383,6 +13478,7 @@ export namespace Prisma {
     deezerTrackId?: SortOrder
     title?: SortOrder
     artistName?: SortOrder
+    artistId?: SortOrder
     albumTitle?: SortOrder
     albumCover?: SortOrder
     duration?: SortOrder
@@ -13391,6 +13487,7 @@ export namespace Prisma {
 
   export type PlaylistTrackSumOrderByAggregateInput = {
     deezerTrackId?: SortOrder
+    artistId?: SortOrder
     duration?: SortOrder
   }
 
@@ -13863,6 +13960,14 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutLikedTracksNestedInput = {
     create?: XOR<UserCreateWithoutLikedTracksInput, UserUncheckedCreateWithoutLikedTracksInput>
     connectOrCreate?: UserCreateOrConnectWithoutLikedTracksInput
@@ -14154,6 +14259,33 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumFriendshipStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.FriendshipStatus | EnumFriendshipStatusFieldRefInput<$PrismaModel>
     in?: $Enums.FriendshipStatus[]
@@ -14197,6 +14329,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -14208,6 +14341,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -14399,6 +14533,7 @@ export namespace Prisma {
     deezerTrackId?: IntFilter<"LikedTrack"> | number
     title?: StringFilter<"LikedTrack"> | string
     artistName?: StringFilter<"LikedTrack"> | string
+    artistId?: IntNullableFilter<"LikedTrack"> | number | null
     albumTitle?: StringFilter<"LikedTrack"> | string
     albumCover?: StringFilter<"LikedTrack"> | string
     duration?: IntFilter<"LikedTrack"> | number
@@ -14734,6 +14869,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -14745,6 +14881,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -14828,6 +14965,7 @@ export namespace Prisma {
     deezerTrackId?: IntFilter<"PlaylistTrack"> | number
     title?: StringFilter<"PlaylistTrack"> | string
     artistName?: StringFilter<"PlaylistTrack"> | string
+    artistId?: IntNullableFilter<"PlaylistTrack"> | number | null
     albumTitle?: StringFilter<"PlaylistTrack"> | string
     albumCover?: StringFilter<"PlaylistTrack"> | string
     duration?: IntFilter<"PlaylistTrack"> | number
@@ -15213,6 +15351,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -15281,6 +15420,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -15292,6 +15432,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -15303,6 +15444,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -15433,6 +15575,7 @@ export namespace Prisma {
     deezerTrackId: number
     title: string
     artistName: string
+    artistId?: number | null
     albumTitle: string
     albumCover: string
     duration: number
@@ -15444,6 +15587,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -15455,6 +15599,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number
@@ -15466,6 +15611,7 @@ export namespace Prisma {
     deezerTrackId?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
     albumTitle?: StringFieldUpdateOperationsInput | string
     albumCover?: StringFieldUpdateOperationsInput | string
     duration?: IntFieldUpdateOperationsInput | number

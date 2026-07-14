@@ -47,6 +47,7 @@ export function AddToPlaylistMenu({ track }: { track: DeezerTrack }) {
     deezerTrackId: track.id,
     title: track.title,
     artistName: track.artist.name,
+    artistId: track.artist.id,
     albumTitle: track.album.title,
     albumCover: track.album.cover_medium,
     duration: track.duration,

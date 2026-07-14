@@ -8,6 +8,7 @@ export type PlaylistTrackInput = {
   deezerTrackId: number;
   title: string;
   artistName: string;
+  artistId?: number;
   albumTitle: string;
   albumCover: string;
   duration: number;

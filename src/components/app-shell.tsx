@@ -61,7 +61,7 @@ export async function AppShell({
           </form>
         </header>
 
-        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overscroll-y-contain">
           {children}
         </main>
 
