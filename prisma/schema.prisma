@@ -26,6 +26,8 @@ model User {
   playlists    Playlist[]
   devices      Device[]
   passkeys     Passkey[]
+  playEvents   PlayEvent[]
+  recommendations Recommendation[]
 
   sentFriendRequests     Friendship[] @relation("SentFriendRequests")
   receivedFriendRequests Friendship[] @relation("ReceivedFriendRequests")
@@ -152,4 +154,57 @@ model Friendship {
 
   @@unique([requesterId, addresseeId])
   @@index([addresseeId])
+}
+
+// One row per *qualified* play: written once a track has been actually played
+// for at least the scrobble threshold (~30s) on the primary output device.
+// Track metadata is denormalized so stats survive even if the source track
+// later disappears from Deezer; genre is kept out (cached separately in
+// TrackGenre) because it needs an extra Deezer round-trip to resolve.
+model PlayEvent {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deezerTrackId Int
+  title         String
+  artistName    String
+  artistId      Int?
+  albumTitle    String
+  albumCover    String
+  duration      Int
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([userId, deezerTrackId])
+}
+
+// Per-track genre cache, resolved lazily from Deezer (track -> album -> genre)
+// the first time a track is played. Shared across all users; genreName stays
+// null when Deezer has no genre for the album (a resolved "unknown", so we
+// don't keep refetching it).
+model TrackGenre {
+  deezerTrackId Int      @id
+  albumId       Int?
+  genreId       Int?
+  genreName     String?
+  // "lastfm" (granular, preferred) or "deezer" (coarse fallback). A "deezer"
+  // row is re-resolved to "lastfm" on the next play once a key is configured.
+  source        String?
+  updatedAt     DateTime @updatedAt
+}
+
+// Cached homepage recommendations, one row per (user, time window). The heavy
+// build (dozens of Deezer round-trips seeded from the user's play history) runs
+// on a cache miss or when `computedAt` is older than the TTL, then the JSON
+// result is stored in `payload`. Keeps the homepage instant and Deezer-friendly
+// across frequent visits. `window` is "day" | "week" | "all".
+model Recommendation {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  window     String
+  payload    String
+  computedAt DateTime @default(now())
+
+  @@unique([userId, window])
 }

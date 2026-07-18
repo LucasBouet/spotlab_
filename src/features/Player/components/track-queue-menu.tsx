@@ -3,10 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import { DotsIcon } from "@/components/icons";
 import { downloadTrack } from "@/features/Player/download-track";
-import { type PlayerTrack, usePlayer } from "@/features/Player/player-context";
+import type { PlayerTrack } from "@/features/Player/player-context";
 
-export function TrackQueueMenu({ track }: { track: PlayerTrack }) {
-  const { queuePlayNext, queueAddToEnd } = usePlayer();
+// Queue callbacks are passed in (rather than read from usePlayer here) so a row
+// holding this menu doesn't subscribe to the player context on its own — that
+// keeps it inside its memoized row's re-render boundary. Both callbacks are the
+// context's stable identities.
+export function TrackQueueMenu({
+  track,
+  queuePlayNext,
+  queueAddToEnd,
+}: {
+  track: PlayerTrack;
+  queuePlayNext: (track: PlayerTrack) => void;
+  queueAddToEnd: (track: PlayerTrack) => void;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);

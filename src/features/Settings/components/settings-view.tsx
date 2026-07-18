@@ -11,13 +11,16 @@ import { PasswordForm } from "@/features/Settings/components/password-form";
 import { PreferencesForm } from "@/features/Settings/components/preferences-form";
 import { ProfileForm } from "@/features/Settings/components/profile-form";
 import { SocialPanel } from "@/features/Settings/components/social-panel";
+import { StatsPanel } from "@/features/Settings/components/stats-panel";
+import type { ListeningStats } from "@/features/Settings/stats";
 import type { SocialData } from "@/lib/social-types";
 
-type Tab = "social" | "songs" | "configuration";
+type Tab = "social" | "songs" | "stats" | "configuration";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "social", label: "Social" },
   { id: "songs", label: "Titres" },
+  { id: "stats", label: "Statistiques" },
   { id: "configuration", label: "Configuration" },
 ];
 
@@ -27,12 +30,14 @@ export function SettingsView({
   userSettings,
   social,
   passkeys,
+  stats,
 }: {
   name: string | null;
   email: string;
   userSettings: Record<UserSettingKey, string>;
   social: SocialData;
   passkeys: PasskeyInfo[];
+  stats: ListeningStats;
 }) {
   const [tab, setTab] = useState<Tab>("social");
 
@@ -68,6 +73,8 @@ export function SettingsView({
           <ImportPlaylistForm />
         </div>
       )}
+
+      {tab === "stats" && <StatsPanel stats={stats} />}
 
       {tab === "configuration" && (
         <div className="flex flex-col gap-6">

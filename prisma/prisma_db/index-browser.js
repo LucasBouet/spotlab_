@@ -215,6 +215,36 @@ exports.Prisma.FriendshipScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PlayEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  deezerTrackId: 'deezerTrackId',
+  title: 'title',
+  artistName: 'artistName',
+  artistId: 'artistId',
+  albumTitle: 'albumTitle',
+  albumCover: 'albumCover',
+  duration: 'duration',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.TrackGenreScalarFieldEnum = {
+  deezerTrackId: 'deezerTrackId',
+  albumId: 'albumId',
+  genreId: 'genreId',
+  genreName: 'genreName',
+  source: 'source',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RecommendationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  window: 'window',
+  payload: 'payload',
+  computedAt: 'computedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -244,7 +274,10 @@ exports.Prisma.ModelName = {
   UserSetting: 'UserSetting',
   Device: 'Device',
   Passkey: 'Passkey',
-  Friendship: 'Friendship'
+  Friendship: 'Friendship',
+  PlayEvent: 'PlayEvent',
+  TrackGenre: 'TrackGenre',
+  Recommendation: 'Recommendation'
 };
 
 /**

@@ -1,33 +1,26 @@
 "use client";
 
 import { PauseIcon, PlayIcon } from "@/components/icons";
-import { type PlayerTrack, usePlayer } from "@/features/Player/player-context";
 
+// Presentational only — the play-state booleans and the click handler are
+// passed down from the (memoized) track row so this button re-renders solely
+// when *this* row's state changes, not on every unrelated player-context
+// update (volume drags, queue edits, etc.).
 export function TrackPlayButton({
-  track,
-  onPlay,
+  isCurrent,
+  isPlaying,
+  isLoading,
+  onClick,
 }: {
-  track: PlayerTrack;
-  onPlay?: () => void;
+  isCurrent: boolean;
+  isPlaying: boolean;
+  isLoading: boolean;
+  onClick: () => void;
 }) {
-  const { currentTrack, status, playTrack, togglePlay } = usePlayer();
-  const isCurrent = currentTrack?.id === track.id;
-  const isPlaying = isCurrent && status === "playing";
-  const isLoading = isCurrent && status === "loading";
-
-  function handleClick() {
-    if (isCurrent) {
-      togglePlay();
-      return;
-    }
-    if (onPlay) onPlay();
-    else playTrack(track);
-  }
-
   return (
     <button
       type="button"
-      onClick={handleClick}
+      onClick={onClick}
       aria-label={isPlaying ? "Mettre en pause" : "Lecture"}
       className={`absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition hover:opacity-100 focus-visible:opacity-100 group-hover:opacity-100 group-focus-within:opacity-100 ${
         isCurrent ? "opacity-100" : ""

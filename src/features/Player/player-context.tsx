@@ -22,6 +22,7 @@ import {
 } from "@/features/Player/queue-reducer";
 import { useDeviceId } from "@/features/Player/use-device-id";
 import { useMediaSession } from "@/features/Player/use-media-session";
+import { usePlayTracking } from "@/features/Player/use-play-tracking";
 import { usePlaybackSync } from "@/features/Player/use-playback-sync";
 import { detectDeviceLabel } from "@/lib/device-label";
 import type { JamInviteDTO, JamStateDTO } from "@/lib/jam-types";
@@ -194,6 +195,10 @@ export function PlayerProvider({
   const [syncedIsPlaying, setSyncedIsPlaying] = useState(false);
   const [activeDeviceIds, setActiveDeviceIdsState] = useState<string[]>([]);
   const isActiveOutput = deviceId !== "" && activeDeviceIds.includes(deviceId);
+  // The single device responsible for logging listening stats: the first active
+  // output. Gating on this (rather than isActiveOutput) means a multi-output or
+  // remote-control setup logs each play exactly once instead of per device.
+  const isPrimaryOutput = deviceId !== "" && activeDeviceIds[0] === deviceId;
 
   // Which shared state the latest broadcast belonged to (own id when solo, jam
   // id while in a jam). A change means we switched rooms, so the revision gate
@@ -826,6 +831,8 @@ export function PlayerProvider({
     }
     postCommand({ type: "SET_PLAYING", isPlaying: false });
   }, [isActiveOutput, postCommand]);
+
+  usePlayTracking({ track: current, status, isPrimaryOutput });
 
   useMediaSession({
     track: current,

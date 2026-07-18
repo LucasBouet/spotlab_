@@ -1,6 +1,6 @@
 # File Tree: spotlab_
 
-**Generated:** 7/14/2026, 6:00:59 PM
+**Generated:** 7/18/2026, 9:38:18 PM
 **Root Path:** `/home/lucas/spotlab_`
 
 ```
@@ -23,6 +23,16 @@
 │   │   ├── 20260711144346_add_devices
 │   │   │   └── migration.sql
 │   │   ├── 20260714120000_add_friendships
+│   │   │   └── migration.sql
+│   │   ├── 20260714183000_add_artist_id
+│   │   │   └── migration.sql
+│   │   ├── 20260714190000_add_passkeys
+│   │   │   └── migration.sql
+│   │   ├── 20260718200000_add_play_stats
+│   │   │   └── migration.sql
+│   │   ├── 20260718210000_add_track_genre_source
+│   │   │   └── migration.sql
+│   │   ├── 20260718220000_add_recommendations
 │   │   │   └── migration.sql
 │   │   └── migration_lock.toml
 │   ├── prisma_db
@@ -59,6 +69,7 @@
 │   │   ├── schema.prisma
 │   │   ├── wasm-edge-light-loader.mjs
 │   │   └── wasm-worker-loader.mjs
+│   ├── backfill-artist-ids.mts
 │   ├── schema.prisma
 │   └── seed.mts
 ├── public
@@ -107,14 +118,20 @@
 │   │   │   ├── friends
 │   │   │   │   └── activity
 │   │   │   │       └── route.ts
+│   │   │   ├── jam
+│   │   │   │   └── route.ts
 │   │   │   ├── lyrics
 │   │   │   │   └── route.ts
 │   │   │   ├── playlists
 │   │   │   │   └── import
 │   │   │   │       └── route.ts
+│   │   │   ├── plays
+│   │   │   │   └── route.ts
 │   │   │   ├── prefetch
 │   │   │   │   └── [id]
 │   │   │   │       └── route.ts
+│   │   │   ├── recommendations
+│   │   │   │   └── route.ts
 │   │   │   ├── search
 │   │   │   │   └── route.ts
 │   │   │   ├── stream
@@ -161,9 +178,14 @@
 │   │   │   │   └── pages.tsx
 │   │   │   ├── Register
 │   │   │   │   └── pages.tsx
-│   │   │   └── actions.ts
+│   │   │   ├── actions.ts
+│   │   │   └── passkey-actions.ts
 │   │   ├── Home
-│   │   │   └── pages.tsx
+│   │   │   ├── pages.tsx
+│   │   │   └── recommendations.ts
+│   │   ├── Jam
+│   │   │   └── components
+│   │   │       └── jam-invite-toast.tsx
 │   │   ├── Library
 │   │   │   ├── actions.ts
 │   │   │   └── pages.tsx
@@ -184,6 +206,7 @@
 │   │   │   ├── use-lyrics-offset.ts
 │   │   │   ├── use-lyrics.ts
 │   │   │   ├── use-media-session.ts
+│   │   │   ├── use-play-tracking.ts
 │   │   │   └── use-playback-sync.ts
 │   │   ├── Playlists
 │   │   │   ├── Detail
@@ -199,20 +222,26 @@
 │   │   ├── Settings
 │   │   │   ├── components
 │   │   │   │   ├── import-playlist-form.tsx
+│   │   │   │   ├── passkey-panel.tsx
 │   │   │   │   ├── password-form.tsx
 │   │   │   │   ├── preferences-form.tsx
 │   │   │   │   ├── profile-form.tsx
 │   │   │   │   ├── settings-view.tsx
-│   │   │   │   └── social-panel.tsx
+│   │   │   │   ├── social-panel.tsx
+│   │   │   │   └── stats-panel.tsx
 │   │   │   ├── actions.ts
 │   │   │   ├── pages.tsx
-│   │   │   └── social-actions.ts
+│   │   │   ├── passkey-actions.ts
+│   │   │   ├── social-actions.ts
+│   │   │   └── stats.ts
 │   │   └── shared
 │   │       └── use-like-toggle.ts
 │   ├── lib
 │   │   ├── deezer.ts
 │   │   ├── device-label.ts
 │   │   ├── friends.ts
+│   │   ├── genres.ts
+│   │   ├── jam-types.ts
 │   │   ├── lrc.ts
 │   │   ├── password.ts
 │   │   ├── playback-position.ts
@@ -224,8 +253,10 @@
 │   │   ├── social-types.ts
 │   │   ├── stream.ts
 │   │   ├── sync-types.ts
+│   │   ├── track-genre.ts
 │   │   ├── use-resizable-width.ts
 │   │   ├── validation.ts
+│   │   ├── webauthn.ts
 │   │   ├── youtube-audio.ts
 │   │   └── ytmusic.ts
 │   └── proxy.ts

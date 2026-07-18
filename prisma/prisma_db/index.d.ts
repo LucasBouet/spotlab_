@@ -63,6 +63,21 @@ export type Passkey = $Result.DefaultSelection<Prisma.$PasskeyPayload>
  * 
  */
 export type Friendship = $Result.DefaultSelection<Prisma.$FriendshipPayload>
+/**
+ * Model PlayEvent
+ * 
+ */
+export type PlayEvent = $Result.DefaultSelection<Prisma.$PlayEventPayload>
+/**
+ * Model TrackGenre
+ * 
+ */
+export type TrackGenre = $Result.DefaultSelection<Prisma.$TrackGenrePayload>
+/**
+ * Model Recommendation
+ * 
+ */
+export type Recommendation = $Result.DefaultSelection<Prisma.$RecommendationPayload>
 
 /**
  * Enums
@@ -313,6 +328,36 @@ export class PrismaClient<
     * ```
     */
   get friendship(): Prisma.FriendshipDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.playEvent`: Exposes CRUD operations for the **PlayEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PlayEvents
+    * const playEvents = await prisma.playEvent.findMany()
+    * ```
+    */
+  get playEvent(): Prisma.PlayEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.trackGenre`: Exposes CRUD operations for the **TrackGenre** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TrackGenres
+    * const trackGenres = await prisma.trackGenre.findMany()
+    * ```
+    */
+  get trackGenre(): Prisma.TrackGenreDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.recommendation`: Exposes CRUD operations for the **Recommendation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Recommendations
+    * const recommendations = await prisma.recommendation.findMany()
+    * ```
+    */
+  get recommendation(): Prisma.RecommendationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -756,7 +801,10 @@ export namespace Prisma {
     UserSetting: 'UserSetting',
     Device: 'Device',
     Passkey: 'Passkey',
-    Friendship: 'Friendship'
+    Friendship: 'Friendship',
+    PlayEvent: 'PlayEvent',
+    TrackGenre: 'TrackGenre',
+    Recommendation: 'Recommendation'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -772,7 +820,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "likedTrack" | "playlist" | "playlistTrack" | "appSetting" | "userSetting" | "device" | "passkey" | "friendship"
+      modelProps: "user" | "session" | "likedTrack" | "playlist" | "playlistTrack" | "appSetting" | "userSetting" | "device" | "passkey" | "friendship" | "playEvent" | "trackGenre" | "recommendation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1516,6 +1564,228 @@ export namespace Prisma {
           }
         }
       }
+      PlayEvent: {
+        payload: Prisma.$PlayEventPayload<ExtArgs>
+        fields: Prisma.PlayEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PlayEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PlayEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>
+          }
+          findFirst: {
+            args: Prisma.PlayEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PlayEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>
+          }
+          findMany: {
+            args: Prisma.PlayEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>[]
+          }
+          create: {
+            args: Prisma.PlayEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>
+          }
+          createMany: {
+            args: Prisma.PlayEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PlayEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>[]
+          }
+          delete: {
+            args: Prisma.PlayEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>
+          }
+          update: {
+            args: Prisma.PlayEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.PlayEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PlayEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PlayEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.PlayEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlayEventPayload>
+          }
+          aggregate: {
+            args: Prisma.PlayEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePlayEvent>
+          }
+          groupBy: {
+            args: Prisma.PlayEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PlayEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PlayEventCountArgs<ExtArgs>
+            result: $Utils.Optional<PlayEventCountAggregateOutputType> | number
+          }
+        }
+      }
+      TrackGenre: {
+        payload: Prisma.$TrackGenrePayload<ExtArgs>
+        fields: Prisma.TrackGenreFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TrackGenreFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TrackGenreFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>
+          }
+          findFirst: {
+            args: Prisma.TrackGenreFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TrackGenreFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>
+          }
+          findMany: {
+            args: Prisma.TrackGenreFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>[]
+          }
+          create: {
+            args: Prisma.TrackGenreCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>
+          }
+          createMany: {
+            args: Prisma.TrackGenreCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TrackGenreCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>[]
+          }
+          delete: {
+            args: Prisma.TrackGenreDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>
+          }
+          update: {
+            args: Prisma.TrackGenreUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>
+          }
+          deleteMany: {
+            args: Prisma.TrackGenreDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TrackGenreUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TrackGenreUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>[]
+          }
+          upsert: {
+            args: Prisma.TrackGenreUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrackGenrePayload>
+          }
+          aggregate: {
+            args: Prisma.TrackGenreAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTrackGenre>
+          }
+          groupBy: {
+            args: Prisma.TrackGenreGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TrackGenreGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TrackGenreCountArgs<ExtArgs>
+            result: $Utils.Optional<TrackGenreCountAggregateOutputType> | number
+          }
+        }
+      }
+      Recommendation: {
+        payload: Prisma.$RecommendationPayload<ExtArgs>
+        fields: Prisma.RecommendationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RecommendationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RecommendationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>
+          }
+          findFirst: {
+            args: Prisma.RecommendationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RecommendationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>
+          }
+          findMany: {
+            args: Prisma.RecommendationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>[]
+          }
+          create: {
+            args: Prisma.RecommendationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>
+          }
+          createMany: {
+            args: Prisma.RecommendationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RecommendationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>[]
+          }
+          delete: {
+            args: Prisma.RecommendationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>
+          }
+          update: {
+            args: Prisma.RecommendationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>
+          }
+          deleteMany: {
+            args: Prisma.RecommendationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RecommendationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RecommendationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>[]
+          }
+          upsert: {
+            args: Prisma.RecommendationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationPayload>
+          }
+          aggregate: {
+            args: Prisma.RecommendationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRecommendation>
+          }
+          groupBy: {
+            args: Prisma.RecommendationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RecommendationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RecommendationCountArgs<ExtArgs>
+            result: $Utils.Optional<RecommendationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1634,6 +1904,9 @@ export namespace Prisma {
     device?: DeviceOmit
     passkey?: PasskeyOmit
     friendship?: FriendshipOmit
+    playEvent?: PlayEventOmit
+    trackGenre?: TrackGenreOmit
+    recommendation?: RecommendationOmit
   }
 
   /* Types for Logging */
@@ -1720,6 +1993,8 @@ export namespace Prisma {
     playlists: number
     devices: number
     passkeys: number
+    playEvents: number
+    recommendations: number
     sentFriendRequests: number
     receivedFriendRequests: number
   }
@@ -1731,6 +2006,8 @@ export namespace Prisma {
     playlists?: boolean | UserCountOutputTypeCountPlaylistsArgs
     devices?: boolean | UserCountOutputTypeCountDevicesArgs
     passkeys?: boolean | UserCountOutputTypeCountPasskeysArgs
+    playEvents?: boolean | UserCountOutputTypeCountPlayEventsArgs
+    recommendations?: boolean | UserCountOutputTypeCountRecommendationsArgs
     sentFriendRequests?: boolean | UserCountOutputTypeCountSentFriendRequestsArgs
     receivedFriendRequests?: boolean | UserCountOutputTypeCountReceivedFriendRequestsArgs
   }
@@ -1786,6 +2063,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountPasskeysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PasskeyWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPlayEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayEventWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRecommendationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecommendationWhereInput
   }
 
   /**
@@ -2024,6 +2315,8 @@ export namespace Prisma {
     playlists?: boolean | User$playlistsArgs<ExtArgs>
     devices?: boolean | User$devicesArgs<ExtArgs>
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
+    playEvents?: boolean | User$playEventsArgs<ExtArgs>
+    recommendations?: boolean | User$recommendationsArgs<ExtArgs>
     sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
     receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2067,6 +2360,8 @@ export namespace Prisma {
     playlists?: boolean | User$playlistsArgs<ExtArgs>
     devices?: boolean | User$devicesArgs<ExtArgs>
     passkeys?: boolean | User$passkeysArgs<ExtArgs>
+    playEvents?: boolean | User$playEventsArgs<ExtArgs>
+    recommendations?: boolean | User$recommendationsArgs<ExtArgs>
     sentFriendRequests?: boolean | User$sentFriendRequestsArgs<ExtArgs>
     receivedFriendRequests?: boolean | User$receivedFriendRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2083,6 +2378,8 @@ export namespace Prisma {
       playlists: Prisma.$PlaylistPayload<ExtArgs>[]
       devices: Prisma.$DevicePayload<ExtArgs>[]
       passkeys: Prisma.$PasskeyPayload<ExtArgs>[]
+      playEvents: Prisma.$PlayEventPayload<ExtArgs>[]
+      recommendations: Prisma.$RecommendationPayload<ExtArgs>[]
       sentFriendRequests: Prisma.$FriendshipPayload<ExtArgs>[]
       receivedFriendRequests: Prisma.$FriendshipPayload<ExtArgs>[]
     }
@@ -2494,6 +2791,8 @@ export namespace Prisma {
     playlists<T extends User$playlistsArgs<ExtArgs> = {}>(args?: Subset<T, User$playlistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlaylistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     devices<T extends User$devicesArgs<ExtArgs> = {}>(args?: Subset<T, User$devicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     passkeys<T extends User$passkeysArgs<ExtArgs> = {}>(args?: Subset<T, User$passkeysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasskeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    playEvents<T extends User$playEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$playEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recommendations<T extends User$recommendationsArgs<ExtArgs> = {}>(args?: Subset<T, User$recommendationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sentFriendRequests<T extends User$sentFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$sentFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedFriendRequests<T extends User$receivedFriendRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedFriendRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -3064,6 +3363,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PasskeyScalarFieldEnum | PasskeyScalarFieldEnum[]
+  }
+
+  /**
+   * User.playEvents
+   */
+  export type User$playEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    where?: PlayEventWhereInput
+    orderBy?: PlayEventOrderByWithRelationInput | PlayEventOrderByWithRelationInput[]
+    cursor?: PlayEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PlayEventScalarFieldEnum | PlayEventScalarFieldEnum[]
+  }
+
+  /**
+   * User.recommendations
+   */
+  export type User$recommendationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    where?: RecommendationWhereInput
+    orderBy?: RecommendationOrderByWithRelationInput | RecommendationOrderByWithRelationInput[]
+    cursor?: RecommendationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecommendationScalarFieldEnum | RecommendationScalarFieldEnum[]
   }
 
   /**
@@ -12984,6 +13331,3288 @@ export namespace Prisma {
 
 
   /**
+   * Model PlayEvent
+   */
+
+  export type AggregatePlayEvent = {
+    _count: PlayEventCountAggregateOutputType | null
+    _avg: PlayEventAvgAggregateOutputType | null
+    _sum: PlayEventSumAggregateOutputType | null
+    _min: PlayEventMinAggregateOutputType | null
+    _max: PlayEventMaxAggregateOutputType | null
+  }
+
+  export type PlayEventAvgAggregateOutputType = {
+    deezerTrackId: number | null
+    artistId: number | null
+    duration: number | null
+  }
+
+  export type PlayEventSumAggregateOutputType = {
+    deezerTrackId: number | null
+    artistId: number | null
+    duration: number | null
+  }
+
+  export type PlayEventMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    deezerTrackId: number | null
+    title: string | null
+    artistName: string | null
+    artistId: number | null
+    albumTitle: string | null
+    albumCover: string | null
+    duration: number | null
+    createdAt: Date | null
+  }
+
+  export type PlayEventMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    deezerTrackId: number | null
+    title: string | null
+    artistName: string | null
+    artistId: number | null
+    albumTitle: string | null
+    albumCover: string | null
+    duration: number | null
+    createdAt: Date | null
+  }
+
+  export type PlayEventCountAggregateOutputType = {
+    id: number
+    userId: number
+    deezerTrackId: number
+    title: number
+    artistName: number
+    artistId: number
+    albumTitle: number
+    albumCover: number
+    duration: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PlayEventAvgAggregateInputType = {
+    deezerTrackId?: true
+    artistId?: true
+    duration?: true
+  }
+
+  export type PlayEventSumAggregateInputType = {
+    deezerTrackId?: true
+    artistId?: true
+    duration?: true
+  }
+
+  export type PlayEventMinAggregateInputType = {
+    id?: true
+    userId?: true
+    deezerTrackId?: true
+    title?: true
+    artistName?: true
+    artistId?: true
+    albumTitle?: true
+    albumCover?: true
+    duration?: true
+    createdAt?: true
+  }
+
+  export type PlayEventMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    deezerTrackId?: true
+    title?: true
+    artistName?: true
+    artistId?: true
+    albumTitle?: true
+    albumCover?: true
+    duration?: true
+    createdAt?: true
+  }
+
+  export type PlayEventCountAggregateInputType = {
+    id?: true
+    userId?: true
+    deezerTrackId?: true
+    title?: true
+    artistName?: true
+    artistId?: true
+    albumTitle?: true
+    albumCover?: true
+    duration?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PlayEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayEvent to aggregate.
+     */
+    where?: PlayEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayEvents to fetch.
+     */
+    orderBy?: PlayEventOrderByWithRelationInput | PlayEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PlayEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PlayEvents
+    **/
+    _count?: true | PlayEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PlayEventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PlayEventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PlayEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PlayEventMaxAggregateInputType
+  }
+
+  export type GetPlayEventAggregateType<T extends PlayEventAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlayEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePlayEvent[P]>
+      : GetScalarType<T[P], AggregatePlayEvent[P]>
+  }
+
+
+
+
+  export type PlayEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlayEventWhereInput
+    orderBy?: PlayEventOrderByWithAggregationInput | PlayEventOrderByWithAggregationInput[]
+    by: PlayEventScalarFieldEnum[] | PlayEventScalarFieldEnum
+    having?: PlayEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PlayEventCountAggregateInputType | true
+    _avg?: PlayEventAvgAggregateInputType
+    _sum?: PlayEventSumAggregateInputType
+    _min?: PlayEventMinAggregateInputType
+    _max?: PlayEventMaxAggregateInputType
+  }
+
+  export type PlayEventGroupByOutputType = {
+    id: string
+    userId: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    artistId: number | null
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt: Date
+    _count: PlayEventCountAggregateOutputType | null
+    _avg: PlayEventAvgAggregateOutputType | null
+    _sum: PlayEventSumAggregateOutputType | null
+    _min: PlayEventMinAggregateOutputType | null
+    _max: PlayEventMaxAggregateOutputType | null
+  }
+
+  type GetPlayEventGroupByPayload<T extends PlayEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PlayEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PlayEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PlayEventGroupByOutputType[P]>
+            : GetScalarType<T[P], PlayEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PlayEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    artistId?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playEvent"]>
+
+  export type PlayEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    artistId?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playEvent"]>
+
+  export type PlayEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    artistId?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["playEvent"]>
+
+  export type PlayEventSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    deezerTrackId?: boolean
+    title?: boolean
+    artistName?: boolean
+    artistId?: boolean
+    albumTitle?: boolean
+    albumCover?: boolean
+    duration?: boolean
+    createdAt?: boolean
+  }
+
+  export type PlayEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "deezerTrackId" | "title" | "artistName" | "artistId" | "albumTitle" | "albumCover" | "duration" | "createdAt", ExtArgs["result"]["playEvent"]>
+  export type PlayEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PlayEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PlayEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PlayEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PlayEvent"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      deezerTrackId: number
+      title: string
+      artistName: string
+      artistId: number | null
+      albumTitle: string
+      albumCover: string
+      duration: number
+      createdAt: Date
+    }, ExtArgs["result"]["playEvent"]>
+    composites: {}
+  }
+
+  type PlayEventGetPayload<S extends boolean | null | undefined | PlayEventDefaultArgs> = $Result.GetResult<Prisma.$PlayEventPayload, S>
+
+  type PlayEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PlayEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PlayEventCountAggregateInputType | true
+    }
+
+  export interface PlayEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PlayEvent'], meta: { name: 'PlayEvent' } }
+    /**
+     * Find zero or one PlayEvent that matches the filter.
+     * @param {PlayEventFindUniqueArgs} args - Arguments to find a PlayEvent
+     * @example
+     * // Get one PlayEvent
+     * const playEvent = await prisma.playEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PlayEventFindUniqueArgs>(args: SelectSubset<T, PlayEventFindUniqueArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PlayEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PlayEventFindUniqueOrThrowArgs} args - Arguments to find a PlayEvent
+     * @example
+     * // Get one PlayEvent
+     * const playEvent = await prisma.playEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PlayEventFindUniqueOrThrowArgs>(args: SelectSubset<T, PlayEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayEventFindFirstArgs} args - Arguments to find a PlayEvent
+     * @example
+     * // Get one PlayEvent
+     * const playEvent = await prisma.playEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PlayEventFindFirstArgs>(args?: SelectSubset<T, PlayEventFindFirstArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlayEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayEventFindFirstOrThrowArgs} args - Arguments to find a PlayEvent
+     * @example
+     * // Get one PlayEvent
+     * const playEvent = await prisma.playEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PlayEventFindFirstOrThrowArgs>(args?: SelectSubset<T, PlayEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PlayEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PlayEvents
+     * const playEvents = await prisma.playEvent.findMany()
+     * 
+     * // Get first 10 PlayEvents
+     * const playEvents = await prisma.playEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const playEventWithIdOnly = await prisma.playEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PlayEventFindManyArgs>(args?: SelectSubset<T, PlayEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PlayEvent.
+     * @param {PlayEventCreateArgs} args - Arguments to create a PlayEvent.
+     * @example
+     * // Create one PlayEvent
+     * const PlayEvent = await prisma.playEvent.create({
+     *   data: {
+     *     // ... data to create a PlayEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends PlayEventCreateArgs>(args: SelectSubset<T, PlayEventCreateArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PlayEvents.
+     * @param {PlayEventCreateManyArgs} args - Arguments to create many PlayEvents.
+     * @example
+     * // Create many PlayEvents
+     * const playEvent = await prisma.playEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PlayEventCreateManyArgs>(args?: SelectSubset<T, PlayEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PlayEvents and returns the data saved in the database.
+     * @param {PlayEventCreateManyAndReturnArgs} args - Arguments to create many PlayEvents.
+     * @example
+     * // Create many PlayEvents
+     * const playEvent = await prisma.playEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PlayEvents and only return the `id`
+     * const playEventWithIdOnly = await prisma.playEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PlayEventCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PlayEvent.
+     * @param {PlayEventDeleteArgs} args - Arguments to delete one PlayEvent.
+     * @example
+     * // Delete one PlayEvent
+     * const PlayEvent = await prisma.playEvent.delete({
+     *   where: {
+     *     // ... filter to delete one PlayEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PlayEventDeleteArgs>(args: SelectSubset<T, PlayEventDeleteArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PlayEvent.
+     * @param {PlayEventUpdateArgs} args - Arguments to update one PlayEvent.
+     * @example
+     * // Update one PlayEvent
+     * const playEvent = await prisma.playEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PlayEventUpdateArgs>(args: SelectSubset<T, PlayEventUpdateArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PlayEvents.
+     * @param {PlayEventDeleteManyArgs} args - Arguments to filter PlayEvents to delete.
+     * @example
+     * // Delete a few PlayEvents
+     * const { count } = await prisma.playEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PlayEventDeleteManyArgs>(args?: SelectSubset<T, PlayEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PlayEvents
+     * const playEvent = await prisma.playEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PlayEventUpdateManyArgs>(args: SelectSubset<T, PlayEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlayEvents and returns the data updated in the database.
+     * @param {PlayEventUpdateManyAndReturnArgs} args - Arguments to update many PlayEvents.
+     * @example
+     * // Update many PlayEvents
+     * const playEvent = await prisma.playEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PlayEvents and only return the `id`
+     * const playEventWithIdOnly = await prisma.playEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PlayEventUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PlayEvent.
+     * @param {PlayEventUpsertArgs} args - Arguments to update or create a PlayEvent.
+     * @example
+     * // Update or create a PlayEvent
+     * const playEvent = await prisma.playEvent.upsert({
+     *   create: {
+     *     // ... data to create a PlayEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PlayEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PlayEventUpsertArgs>(args: SelectSubset<T, PlayEventUpsertArgs<ExtArgs>>): Prisma__PlayEventClient<$Result.GetResult<Prisma.$PlayEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PlayEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayEventCountArgs} args - Arguments to filter PlayEvents to count.
+     * @example
+     * // Count the number of PlayEvents
+     * const count = await prisma.playEvent.count({
+     *   where: {
+     *     // ... the filter for the PlayEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends PlayEventCountArgs>(
+      args?: Subset<T, PlayEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PlayEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PlayEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PlayEventAggregateArgs>(args: Subset<T, PlayEventAggregateArgs>): Prisma.PrismaPromise<GetPlayEventAggregateType<T>>
+
+    /**
+     * Group by PlayEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlayEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PlayEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PlayEventGroupByArgs['orderBy'] }
+        : { orderBy?: PlayEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PlayEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlayEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PlayEvent model
+   */
+  readonly fields: PlayEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PlayEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PlayEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PlayEvent model
+   */
+  interface PlayEventFieldRefs {
+    readonly id: FieldRef<"PlayEvent", 'String'>
+    readonly userId: FieldRef<"PlayEvent", 'String'>
+    readonly deezerTrackId: FieldRef<"PlayEvent", 'Int'>
+    readonly title: FieldRef<"PlayEvent", 'String'>
+    readonly artistName: FieldRef<"PlayEvent", 'String'>
+    readonly artistId: FieldRef<"PlayEvent", 'Int'>
+    readonly albumTitle: FieldRef<"PlayEvent", 'String'>
+    readonly albumCover: FieldRef<"PlayEvent", 'String'>
+    readonly duration: FieldRef<"PlayEvent", 'Int'>
+    readonly createdAt: FieldRef<"PlayEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PlayEvent findUnique
+   */
+  export type PlayEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayEvent to fetch.
+     */
+    where: PlayEventWhereUniqueInput
+  }
+
+  /**
+   * PlayEvent findUniqueOrThrow
+   */
+  export type PlayEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayEvent to fetch.
+     */
+    where: PlayEventWhereUniqueInput
+  }
+
+  /**
+   * PlayEvent findFirst
+   */
+  export type PlayEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayEvent to fetch.
+     */
+    where?: PlayEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayEvents to fetch.
+     */
+    orderBy?: PlayEventOrderByWithRelationInput | PlayEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayEvents.
+     */
+    cursor?: PlayEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayEvents.
+     */
+    distinct?: PlayEventScalarFieldEnum | PlayEventScalarFieldEnum[]
+  }
+
+  /**
+   * PlayEvent findFirstOrThrow
+   */
+  export type PlayEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayEvent to fetch.
+     */
+    where?: PlayEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayEvents to fetch.
+     */
+    orderBy?: PlayEventOrderByWithRelationInput | PlayEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlayEvents.
+     */
+    cursor?: PlayEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayEvents.
+     */
+    distinct?: PlayEventScalarFieldEnum | PlayEventScalarFieldEnum[]
+  }
+
+  /**
+   * PlayEvent findMany
+   */
+  export type PlayEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PlayEvents to fetch.
+     */
+    where?: PlayEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlayEvents to fetch.
+     */
+    orderBy?: PlayEventOrderByWithRelationInput | PlayEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PlayEvents.
+     */
+    cursor?: PlayEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlayEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlayEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlayEvents.
+     */
+    distinct?: PlayEventScalarFieldEnum | PlayEventScalarFieldEnum[]
+  }
+
+  /**
+   * PlayEvent create
+   */
+  export type PlayEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PlayEvent.
+     */
+    data: XOR<PlayEventCreateInput, PlayEventUncheckedCreateInput>
+  }
+
+  /**
+   * PlayEvent createMany
+   */
+  export type PlayEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PlayEvents.
+     */
+    data: PlayEventCreateManyInput | PlayEventCreateManyInput[]
+  }
+
+  /**
+   * PlayEvent createManyAndReturn
+   */
+  export type PlayEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many PlayEvents.
+     */
+    data: PlayEventCreateManyInput | PlayEventCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayEvent update
+   */
+  export type PlayEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PlayEvent.
+     */
+    data: XOR<PlayEventUpdateInput, PlayEventUncheckedUpdateInput>
+    /**
+     * Choose, which PlayEvent to update.
+     */
+    where: PlayEventWhereUniqueInput
+  }
+
+  /**
+   * PlayEvent updateMany
+   */
+  export type PlayEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PlayEvents.
+     */
+    data: XOR<PlayEventUpdateManyMutationInput, PlayEventUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayEvents to update
+     */
+    where?: PlayEventWhereInput
+    /**
+     * Limit how many PlayEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayEvent updateManyAndReturn
+   */
+  export type PlayEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * The data used to update PlayEvents.
+     */
+    data: XOR<PlayEventUpdateManyMutationInput, PlayEventUncheckedUpdateManyInput>
+    /**
+     * Filter which PlayEvents to update
+     */
+    where?: PlayEventWhereInput
+    /**
+     * Limit how many PlayEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlayEvent upsert
+   */
+  export type PlayEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PlayEvent to update in case it exists.
+     */
+    where: PlayEventWhereUniqueInput
+    /**
+     * In case the PlayEvent found by the `where` argument doesn't exist, create a new PlayEvent with this data.
+     */
+    create: XOR<PlayEventCreateInput, PlayEventUncheckedCreateInput>
+    /**
+     * In case the PlayEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PlayEventUpdateInput, PlayEventUncheckedUpdateInput>
+  }
+
+  /**
+   * PlayEvent delete
+   */
+  export type PlayEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+    /**
+     * Filter which PlayEvent to delete.
+     */
+    where: PlayEventWhereUniqueInput
+  }
+
+  /**
+   * PlayEvent deleteMany
+   */
+  export type PlayEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlayEvents to delete
+     */
+    where?: PlayEventWhereInput
+    /**
+     * Limit how many PlayEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlayEvent without action
+   */
+  export type PlayEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlayEvent
+     */
+    select?: PlayEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlayEvent
+     */
+    omit?: PlayEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayEventInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TrackGenre
+   */
+
+  export type AggregateTrackGenre = {
+    _count: TrackGenreCountAggregateOutputType | null
+    _avg: TrackGenreAvgAggregateOutputType | null
+    _sum: TrackGenreSumAggregateOutputType | null
+    _min: TrackGenreMinAggregateOutputType | null
+    _max: TrackGenreMaxAggregateOutputType | null
+  }
+
+  export type TrackGenreAvgAggregateOutputType = {
+    deezerTrackId: number | null
+    albumId: number | null
+    genreId: number | null
+  }
+
+  export type TrackGenreSumAggregateOutputType = {
+    deezerTrackId: number | null
+    albumId: number | null
+    genreId: number | null
+  }
+
+  export type TrackGenreMinAggregateOutputType = {
+    deezerTrackId: number | null
+    albumId: number | null
+    genreId: number | null
+    genreName: string | null
+    source: string | null
+    updatedAt: Date | null
+  }
+
+  export type TrackGenreMaxAggregateOutputType = {
+    deezerTrackId: number | null
+    albumId: number | null
+    genreId: number | null
+    genreName: string | null
+    source: string | null
+    updatedAt: Date | null
+  }
+
+  export type TrackGenreCountAggregateOutputType = {
+    deezerTrackId: number
+    albumId: number
+    genreId: number
+    genreName: number
+    source: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TrackGenreAvgAggregateInputType = {
+    deezerTrackId?: true
+    albumId?: true
+    genreId?: true
+  }
+
+  export type TrackGenreSumAggregateInputType = {
+    deezerTrackId?: true
+    albumId?: true
+    genreId?: true
+  }
+
+  export type TrackGenreMinAggregateInputType = {
+    deezerTrackId?: true
+    albumId?: true
+    genreId?: true
+    genreName?: true
+    source?: true
+    updatedAt?: true
+  }
+
+  export type TrackGenreMaxAggregateInputType = {
+    deezerTrackId?: true
+    albumId?: true
+    genreId?: true
+    genreName?: true
+    source?: true
+    updatedAt?: true
+  }
+
+  export type TrackGenreCountAggregateInputType = {
+    deezerTrackId?: true
+    albumId?: true
+    genreId?: true
+    genreName?: true
+    source?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TrackGenreAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TrackGenre to aggregate.
+     */
+    where?: TrackGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackGenres to fetch.
+     */
+    orderBy?: TrackGenreOrderByWithRelationInput | TrackGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TrackGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackGenres.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TrackGenres
+    **/
+    _count?: true | TrackGenreCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TrackGenreAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TrackGenreSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TrackGenreMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TrackGenreMaxAggregateInputType
+  }
+
+  export type GetTrackGenreAggregateType<T extends TrackGenreAggregateArgs> = {
+        [P in keyof T & keyof AggregateTrackGenre]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTrackGenre[P]>
+      : GetScalarType<T[P], AggregateTrackGenre[P]>
+  }
+
+
+
+
+  export type TrackGenreGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrackGenreWhereInput
+    orderBy?: TrackGenreOrderByWithAggregationInput | TrackGenreOrderByWithAggregationInput[]
+    by: TrackGenreScalarFieldEnum[] | TrackGenreScalarFieldEnum
+    having?: TrackGenreScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TrackGenreCountAggregateInputType | true
+    _avg?: TrackGenreAvgAggregateInputType
+    _sum?: TrackGenreSumAggregateInputType
+    _min?: TrackGenreMinAggregateInputType
+    _max?: TrackGenreMaxAggregateInputType
+  }
+
+  export type TrackGenreGroupByOutputType = {
+    deezerTrackId: number
+    albumId: number | null
+    genreId: number | null
+    genreName: string | null
+    source: string | null
+    updatedAt: Date
+    _count: TrackGenreCountAggregateOutputType | null
+    _avg: TrackGenreAvgAggregateOutputType | null
+    _sum: TrackGenreSumAggregateOutputType | null
+    _min: TrackGenreMinAggregateOutputType | null
+    _max: TrackGenreMaxAggregateOutputType | null
+  }
+
+  type GetTrackGenreGroupByPayload<T extends TrackGenreGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TrackGenreGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TrackGenreGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TrackGenreGroupByOutputType[P]>
+            : GetScalarType<T[P], TrackGenreGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TrackGenreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    deezerTrackId?: boolean
+    albumId?: boolean
+    genreId?: boolean
+    genreName?: boolean
+    source?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["trackGenre"]>
+
+  export type TrackGenreSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    deezerTrackId?: boolean
+    albumId?: boolean
+    genreId?: boolean
+    genreName?: boolean
+    source?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["trackGenre"]>
+
+  export type TrackGenreSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    deezerTrackId?: boolean
+    albumId?: boolean
+    genreId?: boolean
+    genreName?: boolean
+    source?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["trackGenre"]>
+
+  export type TrackGenreSelectScalar = {
+    deezerTrackId?: boolean
+    albumId?: boolean
+    genreId?: boolean
+    genreName?: boolean
+    source?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TrackGenreOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"deezerTrackId" | "albumId" | "genreId" | "genreName" | "source" | "updatedAt", ExtArgs["result"]["trackGenre"]>
+
+  export type $TrackGenrePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TrackGenre"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      deezerTrackId: number
+      albumId: number | null
+      genreId: number | null
+      genreName: string | null
+      source: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["trackGenre"]>
+    composites: {}
+  }
+
+  type TrackGenreGetPayload<S extends boolean | null | undefined | TrackGenreDefaultArgs> = $Result.GetResult<Prisma.$TrackGenrePayload, S>
+
+  type TrackGenreCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TrackGenreFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TrackGenreCountAggregateInputType | true
+    }
+
+  export interface TrackGenreDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TrackGenre'], meta: { name: 'TrackGenre' } }
+    /**
+     * Find zero or one TrackGenre that matches the filter.
+     * @param {TrackGenreFindUniqueArgs} args - Arguments to find a TrackGenre
+     * @example
+     * // Get one TrackGenre
+     * const trackGenre = await prisma.trackGenre.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TrackGenreFindUniqueArgs>(args: SelectSubset<T, TrackGenreFindUniqueArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TrackGenre that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TrackGenreFindUniqueOrThrowArgs} args - Arguments to find a TrackGenre
+     * @example
+     * // Get one TrackGenre
+     * const trackGenre = await prisma.trackGenre.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TrackGenreFindUniqueOrThrowArgs>(args: SelectSubset<T, TrackGenreFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TrackGenre that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackGenreFindFirstArgs} args - Arguments to find a TrackGenre
+     * @example
+     * // Get one TrackGenre
+     * const trackGenre = await prisma.trackGenre.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TrackGenreFindFirstArgs>(args?: SelectSubset<T, TrackGenreFindFirstArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TrackGenre that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackGenreFindFirstOrThrowArgs} args - Arguments to find a TrackGenre
+     * @example
+     * // Get one TrackGenre
+     * const trackGenre = await prisma.trackGenre.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TrackGenreFindFirstOrThrowArgs>(args?: SelectSubset<T, TrackGenreFindFirstOrThrowArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TrackGenres that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackGenreFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TrackGenres
+     * const trackGenres = await prisma.trackGenre.findMany()
+     * 
+     * // Get first 10 TrackGenres
+     * const trackGenres = await prisma.trackGenre.findMany({ take: 10 })
+     * 
+     * // Only select the `deezerTrackId`
+     * const trackGenreWithDeezerTrackIdOnly = await prisma.trackGenre.findMany({ select: { deezerTrackId: true } })
+     * 
+     */
+    findMany<T extends TrackGenreFindManyArgs>(args?: SelectSubset<T, TrackGenreFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TrackGenre.
+     * @param {TrackGenreCreateArgs} args - Arguments to create a TrackGenre.
+     * @example
+     * // Create one TrackGenre
+     * const TrackGenre = await prisma.trackGenre.create({
+     *   data: {
+     *     // ... data to create a TrackGenre
+     *   }
+     * })
+     * 
+     */
+    create<T extends TrackGenreCreateArgs>(args: SelectSubset<T, TrackGenreCreateArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TrackGenres.
+     * @param {TrackGenreCreateManyArgs} args - Arguments to create many TrackGenres.
+     * @example
+     * // Create many TrackGenres
+     * const trackGenre = await prisma.trackGenre.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TrackGenreCreateManyArgs>(args?: SelectSubset<T, TrackGenreCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TrackGenres and returns the data saved in the database.
+     * @param {TrackGenreCreateManyAndReturnArgs} args - Arguments to create many TrackGenres.
+     * @example
+     * // Create many TrackGenres
+     * const trackGenre = await prisma.trackGenre.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TrackGenres and only return the `deezerTrackId`
+     * const trackGenreWithDeezerTrackIdOnly = await prisma.trackGenre.createManyAndReturn({
+     *   select: { deezerTrackId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TrackGenreCreateManyAndReturnArgs>(args?: SelectSubset<T, TrackGenreCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TrackGenre.
+     * @param {TrackGenreDeleteArgs} args - Arguments to delete one TrackGenre.
+     * @example
+     * // Delete one TrackGenre
+     * const TrackGenre = await prisma.trackGenre.delete({
+     *   where: {
+     *     // ... filter to delete one TrackGenre
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TrackGenreDeleteArgs>(args: SelectSubset<T, TrackGenreDeleteArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TrackGenre.
+     * @param {TrackGenreUpdateArgs} args - Arguments to update one TrackGenre.
+     * @example
+     * // Update one TrackGenre
+     * const trackGenre = await prisma.trackGenre.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TrackGenreUpdateArgs>(args: SelectSubset<T, TrackGenreUpdateArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TrackGenres.
+     * @param {TrackGenreDeleteManyArgs} args - Arguments to filter TrackGenres to delete.
+     * @example
+     * // Delete a few TrackGenres
+     * const { count } = await prisma.trackGenre.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TrackGenreDeleteManyArgs>(args?: SelectSubset<T, TrackGenreDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TrackGenres.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackGenreUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TrackGenres
+     * const trackGenre = await prisma.trackGenre.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TrackGenreUpdateManyArgs>(args: SelectSubset<T, TrackGenreUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TrackGenres and returns the data updated in the database.
+     * @param {TrackGenreUpdateManyAndReturnArgs} args - Arguments to update many TrackGenres.
+     * @example
+     * // Update many TrackGenres
+     * const trackGenre = await prisma.trackGenre.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TrackGenres and only return the `deezerTrackId`
+     * const trackGenreWithDeezerTrackIdOnly = await prisma.trackGenre.updateManyAndReturn({
+     *   select: { deezerTrackId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TrackGenreUpdateManyAndReturnArgs>(args: SelectSubset<T, TrackGenreUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TrackGenre.
+     * @param {TrackGenreUpsertArgs} args - Arguments to update or create a TrackGenre.
+     * @example
+     * // Update or create a TrackGenre
+     * const trackGenre = await prisma.trackGenre.upsert({
+     *   create: {
+     *     // ... data to create a TrackGenre
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TrackGenre we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TrackGenreUpsertArgs>(args: SelectSubset<T, TrackGenreUpsertArgs<ExtArgs>>): Prisma__TrackGenreClient<$Result.GetResult<Prisma.$TrackGenrePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TrackGenres.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackGenreCountArgs} args - Arguments to filter TrackGenres to count.
+     * @example
+     * // Count the number of TrackGenres
+     * const count = await prisma.trackGenre.count({
+     *   where: {
+     *     // ... the filter for the TrackGenres we want to count
+     *   }
+     * })
+    **/
+    count<T extends TrackGenreCountArgs>(
+      args?: Subset<T, TrackGenreCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TrackGenreCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TrackGenre.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackGenreAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TrackGenreAggregateArgs>(args: Subset<T, TrackGenreAggregateArgs>): Prisma.PrismaPromise<GetTrackGenreAggregateType<T>>
+
+    /**
+     * Group by TrackGenre.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrackGenreGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TrackGenreGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TrackGenreGroupByArgs['orderBy'] }
+        : { orderBy?: TrackGenreGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TrackGenreGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTrackGenreGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TrackGenre model
+   */
+  readonly fields: TrackGenreFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TrackGenre.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TrackGenreClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TrackGenre model
+   */
+  interface TrackGenreFieldRefs {
+    readonly deezerTrackId: FieldRef<"TrackGenre", 'Int'>
+    readonly albumId: FieldRef<"TrackGenre", 'Int'>
+    readonly genreId: FieldRef<"TrackGenre", 'Int'>
+    readonly genreName: FieldRef<"TrackGenre", 'String'>
+    readonly source: FieldRef<"TrackGenre", 'String'>
+    readonly updatedAt: FieldRef<"TrackGenre", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TrackGenre findUnique
+   */
+  export type TrackGenreFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * Filter, which TrackGenre to fetch.
+     */
+    where: TrackGenreWhereUniqueInput
+  }
+
+  /**
+   * TrackGenre findUniqueOrThrow
+   */
+  export type TrackGenreFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * Filter, which TrackGenre to fetch.
+     */
+    where: TrackGenreWhereUniqueInput
+  }
+
+  /**
+   * TrackGenre findFirst
+   */
+  export type TrackGenreFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * Filter, which TrackGenre to fetch.
+     */
+    where?: TrackGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackGenres to fetch.
+     */
+    orderBy?: TrackGenreOrderByWithRelationInput | TrackGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TrackGenres.
+     */
+    cursor?: TrackGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackGenres.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TrackGenres.
+     */
+    distinct?: TrackGenreScalarFieldEnum | TrackGenreScalarFieldEnum[]
+  }
+
+  /**
+   * TrackGenre findFirstOrThrow
+   */
+  export type TrackGenreFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * Filter, which TrackGenre to fetch.
+     */
+    where?: TrackGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackGenres to fetch.
+     */
+    orderBy?: TrackGenreOrderByWithRelationInput | TrackGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TrackGenres.
+     */
+    cursor?: TrackGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackGenres.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TrackGenres.
+     */
+    distinct?: TrackGenreScalarFieldEnum | TrackGenreScalarFieldEnum[]
+  }
+
+  /**
+   * TrackGenre findMany
+   */
+  export type TrackGenreFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * Filter, which TrackGenres to fetch.
+     */
+    where?: TrackGenreWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TrackGenres to fetch.
+     */
+    orderBy?: TrackGenreOrderByWithRelationInput | TrackGenreOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TrackGenres.
+     */
+    cursor?: TrackGenreWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TrackGenres from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TrackGenres.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TrackGenres.
+     */
+    distinct?: TrackGenreScalarFieldEnum | TrackGenreScalarFieldEnum[]
+  }
+
+  /**
+   * TrackGenre create
+   */
+  export type TrackGenreCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * The data needed to create a TrackGenre.
+     */
+    data: XOR<TrackGenreCreateInput, TrackGenreUncheckedCreateInput>
+  }
+
+  /**
+   * TrackGenre createMany
+   */
+  export type TrackGenreCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TrackGenres.
+     */
+    data: TrackGenreCreateManyInput | TrackGenreCreateManyInput[]
+  }
+
+  /**
+   * TrackGenre createManyAndReturn
+   */
+  export type TrackGenreCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * The data used to create many TrackGenres.
+     */
+    data: TrackGenreCreateManyInput | TrackGenreCreateManyInput[]
+  }
+
+  /**
+   * TrackGenre update
+   */
+  export type TrackGenreUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * The data needed to update a TrackGenre.
+     */
+    data: XOR<TrackGenreUpdateInput, TrackGenreUncheckedUpdateInput>
+    /**
+     * Choose, which TrackGenre to update.
+     */
+    where: TrackGenreWhereUniqueInput
+  }
+
+  /**
+   * TrackGenre updateMany
+   */
+  export type TrackGenreUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TrackGenres.
+     */
+    data: XOR<TrackGenreUpdateManyMutationInput, TrackGenreUncheckedUpdateManyInput>
+    /**
+     * Filter which TrackGenres to update
+     */
+    where?: TrackGenreWhereInput
+    /**
+     * Limit how many TrackGenres to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TrackGenre updateManyAndReturn
+   */
+  export type TrackGenreUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * The data used to update TrackGenres.
+     */
+    data: XOR<TrackGenreUpdateManyMutationInput, TrackGenreUncheckedUpdateManyInput>
+    /**
+     * Filter which TrackGenres to update
+     */
+    where?: TrackGenreWhereInput
+    /**
+     * Limit how many TrackGenres to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TrackGenre upsert
+   */
+  export type TrackGenreUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * The filter to search for the TrackGenre to update in case it exists.
+     */
+    where: TrackGenreWhereUniqueInput
+    /**
+     * In case the TrackGenre found by the `where` argument doesn't exist, create a new TrackGenre with this data.
+     */
+    create: XOR<TrackGenreCreateInput, TrackGenreUncheckedCreateInput>
+    /**
+     * In case the TrackGenre was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TrackGenreUpdateInput, TrackGenreUncheckedUpdateInput>
+  }
+
+  /**
+   * TrackGenre delete
+   */
+  export type TrackGenreDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+    /**
+     * Filter which TrackGenre to delete.
+     */
+    where: TrackGenreWhereUniqueInput
+  }
+
+  /**
+   * TrackGenre deleteMany
+   */
+  export type TrackGenreDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TrackGenres to delete
+     */
+    where?: TrackGenreWhereInput
+    /**
+     * Limit how many TrackGenres to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TrackGenre without action
+   */
+  export type TrackGenreDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackGenre
+     */
+    select?: TrackGenreSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackGenre
+     */
+    omit?: TrackGenreOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Recommendation
+   */
+
+  export type AggregateRecommendation = {
+    _count: RecommendationCountAggregateOutputType | null
+    _min: RecommendationMinAggregateOutputType | null
+    _max: RecommendationMaxAggregateOutputType | null
+  }
+
+  export type RecommendationMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    window: string | null
+    payload: string | null
+    computedAt: Date | null
+  }
+
+  export type RecommendationMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    window: string | null
+    payload: string | null
+    computedAt: Date | null
+  }
+
+  export type RecommendationCountAggregateOutputType = {
+    id: number
+    userId: number
+    window: number
+    payload: number
+    computedAt: number
+    _all: number
+  }
+
+
+  export type RecommendationMinAggregateInputType = {
+    id?: true
+    userId?: true
+    window?: true
+    payload?: true
+    computedAt?: true
+  }
+
+  export type RecommendationMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    window?: true
+    payload?: true
+    computedAt?: true
+  }
+
+  export type RecommendationCountAggregateInputType = {
+    id?: true
+    userId?: true
+    window?: true
+    payload?: true
+    computedAt?: true
+    _all?: true
+  }
+
+  export type RecommendationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Recommendation to aggregate.
+     */
+    where?: RecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recommendations to fetch.
+     */
+    orderBy?: RecommendationOrderByWithRelationInput | RecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Recommendations
+    **/
+    _count?: true | RecommendationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RecommendationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RecommendationMaxAggregateInputType
+  }
+
+  export type GetRecommendationAggregateType<T extends RecommendationAggregateArgs> = {
+        [P in keyof T & keyof AggregateRecommendation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRecommendation[P]>
+      : GetScalarType<T[P], AggregateRecommendation[P]>
+  }
+
+
+
+
+  export type RecommendationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecommendationWhereInput
+    orderBy?: RecommendationOrderByWithAggregationInput | RecommendationOrderByWithAggregationInput[]
+    by: RecommendationScalarFieldEnum[] | RecommendationScalarFieldEnum
+    having?: RecommendationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RecommendationCountAggregateInputType | true
+    _min?: RecommendationMinAggregateInputType
+    _max?: RecommendationMaxAggregateInputType
+  }
+
+  export type RecommendationGroupByOutputType = {
+    id: string
+    userId: string
+    window: string
+    payload: string
+    computedAt: Date
+    _count: RecommendationCountAggregateOutputType | null
+    _min: RecommendationMinAggregateOutputType | null
+    _max: RecommendationMaxAggregateOutputType | null
+  }
+
+  type GetRecommendationGroupByPayload<T extends RecommendationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RecommendationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RecommendationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RecommendationGroupByOutputType[P]>
+            : GetScalarType<T[P], RecommendationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RecommendationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    window?: boolean
+    payload?: boolean
+    computedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recommendation"]>
+
+  export type RecommendationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    window?: boolean
+    payload?: boolean
+    computedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recommendation"]>
+
+  export type RecommendationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    window?: boolean
+    payload?: boolean
+    computedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recommendation"]>
+
+  export type RecommendationSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    window?: boolean
+    payload?: boolean
+    computedAt?: boolean
+  }
+
+  export type RecommendationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "window" | "payload" | "computedAt", ExtArgs["result"]["recommendation"]>
+  export type RecommendationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RecommendationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RecommendationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $RecommendationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Recommendation"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      window: string
+      payload: string
+      computedAt: Date
+    }, ExtArgs["result"]["recommendation"]>
+    composites: {}
+  }
+
+  type RecommendationGetPayload<S extends boolean | null | undefined | RecommendationDefaultArgs> = $Result.GetResult<Prisma.$RecommendationPayload, S>
+
+  type RecommendationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RecommendationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RecommendationCountAggregateInputType | true
+    }
+
+  export interface RecommendationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Recommendation'], meta: { name: 'Recommendation' } }
+    /**
+     * Find zero or one Recommendation that matches the filter.
+     * @param {RecommendationFindUniqueArgs} args - Arguments to find a Recommendation
+     * @example
+     * // Get one Recommendation
+     * const recommendation = await prisma.recommendation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RecommendationFindUniqueArgs>(args: SelectSubset<T, RecommendationFindUniqueArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Recommendation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RecommendationFindUniqueOrThrowArgs} args - Arguments to find a Recommendation
+     * @example
+     * // Get one Recommendation
+     * const recommendation = await prisma.recommendation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RecommendationFindUniqueOrThrowArgs>(args: SelectSubset<T, RecommendationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Recommendation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationFindFirstArgs} args - Arguments to find a Recommendation
+     * @example
+     * // Get one Recommendation
+     * const recommendation = await prisma.recommendation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RecommendationFindFirstArgs>(args?: SelectSubset<T, RecommendationFindFirstArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Recommendation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationFindFirstOrThrowArgs} args - Arguments to find a Recommendation
+     * @example
+     * // Get one Recommendation
+     * const recommendation = await prisma.recommendation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RecommendationFindFirstOrThrowArgs>(args?: SelectSubset<T, RecommendationFindFirstOrThrowArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Recommendations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Recommendations
+     * const recommendations = await prisma.recommendation.findMany()
+     * 
+     * // Get first 10 Recommendations
+     * const recommendations = await prisma.recommendation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const recommendationWithIdOnly = await prisma.recommendation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RecommendationFindManyArgs>(args?: SelectSubset<T, RecommendationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Recommendation.
+     * @param {RecommendationCreateArgs} args - Arguments to create a Recommendation.
+     * @example
+     * // Create one Recommendation
+     * const Recommendation = await prisma.recommendation.create({
+     *   data: {
+     *     // ... data to create a Recommendation
+     *   }
+     * })
+     * 
+     */
+    create<T extends RecommendationCreateArgs>(args: SelectSubset<T, RecommendationCreateArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Recommendations.
+     * @param {RecommendationCreateManyArgs} args - Arguments to create many Recommendations.
+     * @example
+     * // Create many Recommendations
+     * const recommendation = await prisma.recommendation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RecommendationCreateManyArgs>(args?: SelectSubset<T, RecommendationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Recommendations and returns the data saved in the database.
+     * @param {RecommendationCreateManyAndReturnArgs} args - Arguments to create many Recommendations.
+     * @example
+     * // Create many Recommendations
+     * const recommendation = await prisma.recommendation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Recommendations and only return the `id`
+     * const recommendationWithIdOnly = await prisma.recommendation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RecommendationCreateManyAndReturnArgs>(args?: SelectSubset<T, RecommendationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Recommendation.
+     * @param {RecommendationDeleteArgs} args - Arguments to delete one Recommendation.
+     * @example
+     * // Delete one Recommendation
+     * const Recommendation = await prisma.recommendation.delete({
+     *   where: {
+     *     // ... filter to delete one Recommendation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RecommendationDeleteArgs>(args: SelectSubset<T, RecommendationDeleteArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Recommendation.
+     * @param {RecommendationUpdateArgs} args - Arguments to update one Recommendation.
+     * @example
+     * // Update one Recommendation
+     * const recommendation = await prisma.recommendation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RecommendationUpdateArgs>(args: SelectSubset<T, RecommendationUpdateArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Recommendations.
+     * @param {RecommendationDeleteManyArgs} args - Arguments to filter Recommendations to delete.
+     * @example
+     * // Delete a few Recommendations
+     * const { count } = await prisma.recommendation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RecommendationDeleteManyArgs>(args?: SelectSubset<T, RecommendationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Recommendations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Recommendations
+     * const recommendation = await prisma.recommendation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RecommendationUpdateManyArgs>(args: SelectSubset<T, RecommendationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Recommendations and returns the data updated in the database.
+     * @param {RecommendationUpdateManyAndReturnArgs} args - Arguments to update many Recommendations.
+     * @example
+     * // Update many Recommendations
+     * const recommendation = await prisma.recommendation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Recommendations and only return the `id`
+     * const recommendationWithIdOnly = await prisma.recommendation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RecommendationUpdateManyAndReturnArgs>(args: SelectSubset<T, RecommendationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Recommendation.
+     * @param {RecommendationUpsertArgs} args - Arguments to update or create a Recommendation.
+     * @example
+     * // Update or create a Recommendation
+     * const recommendation = await prisma.recommendation.upsert({
+     *   create: {
+     *     // ... data to create a Recommendation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Recommendation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RecommendationUpsertArgs>(args: SelectSubset<T, RecommendationUpsertArgs<ExtArgs>>): Prisma__RecommendationClient<$Result.GetResult<Prisma.$RecommendationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Recommendations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationCountArgs} args - Arguments to filter Recommendations to count.
+     * @example
+     * // Count the number of Recommendations
+     * const count = await prisma.recommendation.count({
+     *   where: {
+     *     // ... the filter for the Recommendations we want to count
+     *   }
+     * })
+    **/
+    count<T extends RecommendationCountArgs>(
+      args?: Subset<T, RecommendationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RecommendationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Recommendation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RecommendationAggregateArgs>(args: Subset<T, RecommendationAggregateArgs>): Prisma.PrismaPromise<GetRecommendationAggregateType<T>>
+
+    /**
+     * Group by Recommendation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RecommendationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RecommendationGroupByArgs['orderBy'] }
+        : { orderBy?: RecommendationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RecommendationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRecommendationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Recommendation model
+   */
+  readonly fields: RecommendationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Recommendation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RecommendationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Recommendation model
+   */
+  interface RecommendationFieldRefs {
+    readonly id: FieldRef<"Recommendation", 'String'>
+    readonly userId: FieldRef<"Recommendation", 'String'>
+    readonly window: FieldRef<"Recommendation", 'String'>
+    readonly payload: FieldRef<"Recommendation", 'String'>
+    readonly computedAt: FieldRef<"Recommendation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Recommendation findUnique
+   */
+  export type RecommendationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which Recommendation to fetch.
+     */
+    where: RecommendationWhereUniqueInput
+  }
+
+  /**
+   * Recommendation findUniqueOrThrow
+   */
+  export type RecommendationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which Recommendation to fetch.
+     */
+    where: RecommendationWhereUniqueInput
+  }
+
+  /**
+   * Recommendation findFirst
+   */
+  export type RecommendationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which Recommendation to fetch.
+     */
+    where?: RecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recommendations to fetch.
+     */
+    orderBy?: RecommendationOrderByWithRelationInput | RecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Recommendations.
+     */
+    cursor?: RecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Recommendations.
+     */
+    distinct?: RecommendationScalarFieldEnum | RecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * Recommendation findFirstOrThrow
+   */
+  export type RecommendationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which Recommendation to fetch.
+     */
+    where?: RecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recommendations to fetch.
+     */
+    orderBy?: RecommendationOrderByWithRelationInput | RecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Recommendations.
+     */
+    cursor?: RecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Recommendations.
+     */
+    distinct?: RecommendationScalarFieldEnum | RecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * Recommendation findMany
+   */
+  export type RecommendationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which Recommendations to fetch.
+     */
+    where?: RecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Recommendations to fetch.
+     */
+    orderBy?: RecommendationOrderByWithRelationInput | RecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Recommendations.
+     */
+    cursor?: RecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Recommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Recommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Recommendations.
+     */
+    distinct?: RecommendationScalarFieldEnum | RecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * Recommendation create
+   */
+  export type RecommendationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Recommendation.
+     */
+    data: XOR<RecommendationCreateInput, RecommendationUncheckedCreateInput>
+  }
+
+  /**
+   * Recommendation createMany
+   */
+  export type RecommendationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Recommendations.
+     */
+    data: RecommendationCreateManyInput | RecommendationCreateManyInput[]
+  }
+
+  /**
+   * Recommendation createManyAndReturn
+   */
+  export type RecommendationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Recommendations.
+     */
+    data: RecommendationCreateManyInput | RecommendationCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Recommendation update
+   */
+  export type RecommendationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Recommendation.
+     */
+    data: XOR<RecommendationUpdateInput, RecommendationUncheckedUpdateInput>
+    /**
+     * Choose, which Recommendation to update.
+     */
+    where: RecommendationWhereUniqueInput
+  }
+
+  /**
+   * Recommendation updateMany
+   */
+  export type RecommendationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Recommendations.
+     */
+    data: XOR<RecommendationUpdateManyMutationInput, RecommendationUncheckedUpdateManyInput>
+    /**
+     * Filter which Recommendations to update
+     */
+    where?: RecommendationWhereInput
+    /**
+     * Limit how many Recommendations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Recommendation updateManyAndReturn
+   */
+  export type RecommendationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * The data used to update Recommendations.
+     */
+    data: XOR<RecommendationUpdateManyMutationInput, RecommendationUncheckedUpdateManyInput>
+    /**
+     * Filter which Recommendations to update
+     */
+    where?: RecommendationWhereInput
+    /**
+     * Limit how many Recommendations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Recommendation upsert
+   */
+  export type RecommendationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Recommendation to update in case it exists.
+     */
+    where: RecommendationWhereUniqueInput
+    /**
+     * In case the Recommendation found by the `where` argument doesn't exist, create a new Recommendation with this data.
+     */
+    create: XOR<RecommendationCreateInput, RecommendationUncheckedCreateInput>
+    /**
+     * In case the Recommendation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RecommendationUpdateInput, RecommendationUncheckedUpdateInput>
+  }
+
+  /**
+   * Recommendation delete
+   */
+  export type RecommendationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+    /**
+     * Filter which Recommendation to delete.
+     */
+    where: RecommendationWhereUniqueInput
+  }
+
+  /**
+   * Recommendation deleteMany
+   */
+  export type RecommendationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Recommendations to delete
+     */
+    where?: RecommendationWhereInput
+    /**
+     * Limit how many Recommendations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Recommendation without action
+   */
+  export type RecommendationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recommendation
+     */
+    select?: RecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recommendation
+     */
+    omit?: RecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -13122,6 +16751,45 @@ export namespace Prisma {
   export type FriendshipScalarFieldEnum = (typeof FriendshipScalarFieldEnum)[keyof typeof FriendshipScalarFieldEnum]
 
 
+  export const PlayEventScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    deezerTrackId: 'deezerTrackId',
+    title: 'title',
+    artistName: 'artistName',
+    artistId: 'artistId',
+    albumTitle: 'albumTitle',
+    albumCover: 'albumCover',
+    duration: 'duration',
+    createdAt: 'createdAt'
+  };
+
+  export type PlayEventScalarFieldEnum = (typeof PlayEventScalarFieldEnum)[keyof typeof PlayEventScalarFieldEnum]
+
+
+  export const TrackGenreScalarFieldEnum: {
+    deezerTrackId: 'deezerTrackId',
+    albumId: 'albumId',
+    genreId: 'genreId',
+    genreName: 'genreName',
+    source: 'source',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TrackGenreScalarFieldEnum = (typeof TrackGenreScalarFieldEnum)[keyof typeof TrackGenreScalarFieldEnum]
+
+
+  export const RecommendationScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    window: 'window',
+    payload: 'payload',
+    computedAt: 'computedAt'
+  };
+
+  export type RecommendationScalarFieldEnum = (typeof RecommendationScalarFieldEnum)[keyof typeof RecommendationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -13219,6 +16887,8 @@ export namespace Prisma {
     playlists?: PlaylistListRelationFilter
     devices?: DeviceListRelationFilter
     passkeys?: PasskeyListRelationFilter
+    playEvents?: PlayEventListRelationFilter
+    recommendations?: RecommendationListRelationFilter
     sentFriendRequests?: FriendshipListRelationFilter
     receivedFriendRequests?: FriendshipListRelationFilter
   }
@@ -13237,6 +16907,8 @@ export namespace Prisma {
     playlists?: PlaylistOrderByRelationAggregateInput
     devices?: DeviceOrderByRelationAggregateInput
     passkeys?: PasskeyOrderByRelationAggregateInput
+    playEvents?: PlayEventOrderByRelationAggregateInput
+    recommendations?: RecommendationOrderByRelationAggregateInput
     sentFriendRequests?: FriendshipOrderByRelationAggregateInput
     receivedFriendRequests?: FriendshipOrderByRelationAggregateInput
   }
@@ -13258,6 +16930,8 @@ export namespace Prisma {
     playlists?: PlaylistListRelationFilter
     devices?: DeviceListRelationFilter
     passkeys?: PasskeyListRelationFilter
+    playEvents?: PlayEventListRelationFilter
+    recommendations?: RecommendationListRelationFilter
     sentFriendRequests?: FriendshipListRelationFilter
     receivedFriendRequests?: FriendshipListRelationFilter
   }, "id" | "email">
@@ -13876,6 +17550,203 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Friendship"> | Date | string
   }
 
+  export type PlayEventWhereInput = {
+    AND?: PlayEventWhereInput | PlayEventWhereInput[]
+    OR?: PlayEventWhereInput[]
+    NOT?: PlayEventWhereInput | PlayEventWhereInput[]
+    id?: StringFilter<"PlayEvent"> | string
+    userId?: StringFilter<"PlayEvent"> | string
+    deezerTrackId?: IntFilter<"PlayEvent"> | number
+    title?: StringFilter<"PlayEvent"> | string
+    artistName?: StringFilter<"PlayEvent"> | string
+    artistId?: IntNullableFilter<"PlayEvent"> | number | null
+    albumTitle?: StringFilter<"PlayEvent"> | string
+    albumCover?: StringFilter<"PlayEvent"> | string
+    duration?: IntFilter<"PlayEvent"> | number
+    createdAt?: DateTimeFilter<"PlayEvent"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PlayEventOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    artistId?: SortOrderInput | SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PlayEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PlayEventWhereInput | PlayEventWhereInput[]
+    OR?: PlayEventWhereInput[]
+    NOT?: PlayEventWhereInput | PlayEventWhereInput[]
+    userId?: StringFilter<"PlayEvent"> | string
+    deezerTrackId?: IntFilter<"PlayEvent"> | number
+    title?: StringFilter<"PlayEvent"> | string
+    artistName?: StringFilter<"PlayEvent"> | string
+    artistId?: IntNullableFilter<"PlayEvent"> | number | null
+    albumTitle?: StringFilter<"PlayEvent"> | string
+    albumCover?: StringFilter<"PlayEvent"> | string
+    duration?: IntFilter<"PlayEvent"> | number
+    createdAt?: DateTimeFilter<"PlayEvent"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type PlayEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    artistId?: SortOrderInput | SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+    _count?: PlayEventCountOrderByAggregateInput
+    _avg?: PlayEventAvgOrderByAggregateInput
+    _max?: PlayEventMaxOrderByAggregateInput
+    _min?: PlayEventMinOrderByAggregateInput
+    _sum?: PlayEventSumOrderByAggregateInput
+  }
+
+  export type PlayEventScalarWhereWithAggregatesInput = {
+    AND?: PlayEventScalarWhereWithAggregatesInput | PlayEventScalarWhereWithAggregatesInput[]
+    OR?: PlayEventScalarWhereWithAggregatesInput[]
+    NOT?: PlayEventScalarWhereWithAggregatesInput | PlayEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PlayEvent"> | string
+    userId?: StringWithAggregatesFilter<"PlayEvent"> | string
+    deezerTrackId?: IntWithAggregatesFilter<"PlayEvent"> | number
+    title?: StringWithAggregatesFilter<"PlayEvent"> | string
+    artistName?: StringWithAggregatesFilter<"PlayEvent"> | string
+    artistId?: IntNullableWithAggregatesFilter<"PlayEvent"> | number | null
+    albumTitle?: StringWithAggregatesFilter<"PlayEvent"> | string
+    albumCover?: StringWithAggregatesFilter<"PlayEvent"> | string
+    duration?: IntWithAggregatesFilter<"PlayEvent"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"PlayEvent"> | Date | string
+  }
+
+  export type TrackGenreWhereInput = {
+    AND?: TrackGenreWhereInput | TrackGenreWhereInput[]
+    OR?: TrackGenreWhereInput[]
+    NOT?: TrackGenreWhereInput | TrackGenreWhereInput[]
+    deezerTrackId?: IntFilter<"TrackGenre"> | number
+    albumId?: IntNullableFilter<"TrackGenre"> | number | null
+    genreId?: IntNullableFilter<"TrackGenre"> | number | null
+    genreName?: StringNullableFilter<"TrackGenre"> | string | null
+    source?: StringNullableFilter<"TrackGenre"> | string | null
+    updatedAt?: DateTimeFilter<"TrackGenre"> | Date | string
+  }
+
+  export type TrackGenreOrderByWithRelationInput = {
+    deezerTrackId?: SortOrder
+    albumId?: SortOrderInput | SortOrder
+    genreId?: SortOrderInput | SortOrder
+    genreName?: SortOrderInput | SortOrder
+    source?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TrackGenreWhereUniqueInput = Prisma.AtLeast<{
+    deezerTrackId?: number
+    AND?: TrackGenreWhereInput | TrackGenreWhereInput[]
+    OR?: TrackGenreWhereInput[]
+    NOT?: TrackGenreWhereInput | TrackGenreWhereInput[]
+    albumId?: IntNullableFilter<"TrackGenre"> | number | null
+    genreId?: IntNullableFilter<"TrackGenre"> | number | null
+    genreName?: StringNullableFilter<"TrackGenre"> | string | null
+    source?: StringNullableFilter<"TrackGenre"> | string | null
+    updatedAt?: DateTimeFilter<"TrackGenre"> | Date | string
+  }, "deezerTrackId">
+
+  export type TrackGenreOrderByWithAggregationInput = {
+    deezerTrackId?: SortOrder
+    albumId?: SortOrderInput | SortOrder
+    genreId?: SortOrderInput | SortOrder
+    genreName?: SortOrderInput | SortOrder
+    source?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: TrackGenreCountOrderByAggregateInput
+    _avg?: TrackGenreAvgOrderByAggregateInput
+    _max?: TrackGenreMaxOrderByAggregateInput
+    _min?: TrackGenreMinOrderByAggregateInput
+    _sum?: TrackGenreSumOrderByAggregateInput
+  }
+
+  export type TrackGenreScalarWhereWithAggregatesInput = {
+    AND?: TrackGenreScalarWhereWithAggregatesInput | TrackGenreScalarWhereWithAggregatesInput[]
+    OR?: TrackGenreScalarWhereWithAggregatesInput[]
+    NOT?: TrackGenreScalarWhereWithAggregatesInput | TrackGenreScalarWhereWithAggregatesInput[]
+    deezerTrackId?: IntWithAggregatesFilter<"TrackGenre"> | number
+    albumId?: IntNullableWithAggregatesFilter<"TrackGenre"> | number | null
+    genreId?: IntNullableWithAggregatesFilter<"TrackGenre"> | number | null
+    genreName?: StringNullableWithAggregatesFilter<"TrackGenre"> | string | null
+    source?: StringNullableWithAggregatesFilter<"TrackGenre"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"TrackGenre"> | Date | string
+  }
+
+  export type RecommendationWhereInput = {
+    AND?: RecommendationWhereInput | RecommendationWhereInput[]
+    OR?: RecommendationWhereInput[]
+    NOT?: RecommendationWhereInput | RecommendationWhereInput[]
+    id?: StringFilter<"Recommendation"> | string
+    userId?: StringFilter<"Recommendation"> | string
+    window?: StringFilter<"Recommendation"> | string
+    payload?: StringFilter<"Recommendation"> | string
+    computedAt?: DateTimeFilter<"Recommendation"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type RecommendationOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    window?: SortOrder
+    payload?: SortOrder
+    computedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type RecommendationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_window?: RecommendationUserIdWindowCompoundUniqueInput
+    AND?: RecommendationWhereInput | RecommendationWhereInput[]
+    OR?: RecommendationWhereInput[]
+    NOT?: RecommendationWhereInput | RecommendationWhereInput[]
+    userId?: StringFilter<"Recommendation"> | string
+    window?: StringFilter<"Recommendation"> | string
+    payload?: StringFilter<"Recommendation"> | string
+    computedAt?: DateTimeFilter<"Recommendation"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_window">
+
+  export type RecommendationOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    window?: SortOrder
+    payload?: SortOrder
+    computedAt?: SortOrder
+    _count?: RecommendationCountOrderByAggregateInput
+    _max?: RecommendationMaxOrderByAggregateInput
+    _min?: RecommendationMinOrderByAggregateInput
+  }
+
+  export type RecommendationScalarWhereWithAggregatesInput = {
+    AND?: RecommendationScalarWhereWithAggregatesInput | RecommendationScalarWhereWithAggregatesInput[]
+    OR?: RecommendationScalarWhereWithAggregatesInput[]
+    NOT?: RecommendationScalarWhereWithAggregatesInput | RecommendationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Recommendation"> | string
+    userId?: StringWithAggregatesFilter<"Recommendation"> | string
+    window?: StringWithAggregatesFilter<"Recommendation"> | string
+    payload?: StringWithAggregatesFilter<"Recommendation"> | string
+    computedAt?: DateTimeWithAggregatesFilter<"Recommendation"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -13890,6 +17761,8 @@ export namespace Prisma {
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
@@ -13908,6 +17781,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
@@ -13926,6 +17801,8 @@ export namespace Prisma {
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
@@ -13944,6 +17821,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
@@ -14589,6 +18468,214 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PlayEventCreateInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    artistId?: number | null
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutPlayEventsInput
+  }
+
+  export type PlayEventUncheckedCreateInput = {
+    id?: string
+    userId: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    artistId?: number | null
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type PlayEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPlayEventsNestedInput
+  }
+
+  export type PlayEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PlayEventCreateManyInput = {
+    id?: string
+    userId: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    artistId?: number | null
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type PlayEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PlayEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackGenreCreateInput = {
+    deezerTrackId: number
+    albumId?: number | null
+    genreId?: number | null
+    genreName?: string | null
+    source?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type TrackGenreUncheckedCreateInput = {
+    deezerTrackId: number
+    albumId?: number | null
+    genreId?: number | null
+    genreName?: string | null
+    source?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type TrackGenreUpdateInput = {
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    albumId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreName?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackGenreUncheckedUpdateInput = {
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    albumId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreName?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackGenreCreateManyInput = {
+    deezerTrackId: number
+    albumId?: number | null
+    genreId?: number | null
+    genreName?: string | null
+    source?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type TrackGenreUpdateManyMutationInput = {
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    albumId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreName?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TrackGenreUncheckedUpdateManyInput = {
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    albumId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreId?: NullableIntFieldUpdateOperationsInput | number | null
+    genreName?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationCreateInput = {
+    id?: string
+    window: string
+    payload: string
+    computedAt?: Date | string
+    user: UserCreateNestedOneWithoutRecommendationsInput
+  }
+
+  export type RecommendationUncheckedCreateInput = {
+    id?: string
+    userId: string
+    window: string
+    payload: string
+    computedAt?: Date | string
+  }
+
+  export type RecommendationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    window?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    computedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutRecommendationsNestedInput
+  }
+
+  export type RecommendationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    window?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    computedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationCreateManyInput = {
+    id?: string
+    userId: string
+    window: string
+    payload: string
+    computedAt?: Date | string
+  }
+
+  export type RecommendationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    window?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    computedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    window?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    computedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -14671,6 +18758,18 @@ export namespace Prisma {
     none?: PasskeyWhereInput
   }
 
+  export type PlayEventListRelationFilter = {
+    every?: PlayEventWhereInput
+    some?: PlayEventWhereInput
+    none?: PlayEventWhereInput
+  }
+
+  export type RecommendationListRelationFilter = {
+    every?: RecommendationWhereInput
+    some?: RecommendationWhereInput
+    none?: RecommendationWhereInput
+  }
+
   export type FriendshipListRelationFilter = {
     every?: FriendshipWhereInput
     some?: FriendshipWhereInput
@@ -14703,6 +18802,14 @@ export namespace Prisma {
   }
 
   export type PasskeyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PlayEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RecommendationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15235,6 +19342,125 @@ export namespace Prisma {
     _max?: NestedEnumFriendshipStatusFilter<$PrismaModel>
   }
 
+  export type PlayEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    artistId?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PlayEventAvgOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    artistId?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type PlayEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    artistId?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PlayEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    deezerTrackId?: SortOrder
+    title?: SortOrder
+    artistName?: SortOrder
+    artistId?: SortOrder
+    albumTitle?: SortOrder
+    albumCover?: SortOrder
+    duration?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PlayEventSumOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    artistId?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type TrackGenreCountOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    albumId?: SortOrder
+    genreId?: SortOrder
+    genreName?: SortOrder
+    source?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TrackGenreAvgOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    albumId?: SortOrder
+    genreId?: SortOrder
+  }
+
+  export type TrackGenreMaxOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    albumId?: SortOrder
+    genreId?: SortOrder
+    genreName?: SortOrder
+    source?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TrackGenreMinOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    albumId?: SortOrder
+    genreId?: SortOrder
+    genreName?: SortOrder
+    source?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TrackGenreSumOrderByAggregateInput = {
+    deezerTrackId?: SortOrder
+    albumId?: SortOrder
+    genreId?: SortOrder
+  }
+
+  export type RecommendationUserIdWindowCompoundUniqueInput = {
+    userId: string
+    window: string
+  }
+
+  export type RecommendationCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    window?: SortOrder
+    payload?: SortOrder
+    computedAt?: SortOrder
+  }
+
+  export type RecommendationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    window?: SortOrder
+    payload?: SortOrder
+    computedAt?: SortOrder
+  }
+
+  export type RecommendationMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    window?: SortOrder
+    payload?: SortOrder
+    computedAt?: SortOrder
+  }
+
   export type SessionCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -15275,6 +19501,20 @@ export namespace Prisma {
     connectOrCreate?: PasskeyCreateOrConnectWithoutUserInput | PasskeyCreateOrConnectWithoutUserInput[]
     createMany?: PasskeyCreateManyUserInputEnvelope
     connect?: PasskeyWhereUniqueInput | PasskeyWhereUniqueInput[]
+  }
+
+  export type PlayEventCreateNestedManyWithoutUserInput = {
+    create?: XOR<PlayEventCreateWithoutUserInput, PlayEventUncheckedCreateWithoutUserInput> | PlayEventCreateWithoutUserInput[] | PlayEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlayEventCreateOrConnectWithoutUserInput | PlayEventCreateOrConnectWithoutUserInput[]
+    createMany?: PlayEventCreateManyUserInputEnvelope
+    connect?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+  }
+
+  export type RecommendationCreateNestedManyWithoutUserInput = {
+    create?: XOR<RecommendationCreateWithoutUserInput, RecommendationUncheckedCreateWithoutUserInput> | RecommendationCreateWithoutUserInput[] | RecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationCreateOrConnectWithoutUserInput | RecommendationCreateOrConnectWithoutUserInput[]
+    createMany?: RecommendationCreateManyUserInputEnvelope
+    connect?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
   }
 
   export type FriendshipCreateNestedManyWithoutRequesterInput = {
@@ -15331,6 +19571,20 @@ export namespace Prisma {
     connectOrCreate?: PasskeyCreateOrConnectWithoutUserInput | PasskeyCreateOrConnectWithoutUserInput[]
     createMany?: PasskeyCreateManyUserInputEnvelope
     connect?: PasskeyWhereUniqueInput | PasskeyWhereUniqueInput[]
+  }
+
+  export type PlayEventUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PlayEventCreateWithoutUserInput, PlayEventUncheckedCreateWithoutUserInput> | PlayEventCreateWithoutUserInput[] | PlayEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlayEventCreateOrConnectWithoutUserInput | PlayEventCreateOrConnectWithoutUserInput[]
+    createMany?: PlayEventCreateManyUserInputEnvelope
+    connect?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+  }
+
+  export type RecommendationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<RecommendationCreateWithoutUserInput, RecommendationUncheckedCreateWithoutUserInput> | RecommendationCreateWithoutUserInput[] | RecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationCreateOrConnectWithoutUserInput | RecommendationCreateOrConnectWithoutUserInput[]
+    createMany?: RecommendationCreateManyUserInputEnvelope
+    connect?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
   }
 
   export type FriendshipUncheckedCreateNestedManyWithoutRequesterInput = {
@@ -15447,6 +19701,34 @@ export namespace Prisma {
     deleteMany?: PasskeyScalarWhereInput | PasskeyScalarWhereInput[]
   }
 
+  export type PlayEventUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PlayEventCreateWithoutUserInput, PlayEventUncheckedCreateWithoutUserInput> | PlayEventCreateWithoutUserInput[] | PlayEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlayEventCreateOrConnectWithoutUserInput | PlayEventCreateOrConnectWithoutUserInput[]
+    upsert?: PlayEventUpsertWithWhereUniqueWithoutUserInput | PlayEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PlayEventCreateManyUserInputEnvelope
+    set?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    disconnect?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    delete?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    connect?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    update?: PlayEventUpdateWithWhereUniqueWithoutUserInput | PlayEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PlayEventUpdateManyWithWhereWithoutUserInput | PlayEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PlayEventScalarWhereInput | PlayEventScalarWhereInput[]
+  }
+
+  export type RecommendationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RecommendationCreateWithoutUserInput, RecommendationUncheckedCreateWithoutUserInput> | RecommendationCreateWithoutUserInput[] | RecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationCreateOrConnectWithoutUserInput | RecommendationCreateOrConnectWithoutUserInput[]
+    upsert?: RecommendationUpsertWithWhereUniqueWithoutUserInput | RecommendationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RecommendationCreateManyUserInputEnvelope
+    set?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    disconnect?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    delete?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    connect?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    update?: RecommendationUpdateWithWhereUniqueWithoutUserInput | RecommendationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RecommendationUpdateManyWithWhereWithoutUserInput | RecommendationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RecommendationScalarWhereInput | RecommendationScalarWhereInput[]
+  }
+
   export type FriendshipUpdateManyWithoutRequesterNestedInput = {
     create?: XOR<FriendshipCreateWithoutRequesterInput, FriendshipUncheckedCreateWithoutRequesterInput> | FriendshipCreateWithoutRequesterInput[] | FriendshipUncheckedCreateWithoutRequesterInput[]
     connectOrCreate?: FriendshipCreateOrConnectWithoutRequesterInput | FriendshipCreateOrConnectWithoutRequesterInput[]
@@ -15557,6 +19839,34 @@ export namespace Prisma {
     update?: PasskeyUpdateWithWhereUniqueWithoutUserInput | PasskeyUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: PasskeyUpdateManyWithWhereWithoutUserInput | PasskeyUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: PasskeyScalarWhereInput | PasskeyScalarWhereInput[]
+  }
+
+  export type PlayEventUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PlayEventCreateWithoutUserInput, PlayEventUncheckedCreateWithoutUserInput> | PlayEventCreateWithoutUserInput[] | PlayEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlayEventCreateOrConnectWithoutUserInput | PlayEventCreateOrConnectWithoutUserInput[]
+    upsert?: PlayEventUpsertWithWhereUniqueWithoutUserInput | PlayEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PlayEventCreateManyUserInputEnvelope
+    set?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    disconnect?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    delete?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    connect?: PlayEventWhereUniqueInput | PlayEventWhereUniqueInput[]
+    update?: PlayEventUpdateWithWhereUniqueWithoutUserInput | PlayEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PlayEventUpdateManyWithWhereWithoutUserInput | PlayEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PlayEventScalarWhereInput | PlayEventScalarWhereInput[]
+  }
+
+  export type RecommendationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RecommendationCreateWithoutUserInput, RecommendationUncheckedCreateWithoutUserInput> | RecommendationCreateWithoutUserInput[] | RecommendationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationCreateOrConnectWithoutUserInput | RecommendationCreateOrConnectWithoutUserInput[]
+    upsert?: RecommendationUpsertWithWhereUniqueWithoutUserInput | RecommendationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RecommendationCreateManyUserInputEnvelope
+    set?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    disconnect?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    delete?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    connect?: RecommendationWhereUniqueInput | RecommendationWhereUniqueInput[]
+    update?: RecommendationUpdateWithWhereUniqueWithoutUserInput | RecommendationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RecommendationUpdateManyWithWhereWithoutUserInput | RecommendationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RecommendationScalarWhereInput | RecommendationScalarWhereInput[]
   }
 
   export type FriendshipUncheckedUpdateManyWithoutRequesterNestedInput = {
@@ -15781,6 +20091,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutReceivedFriendRequestsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedFriendRequestsInput, UserUpdateWithoutReceivedFriendRequestsInput>, UserUncheckedUpdateWithoutReceivedFriendRequestsInput>
+  }
+
+  export type UserCreateNestedOneWithoutPlayEventsInput = {
+    create?: XOR<UserCreateWithoutPlayEventsInput, UserUncheckedCreateWithoutPlayEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPlayEventsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPlayEventsNestedInput = {
+    create?: XOR<UserCreateWithoutPlayEventsInput, UserUncheckedCreateWithoutPlayEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPlayEventsInput
+    upsert?: UserUpsertWithoutPlayEventsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPlayEventsInput, UserUpdateWithoutPlayEventsInput>, UserUncheckedUpdateWithoutPlayEventsInput>
+  }
+
+  export type UserCreateNestedOneWithoutRecommendationsInput = {
+    create?: XOR<UserCreateWithoutRecommendationsInput, UserUncheckedCreateWithoutRecommendationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRecommendationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutRecommendationsNestedInput = {
+    create?: XOR<UserCreateWithoutRecommendationsInput, UserUncheckedCreateWithoutRecommendationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRecommendationsInput
+    upsert?: UserUpsertWithoutRecommendationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRecommendationsInput, UserUpdateWithoutRecommendationsInput>, UserUncheckedUpdateWithoutRecommendationsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -16174,6 +20512,62 @@ export namespace Prisma {
     data: PasskeyCreateManyUserInput | PasskeyCreateManyUserInput[]
   }
 
+  export type PlayEventCreateWithoutUserInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    artistId?: number | null
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type PlayEventUncheckedCreateWithoutUserInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    artistId?: number | null
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type PlayEventCreateOrConnectWithoutUserInput = {
+    where: PlayEventWhereUniqueInput
+    create: XOR<PlayEventCreateWithoutUserInput, PlayEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type PlayEventCreateManyUserInputEnvelope = {
+    data: PlayEventCreateManyUserInput | PlayEventCreateManyUserInput[]
+  }
+
+  export type RecommendationCreateWithoutUserInput = {
+    id?: string
+    window: string
+    payload: string
+    computedAt?: Date | string
+  }
+
+  export type RecommendationUncheckedCreateWithoutUserInput = {
+    id?: string
+    window: string
+    payload: string
+    computedAt?: Date | string
+  }
+
+  export type RecommendationCreateOrConnectWithoutUserInput = {
+    where: RecommendationWhereUniqueInput
+    create: XOR<RecommendationCreateWithoutUserInput, RecommendationUncheckedCreateWithoutUserInput>
+  }
+
+  export type RecommendationCreateManyUserInputEnvelope = {
+    data: RecommendationCreateManyUserInput | RecommendationCreateManyUserInput[]
+  }
+
   export type FriendshipCreateWithoutRequesterInput = {
     id?: string
     status?: $Enums.FriendshipStatus
@@ -16398,6 +20792,65 @@ export namespace Prisma {
     lastUsedAt?: DateTimeFilter<"Passkey"> | Date | string
   }
 
+  export type PlayEventUpsertWithWhereUniqueWithoutUserInput = {
+    where: PlayEventWhereUniqueInput
+    update: XOR<PlayEventUpdateWithoutUserInput, PlayEventUncheckedUpdateWithoutUserInput>
+    create: XOR<PlayEventCreateWithoutUserInput, PlayEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type PlayEventUpdateWithWhereUniqueWithoutUserInput = {
+    where: PlayEventWhereUniqueInput
+    data: XOR<PlayEventUpdateWithoutUserInput, PlayEventUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PlayEventUpdateManyWithWhereWithoutUserInput = {
+    where: PlayEventScalarWhereInput
+    data: XOR<PlayEventUpdateManyMutationInput, PlayEventUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PlayEventScalarWhereInput = {
+    AND?: PlayEventScalarWhereInput | PlayEventScalarWhereInput[]
+    OR?: PlayEventScalarWhereInput[]
+    NOT?: PlayEventScalarWhereInput | PlayEventScalarWhereInput[]
+    id?: StringFilter<"PlayEvent"> | string
+    userId?: StringFilter<"PlayEvent"> | string
+    deezerTrackId?: IntFilter<"PlayEvent"> | number
+    title?: StringFilter<"PlayEvent"> | string
+    artistName?: StringFilter<"PlayEvent"> | string
+    artistId?: IntNullableFilter<"PlayEvent"> | number | null
+    albumTitle?: StringFilter<"PlayEvent"> | string
+    albumCover?: StringFilter<"PlayEvent"> | string
+    duration?: IntFilter<"PlayEvent"> | number
+    createdAt?: DateTimeFilter<"PlayEvent"> | Date | string
+  }
+
+  export type RecommendationUpsertWithWhereUniqueWithoutUserInput = {
+    where: RecommendationWhereUniqueInput
+    update: XOR<RecommendationUpdateWithoutUserInput, RecommendationUncheckedUpdateWithoutUserInput>
+    create: XOR<RecommendationCreateWithoutUserInput, RecommendationUncheckedCreateWithoutUserInput>
+  }
+
+  export type RecommendationUpdateWithWhereUniqueWithoutUserInput = {
+    where: RecommendationWhereUniqueInput
+    data: XOR<RecommendationUpdateWithoutUserInput, RecommendationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RecommendationUpdateManyWithWhereWithoutUserInput = {
+    where: RecommendationScalarWhereInput
+    data: XOR<RecommendationUpdateManyMutationInput, RecommendationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type RecommendationScalarWhereInput = {
+    AND?: RecommendationScalarWhereInput | RecommendationScalarWhereInput[]
+    OR?: RecommendationScalarWhereInput[]
+    NOT?: RecommendationScalarWhereInput | RecommendationScalarWhereInput[]
+    id?: StringFilter<"Recommendation"> | string
+    userId?: StringFilter<"Recommendation"> | string
+    window?: StringFilter<"Recommendation"> | string
+    payload?: StringFilter<"Recommendation"> | string
+    computedAt?: DateTimeFilter<"Recommendation"> | Date | string
+  }
+
   export type FriendshipUpsertWithWhereUniqueWithoutRequesterInput = {
     where: FriendshipWhereUniqueInput
     update: XOR<FriendshipUpdateWithoutRequesterInput, FriendshipUncheckedUpdateWithoutRequesterInput>
@@ -16455,6 +20908,8 @@ export namespace Prisma {
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
@@ -16472,6 +20927,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
@@ -16505,6 +20962,8 @@ export namespace Prisma {
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
@@ -16522,6 +20981,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
@@ -16539,6 +21000,8 @@ export namespace Prisma {
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
@@ -16556,6 +21019,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
@@ -16589,6 +21054,8 @@ export namespace Prisma {
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
@@ -16606,6 +21073,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
@@ -16623,6 +21092,8 @@ export namespace Prisma {
     settings?: UserSettingCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
@@ -16640,6 +21111,8 @@ export namespace Prisma {
     settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
@@ -16706,6 +21179,8 @@ export namespace Prisma {
     settings?: UserSettingUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
@@ -16723,6 +21198,8 @@ export namespace Prisma {
     settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
@@ -16820,6 +21297,8 @@ export namespace Prisma {
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
@@ -16837,6 +21316,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
@@ -16870,6 +21351,8 @@ export namespace Prisma {
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
@@ -16887,6 +21370,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
@@ -16904,6 +21389,8 @@ export namespace Prisma {
     settings?: UserSettingCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
@@ -16921,6 +21408,8 @@ export namespace Prisma {
     settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
@@ -16954,6 +21443,8 @@ export namespace Prisma {
     settings?: UserSettingUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
@@ -16971,6 +21462,8 @@ export namespace Prisma {
     settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
@@ -16988,6 +21481,8 @@ export namespace Prisma {
     settings?: UserSettingCreateNestedManyWithoutUserInput
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
@@ -17005,6 +21500,8 @@ export namespace Prisma {
     settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
@@ -17038,6 +21535,8 @@ export namespace Prisma {
     settings?: UserSettingUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
@@ -17055,6 +21554,8 @@ export namespace Prisma {
     settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
@@ -17073,6 +21574,8 @@ export namespace Prisma {
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
   }
 
@@ -17090,6 +21593,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
   }
 
@@ -17112,6 +21617,8 @@ export namespace Prisma {
     playlists?: PlaylistCreateNestedManyWithoutUserInput
     devices?: DeviceCreateNestedManyWithoutUserInput
     passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
   }
 
@@ -17129,6 +21636,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
     devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
     passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
     sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
   }
 
@@ -17162,6 +21671,8 @@ export namespace Prisma {
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
   }
 
@@ -17179,6 +21690,8 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
 
@@ -17207,6 +21720,8 @@ export namespace Prisma {
     playlists?: PlaylistUpdateManyWithoutUserNestedInput
     devices?: DeviceUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
   }
 
@@ -17224,7 +21739,193 @@ export namespace Prisma {
     playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
     devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
     passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
     sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
+  }
+
+  export type UserCreateWithoutPlayEventsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackCreateNestedManyWithoutUserInput
+    settings?: UserSettingCreateNestedManyWithoutUserInput
+    playlists?: PlaylistCreateNestedManyWithoutUserInput
+    devices?: DeviceCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
+    receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
+  }
+
+  export type UserUncheckedCreateWithoutPlayEventsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackUncheckedCreateNestedManyWithoutUserInput
+    settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
+    playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    recommendations?: RecommendationUncheckedCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
+    receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
+  }
+
+  export type UserCreateOrConnectWithoutPlayEventsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPlayEventsInput, UserUncheckedCreateWithoutPlayEventsInput>
+  }
+
+  export type UserUpsertWithoutPlayEventsInput = {
+    update: XOR<UserUpdateWithoutPlayEventsInput, UserUncheckedUpdateWithoutPlayEventsInput>
+    create: XOR<UserCreateWithoutPlayEventsInput, UserUncheckedCreateWithoutPlayEventsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPlayEventsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPlayEventsInput, UserUncheckedUpdateWithoutPlayEventsInput>
+  }
+
+  export type UserUpdateWithoutPlayEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUpdateManyWithoutUserNestedInput
+    playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    devices?: DeviceUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
+    receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPlayEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUncheckedUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
+    playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    recommendations?: RecommendationUncheckedUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
+    receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
+  }
+
+  export type UserCreateWithoutRecommendationsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackCreateNestedManyWithoutUserInput
+    settings?: UserSettingCreateNestedManyWithoutUserInput
+    playlists?: PlaylistCreateNestedManyWithoutUserInput
+    devices?: DeviceCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendshipCreateNestedManyWithoutRequesterInput
+    receivedFriendRequests?: FriendshipCreateNestedManyWithoutAddresseeInput
+  }
+
+  export type UserUncheckedCreateWithoutRecommendationsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    passwordHash: string
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    likedTracks?: LikedTrackUncheckedCreateNestedManyWithoutUserInput
+    settings?: UserSettingUncheckedCreateNestedManyWithoutUserInput
+    playlists?: PlaylistUncheckedCreateNestedManyWithoutUserInput
+    devices?: DeviceUncheckedCreateNestedManyWithoutUserInput
+    passkeys?: PasskeyUncheckedCreateNestedManyWithoutUserInput
+    playEvents?: PlayEventUncheckedCreateNestedManyWithoutUserInput
+    sentFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutRequesterInput
+    receivedFriendRequests?: FriendshipUncheckedCreateNestedManyWithoutAddresseeInput
+  }
+
+  export type UserCreateOrConnectWithoutRecommendationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRecommendationsInput, UserUncheckedCreateWithoutRecommendationsInput>
+  }
+
+  export type UserUpsertWithoutRecommendationsInput = {
+    update: XOR<UserUpdateWithoutRecommendationsInput, UserUncheckedUpdateWithoutRecommendationsInput>
+    create: XOR<UserCreateWithoutRecommendationsInput, UserUncheckedCreateWithoutRecommendationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRecommendationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRecommendationsInput, UserUncheckedUpdateWithoutRecommendationsInput>
+  }
+
+  export type UserUpdateWithoutRecommendationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUpdateManyWithoutUserNestedInput
+    playlists?: PlaylistUpdateManyWithoutUserNestedInput
+    devices?: DeviceUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendshipUpdateManyWithoutRequesterNestedInput
+    receivedFriendRequests?: FriendshipUpdateManyWithoutAddresseeNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRecommendationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    likedTracks?: LikedTrackUncheckedUpdateManyWithoutUserNestedInput
+    settings?: UserSettingUncheckedUpdateManyWithoutUserNestedInput
+    playlists?: PlaylistUncheckedUpdateManyWithoutUserNestedInput
+    devices?: DeviceUncheckedUpdateManyWithoutUserNestedInput
+    passkeys?: PasskeyUncheckedUpdateManyWithoutUserNestedInput
+    playEvents?: PlayEventUncheckedUpdateManyWithoutUserNestedInput
+    sentFriendRequests?: FriendshipUncheckedUpdateManyWithoutRequesterNestedInput
+    receivedFriendRequests?: FriendshipUncheckedUpdateManyWithoutAddresseeNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -17279,6 +21980,25 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     lastUsedAt?: Date | string
+  }
+
+  export type PlayEventCreateManyUserInput = {
+    id?: string
+    deezerTrackId: number
+    title: string
+    artistName: string
+    artistId?: number | null
+    albumTitle: string
+    albumCover: string
+    duration: number
+    createdAt?: Date | string
+  }
+
+  export type RecommendationCreateManyUserInput = {
+    id?: string
+    window: string
+    payload: string
+    computedAt?: Date | string
   }
 
   export type FriendshipCreateManyRequesterInput = {
@@ -17459,6 +22179,63 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastUsedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PlayEventUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PlayEventUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PlayEventUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deezerTrackId?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    artistName?: StringFieldUpdateOperationsInput | string
+    artistId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumTitle?: StringFieldUpdateOperationsInput | string
+    albumCover?: StringFieldUpdateOperationsInput | string
+    duration?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    window?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    computedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    window?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    computedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    window?: StringFieldUpdateOperationsInput | string
+    payload?: StringFieldUpdateOperationsInput | string
+    computedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FriendshipUpdateWithoutRequesterInput = {
