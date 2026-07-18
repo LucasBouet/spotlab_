@@ -834,9 +834,17 @@ export function PlayerProvider({
 
   usePlayTracking({ track: current, status, isPrimaryOutput });
 
+  // A track that's still downloading/buffering is logically *playing*, not
+  // paused. We report it as playing to the OS media session so playbackState
+  // never flips to "paused" during the load gap — otherwise Android reaps the
+  // background notification while an uncached track is being fetched, and in a
+  // backgrounded PWA it never comes back once audio finally starts. See
+  // useMediaSession for why "playing" is what keeps the session alive.
+  const isBuffering = status === "loading" && syncedIsPlaying;
+
   useMediaSession({
     track: current,
-    isPlaying: status === "playing",
+    isPlaying: status === "playing" || isBuffering,
     duration,
     currentTime,
     canSkipNext: queue.length > 0,

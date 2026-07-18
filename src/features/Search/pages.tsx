@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SearchIcon } from "@/components/icons";
 import { TrackList } from "@/components/track-list";
+import { useSearch } from "@/features/Search/search-context";
 import { useLikeToggle } from "@/features/shared/use-like-toggle";
 import type { DeezerTrack } from "@/lib/deezer";
 
@@ -40,7 +41,7 @@ export default function SearchPage({
 }: {
   initialLikedTrackIds: number[];
 }) {
-  const [query, setQuery] = useState("");
+  const { query, setQuery } = useSearch();
   const [activeTab, setActiveTab] = useState<SearchType>("track");
   const [results, setResults] = useState<
     (DeezerTrack | DeezerAlbum | DeezerArtist)[]
@@ -92,13 +93,16 @@ export default function SearchPage({
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 p-4 sm:p-6">
-      <div className="relative">
+      <div className="relative md:hidden">
         <SearchIcon className="pointer-events-none absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-white/40" />
         <input
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
+          // biome-ignore lint/a11y/noAutofocus: focus attendu à l'ouverture de la recherche sur mobile
+          autoFocus
           placeholder="Titres, albums, artistes..."
+          aria-label="Rechercher"
           className="w-full rounded-full border border-border bg-surface py-3 pr-4 pl-11 text-sm text-white outline-none transition placeholder:text-white/40 focus:border-brand focus:ring-2 focus:ring-brand/30"
         />
       </div>

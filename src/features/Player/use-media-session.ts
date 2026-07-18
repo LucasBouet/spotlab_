@@ -67,6 +67,11 @@ export function useMediaSession({
       : null;
   }, [track]);
 
+  // "playing" is the state Android/Chrome uses to keep a backgrounded tab's
+  // media notification alive. The caller therefore passes isPlaying=true while
+  // an uncached track is still buffering/downloading, so the session stays
+  // "playing" across the load gap instead of flipping to "paused" (which gets
+  // the notification reaped and never re-shown in a backgrounded PWA).
   useEffect(() => {
     if (!isSupported()) return;
     navigator.mediaSession.playbackState = !track

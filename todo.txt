@@ -1,0 +1,3 @@
+Fix the pwa lagging
+
+Fix the multi device background pwa skip

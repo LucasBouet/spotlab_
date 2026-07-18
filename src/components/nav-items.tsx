@@ -7,7 +7,6 @@ import {
   HomeIcon,
   LibraryIcon,
   PlaylistIcon,
-  SearchIcon,
   SettingsIcon,
   ShieldIcon,
 } from "@/components/icons";
@@ -20,7 +19,6 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Accueil", href: "/", icon: HomeIcon },
-  { label: "Rechercher", href: "/search", icon: SearchIcon },
   { label: "Bibliothèque", href: "/library", icon: LibraryIcon },
   { label: "Playlists", href: "/playlists", icon: PlaylistIcon },
 ];
